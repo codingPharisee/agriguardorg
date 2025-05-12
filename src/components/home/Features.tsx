@@ -50,7 +50,7 @@ const Features = () => {
               <div className="flex items-center justify-center gap-2 mb-2">
                 <h3 className="text-xl font-semibold">{feature.title}</h3>
                 {feature.comingSoon && (
-                  <Badge variant="outline" className="text-xs bg-yellow-100 text-yellow-800 border-yellow-300">
+                  <Badge variant="outline" className="text-xs bg-primary-light/30 text-primary-dark border-primary-light">
                     Coming Soon
                   </Badge>
                 )}
