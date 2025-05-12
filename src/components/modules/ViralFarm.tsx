@@ -1,142 +1,134 @@
-
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BarChart3, Radar, TrendingUp } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Bug, Flame, ShieldCheck, TrendingUp, Twitter } from "lucide-react";
 
-// Mock data for the dashboard
-const mockTrendingMyths = [
+const RECENT_MYTHS = [
   {
     id: 1,
-    claim: "GMOs cause cancer in laboratory animals",
-    source: "Facebook",
-    mentions: 342,
-    rating: "False",
-    trend: "rising",
+    title: "GMOs cause cancer",
+    severity: "High",
+    trend: "Rising",
+    source: "Twitter",
   },
   {
     id: 2,
-    claim: "New pesticide kills all bees within 10km radius",
-    source: "WhatsApp",
-    mentions: 289,
-    rating: "Misleading",
-    trend: "stable",
+    title: "Organic food is pesticide-free",
+    severity: "Medium",
+    trend: "Stable",
+    source: "Facebook",
   },
   {
     id: 3,
-    claim: "Organic farming produces higher yields than conventional",
-    source: "Twitter",
-    mentions: 211,
-    rating: "Partly False",
-    trend: "rising",
+    title: "Eating local is always better",
+    severity: "Low",
+    trend: "Falling",
+    source: "WhatsApp",
   },
   {
     id: 4,
-    claim: "This new fertilizer doubles crop production overnight",
-    source: "Radio",
-    mentions: 187,
-    rating: "Unverified",
-    trend: "new",
+    title: "Glyphosate is harmless",
+    severity: "High",
+    trend: "Rising",
+    source: "Twitter",
+  },
+  {
+    id: 5,
+    title: "Bees are dying because of GMOs",
+    severity: "Medium",
+    trend: "Stable",
+    source: "Blogs",
   },
 ];
 
+const SEVERITY_COLORS = {
+  High: "destructive",
+  Medium: "secondary",
+  Low: "outline",
+};
+
+const TREND_ICONS = {
+  Rising: TrendingUp,
+  Stable: ShieldCheck,
+  Falling: Flame,
+};
+
+const SOURCE_ICONS = {
+  Twitter: Twitter,
+  Facebook: Bug,
+  WhatsApp: Bug,
+  Blogs: Bug,
+};
+
 const ViralFarm = () => {
-  const [activeTab, setActiveTab] = useState("trending");
-
-  const getBadgeVariant = (rating: string) => {
-    switch (rating.toLowerCase()) {
-      case "false":
-        return "destructive";
-      case "misleading":
-        return "warning";
-      case "partly false":
-        return "secondary";
-      case "unverified":
-        return "outline";
-      default:
-        return "default";
-    }
-  };
-
-  const getTrendIcon = (trend: string) => {
-    switch (trend.toLowerCase()) {
-      case "rising":
-        return <TrendingUp className="h-4 w-4 text-destructive" />;
-      case "stable":
-        return <BarChart3 className="h-4 w-4 text-amber-500" />;
-      case "new":
-        return <Radar className="h-4 w-4 text-blue-500 animate-pulse-slow" />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <Card className="module-card">
       <CardHeader className="pb-2">
         <CardTitle className="module-header">
-          <Radar className="h-5 w-5" />
+          <TrendingUp className="h-5 w-5" />
           ViralFarm
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          AI-powered detection of agricultural misinformation spreading on social media and radio
+          Early detection of agricultural misinformation spreading online
         </p>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-3 mb-4">
-            <TabsTrigger value="trending">Trending</TabsTrigger>
-            <TabsTrigger value="sources">Sources</TabsTrigger>
-            <TabsTrigger value="alerts">Alerts</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="trending" className="mt-0">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-medium">Trending Claims</h3>
-                <Badge variant="outline" className="bg-primary/5">
-                  Last 24 hours
-                </Badge>
-              </div>
-              
-              <div className="space-y-3">
-                {mockTrendingMyths.map((myth) => (
-                  <div 
-                    key={myth.id}
-                    className="p-3 border rounded-md hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="flex justify-between gap-2 mb-1">
-                      <div className="font-medium">{myth.claim}</div>
-                      <Badge variant={getBadgeVariant(myth.rating)}>
-                        {myth.rating}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>Source: {myth.source}</span>
-                      <div className="flex items-center gap-1">
-                        <span>{myth.mentions} mentions</span>
-                        {getTrendIcon(myth.trend)}
+        <ScrollArea className="h-[450px] pr-4">
+          <div className="space-y-4">
+            {RECENT_MYTHS.map((myth) => {
+              const SeverityColor =
+                SEVERITY_COLORS[myth.severity as keyof typeof SEVERITY_COLORS];
+              const TrendIcon =
+                TREND_ICONS[myth.trend as keyof typeof TREND_ICONS];
+              const SourceIcon =
+                SOURCE_ICONS[myth.source as keyof typeof SOURCE_ICONS];
+
+              return (
+                <div
+                  key={myth.id}
+                  className="border rounded-md p-4 bg-card hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-medium mb-1">{myth.title}</h4>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        Severity:
+                        <Badge variant={SeverityColor}>{myth.severity}</Badge>
                       </div>
                     </div>
+                    <div className="flex flex-col items-end gap-1.5">
+                      <SourceIcon className="h-4 w-4 text-muted-foreground" />
+                      <TrendIcon className="h-6 w-6 text-red-500" />
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="sources" className="mt-0">
-            <div className="flex items-center justify-center h-[200px] border rounded-md bg-gray-50">
-              <p className="text-muted-foreground">Source analytics will be shown here</p>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="alerts" className="mt-0">
-            <div className="flex items-center justify-center h-[200px] border rounded-md bg-gray-50">
-              <p className="text-muted-foreground">Real-time alerts will be shown here</p>
-            </div>
-          </TabsContent>
-        </Tabs>
+                  <div className="pt-3 text-sm text-muted-foreground border-t mt-2">
+                    <p>
+                      Source: {myth.source} | Trend: {myth.trend}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </ScrollArea>
+        <Alert className="mt-4">
+          <AlertTitle>Mitigation Tips</AlertTitle>
+          <AlertDescription>
+            <ul className="list-disc pl-5 space-y-1 mt-2 text-sm">
+              <li>
+                Share verified information from trusted sources on your social
+                media.
+              </li>
+              <li>
+                Engage respectfully in conversations to correct
+                misconceptions.
+              </li>
+              <li>Report misinformation to social media platforms.</li>
+            </ul>
+          </AlertDescription>
+        </Alert>
       </CardContent>
     </Card>
   );

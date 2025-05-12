@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Leaf, UserRound } from "lucide-react";
+import { Leaf, UserRound, MessageSquare } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   NavigationMenu,
@@ -32,10 +33,18 @@ const Header = () => {
     <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Leaf className="h-6 w-6 text-primary" />
-          <h1 className="text-xl font-bold text-primary-dark">AgriGuard</h1>
+          <Link to="/" className="flex items-center gap-2">
+            <Leaf className="h-6 w-6 text-primary" />
+            <h1 className="text-xl font-bold text-primary-dark">AgriGuard</h1>
+          </Link>
         </div>
         <div className="flex gap-3 items-center">
+          <Link to="/fact-check">
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+              <MessageSquare className="h-4 w-4" />
+              <span className="hidden sm:inline">Fact Check</span>
+            </Button>
+          </Link>
           <Button variant="outline" size="sm">About</Button>
           
           {isSignedIn ? (
