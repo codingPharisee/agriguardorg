@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
@@ -9,8 +9,11 @@ import AgriFactCheck from "@/components/modules/AgriFactCheck";
 import MythBusterAg from "@/components/modules/MythBusterAg";
 import NewsAndPhotos from "@/components/home/NewsAndPhotos";
 import { Button } from "@/components/ui/button";
+import ContactFormDialog from "@/components/forms/ContactFormDialog";
 
 const Index = () => {
+  const [contactFormOpen, setContactFormOpen] = useState(false);
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -165,17 +168,7 @@ const Index = () => {
             </p>
             <Button 
               className="bg-white text-primary-dark hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition-colors"
-              onClick={() => {
-                const header = document.querySelector('header');
-                // Find the login button in the header
-                const loginButton = header?.querySelector('button:last-child');
-                if (loginButton && loginButton instanceof HTMLButtonElement) {
-                  loginButton.click();
-                } else {
-                  // If no login button is found (user is already logged in)
-                  alert("You're already signed in. Navigate to your profile to manage your account.");
-                }
-              }}
+              onClick={() => setContactFormOpen(true)}
             >
               Get Started Today
             </Button>
@@ -184,6 +177,11 @@ const Index = () => {
       </main>
       
       <Footer />
+      
+      <ContactFormDialog 
+        open={contactFormOpen} 
+        onOpenChange={setContactFormOpen} 
+      />
     </div>
   );
 };
