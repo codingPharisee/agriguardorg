@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -43,11 +44,11 @@ const RECENT_MYTHS = [
   },
 ];
 
-const SEVERITY_COLORS = {
+const SEVERITY_BADGE_VARIANTS = {
   High: "destructive",
   Medium: "secondary",
   Low: "outline",
-};
+} as const;
 
 const TREND_ICONS = {
   Rising: TrendingUp,
@@ -78,8 +79,8 @@ const ViralFarm = () => {
         <ScrollArea className="h-[450px] pr-4">
           <div className="space-y-4">
             {RECENT_MYTHS.map((myth) => {
-              const SeverityColor =
-                SEVERITY_COLORS[myth.severity as keyof typeof SEVERITY_COLORS];
+              const severityVariant =
+                SEVERITY_BADGE_VARIANTS[myth.severity as keyof typeof SEVERITY_BADGE_VARIANTS];
               const TrendIcon =
                 TREND_ICONS[myth.trend as keyof typeof TREND_ICONS];
               const SourceIcon =
@@ -95,7 +96,7 @@ const ViralFarm = () => {
                       <h4 className="font-medium mb-1">{myth.title}</h4>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         Severity:
-                        <Badge variant={SeverityColor}>{myth.severity}</Badge>
+                        <Badge variant={severityVariant}>{myth.severity}</Badge>
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-1.5">
