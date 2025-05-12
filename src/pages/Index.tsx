@@ -8,6 +8,7 @@ import ViralFarm from "@/components/modules/ViralFarm";
 import AgriFactCheck from "@/components/modules/AgriFactCheck";
 import MythBusterAg from "@/components/modules/MythBusterAg";
 import NewsAndPhotos from "@/components/home/NewsAndPhotos";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   return (
@@ -162,9 +163,22 @@ const Index = () => {
               Join our network of agricultural experts, extension officers, and farmers 
               to help build a more informed farming community.
             </p>
-            <button className="bg-white text-primary-dark hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition-colors">
+            <Button 
+              className="bg-white text-primary-dark hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition-colors"
+              onClick={() => {
+                const header = document.querySelector('header');
+                // Find the login button in the header
+                const loginButton = header?.querySelector('button:last-child');
+                if (loginButton) {
+                  loginButton.click();
+                } else {
+                  // If no login button is found (user is already logged in)
+                  alert("You're already signed in. Navigate to your profile to manage your account.");
+                }
+              }}
+            >
               Get Started Today
-            </button>
+            </Button>
           </div>
         </section>
       </main>
