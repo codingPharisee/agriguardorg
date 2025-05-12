@@ -1,9 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, Shield, TrendingUp } from "lucide-react";
+import { ShieldCheck, Shield } from "lucide-react";
+import ContactFormDialog from "@/components/forms/ContactFormDialog";
 
 const Hero = () => {
+  const [contactFormOpen, setContactFormOpen] = useState(false);
+
   return (
     <div className="bg-gradient-to-br from-primary-light/20 via-white to-earth-light/10 py-12 px-4 md:py-24 text-center">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -25,11 +28,20 @@ const Hero = () => {
             <ShieldCheck className="h-5 w-5" />
             Start Fact Checking
           </Button>
-          <Button variant="outline" size="lg">
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={() => setContactFormOpen(true)}
+          >
             Learn More
           </Button>
         </div>
       </div>
+
+      <ContactFormDialog 
+        open={contactFormOpen} 
+        onOpenChange={setContactFormOpen} 
+      />
     </div>
   );
 };
