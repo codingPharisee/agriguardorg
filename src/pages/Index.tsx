@@ -169,7 +169,7 @@ const Index = () => {
                 const header = document.querySelector('header');
                 // Find the login button in the header
                 const loginButton = header?.querySelector('button:last-child');
-                if (loginButton) {
+                if (loginButton && loginButton instanceof HTMLButtonElement) {
                   loginButton.click();
                 } else {
                   // If no login button is found (user is already logged in)
