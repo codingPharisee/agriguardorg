@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Leaf, UserRound, MessageSquare } from "lucide-react";
+import { Leaf, UserRound, MessageSquare, Info } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   NavigationMenu,
@@ -45,7 +45,12 @@ const Header = () => {
               <span className="hidden sm:inline">Fact Check</span>
             </Button>
           </Link>
-          <Button variant="outline" size="sm">About</Button>
+          <Link to="/about">
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+              <Info className="h-4 w-4" />
+              <span className="hidden sm:inline">About</span>
+            </Button>
+          </Link>
           
           {isSignedIn ? (
             <NavigationMenu>

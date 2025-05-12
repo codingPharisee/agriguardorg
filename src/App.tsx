@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import FactCheck from "./pages/FactCheck";
 import NotFound from "./pages/NotFound";
 import ComingSoon from "./pages/ComingSoon";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/viral-farm" element={<ComingSoon title="ViralFarm" />} />
           <Route path="/myth-buster" element={<ComingSoon title="MythBuster Ag" />} />
           <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
