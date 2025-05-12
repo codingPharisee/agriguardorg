@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -6,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageSquare, Search, Check, X, Loader2 } from "lucide-react";
+import { MessageSquare, Search, Check, X, Loader2, Home } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 // Example FAQ data
 const FAQS = [
@@ -129,7 +129,14 @@ const FactCheck = () => {
       <main className="flex-grow py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8 text-center">Agricultural Fact Checker</h1>
+            <div className="flex justify-between items-center mb-8">
+              <h1 className="text-3xl font-bold text-center">Agricultural Fact Checker</h1>
+              <Button variant="outline" asChild>
+                <Link to="/" className="flex items-center gap-2">
+                  <Home className="h-4 w-4" /> Return to Homepage
+                </Link>
+              </Button>
+            </div>
             
             <Card className="mb-8">
               <CardHeader className="pb-4">
