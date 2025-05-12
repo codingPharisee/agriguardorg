@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import FactCheck from "./pages/FactCheck";
 import NotFound from "./pages/NotFound";
+import ComingSoon from "./pages/ComingSoon";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/fact-check" element={<FactCheck />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/viral-farm" element={<ComingSoon title="ViralFarm" />} />
+          <Route path="/myth-buster" element={<ComingSoon title="MythBuster Ag" />} />
+          <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

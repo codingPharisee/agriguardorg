@@ -55,8 +55,8 @@ const AgriFactCheck = () => {
   };
 
   return (
-    <Card className="module-card">
-      <CardHeader className="pb-2">
+    <Card className="module-card border-2 border-primary shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
+      <CardHeader className="pb-2 bg-primary/10 rounded-t-lg">
         <CardTitle className="module-header">
           <MessageSquare className="h-5 w-5" />
           AgriFactCheck
@@ -65,7 +65,7 @@ const AgriFactCheck = () => {
           Instant agricultural fact checking via AI chatbot and SMS system
         </p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-2 mb-4">
             <TabsTrigger value="chat">Chat</TabsTrigger>
@@ -87,9 +87,9 @@ const AgriFactCheck = () => {
             </form>
             
             {showResults && (
-              <div className="border rounded-md p-4 bg-primary/5 space-y-2">
+              <div className="border-2 border-primary rounded-md p-4 bg-primary/5 space-y-2 animate-fade-in">
                 <div className="flex items-start gap-2">
-                  <span className="bg-primary-dark rounded-full p-1 mt-0.5">
+                  <span className="bg-primary rounded-full p-1 mt-0.5">
                     <Check className="h-3 w-3 text-white" />
                   </span>
                   <div>
@@ -108,8 +108,8 @@ const AgriFactCheck = () => {
             )}
             
             {!showResults && !isLoading && (
-              <div className="flex flex-col items-center justify-center p-10 text-center border rounded-md bg-gray-50">
-                <MessageSquare className="h-10 w-10 text-muted-foreground/50 mb-2" />
+              <div className="flex flex-col items-center justify-center p-10 text-center border rounded-md bg-primary/5">
+                <MessageSquare className="h-10 w-10 text-primary mb-2" />
                 <p className="text-muted-foreground">Ask a question about agricultural myths or claims</p>
               </div>
             )}
@@ -119,7 +119,7 @@ const AgriFactCheck = () => {
             <ScrollArea className="h-[350px] pr-4">
               <div className="space-y-4">
                 {FAQS.map((faq) => (
-                  <div key={faq.id} className="border rounded-md p-4 bg-card hover:bg-secondary/50 transition-colors">
+                  <div key={faq.id} className="border rounded-md p-4 bg-card hover:bg-primary/5 transition-colors">
                     <h4 className="font-medium mb-2">{faq.question}</h4>
                     <p className="text-sm mb-2">{faq.answer}</p>
                     <p className="text-xs text-muted-foreground">Source: {faq.source}</p>
