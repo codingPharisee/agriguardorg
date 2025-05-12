@@ -1,27 +1,32 @@
 
 import React from "react";
 import { Search, MessageSquare, Video, Shield } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const featuresList = [
   {
     icon: <Search className="h-8 w-8 text-primary" />,
     title: "ViralFarm",
     description: "AI-powered detection of trending agricultural myths across social media and radio.",
+    comingSoon: true,
   },
   {
     icon: <MessageSquare className="h-8 w-8 text-primary" />,
     title: "AgriFactCheck",
     description: "Instant fact-checking via AI chatbot and SMS to provide farmers with accurate information.",
+    comingSoon: false,
   },
   {
     icon: <Video className="h-8 w-8 text-primary" />,
     title: "MythBuster Ag",
     description: "AI-generated educational videos to proactively counter common agricultural misinformation.",
+    comingSoon: true,
   },
   {
     icon: <Shield className="h-8 w-8 text-primary" />,
     title: "Integrated Ecosystem",
     description: "All three modules work together in a seamless pipeline to detect, debunk, and prevent misinformation.",
+    comingSoon: true,
   },
 ];
 
@@ -42,8 +47,15 @@ const Features = () => {
               <div className="inline-flex items-center justify-center bg-primary/10 p-3 rounded-full mb-4">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h3 className="text-xl font-semibold">{feature.title}</h3>
+                {feature.comingSoon && (
+                  <Badge variant="outline" className="text-xs bg-yellow-100 text-yellow-800 border-yellow-300">
+                    Coming Soon
+                  </Badge>
+                )}
+              </div>
+              <p className="text-gray-600 text-sm">{feature.description}</p>
             </div>
           ))}
         </div>
