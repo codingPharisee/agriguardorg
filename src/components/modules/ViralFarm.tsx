@@ -12,7 +12,9 @@ import {
   Twitter, 
   RefreshCw,
   Info,
-  ChartBar
+  ChartBar,
+  Filter,
+  SlidersHorizontal
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -27,6 +29,7 @@ import {
   ResponsiveContainer,
   CartesianGrid, 
 } from "recharts";
+import { useToast } from "@/hooks/use-toast";
 
 const INITIAL_MYTHS = [
   {
@@ -152,6 +155,9 @@ const ViralFarm = ({ fullPage = false }) => {
   const [timeSeriesData, setTimeSeriesData] = useState(generateTimeSeriesData());
   const [activeSource, setActiveSource] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [autoRefresh, setAutoRefresh] = useState(false);
+  const [refreshInterval, setRefreshInterval] = useState(30); // seconds
+  const { toast } = useToast();
   
   // Filter function for myths
   const [filter, setFilter] = useState<{
@@ -179,6 +185,13 @@ const ViralFarm = ({ fullPage = false }) => {
       };
       updatedMyths.unshift(newMyth);
       
+      // Show toast notification for new myth
+      toast({
+        title: "New Misinformation Detected",
+        description: newMyth.title,
+        variant: "destructive",
+      });
+      
       // Remove from additional myths to avoid duplicates
       ADDITIONAL_MYTHS.splice(newMythIndex, 1);
     }
@@ -189,7 +202,17 @@ const ViralFarm = ({ fullPage = false }) => {
         const trends = ["Rising", "Stable", "Falling"];
         const currentIndex = trends.indexOf(myth.trend);
         const possibleTrends = trends.filter((_, i) => i !== currentIndex);
+        const previousTrend = myth.trend;
         myth.trend = possibleTrends[Math.floor(Math.random() * possibleTrends.length)];
+        
+        // If trend changed from not rising to rising, show toast
+        if (previousTrend !== "Rising" && myth.trend === "Rising" && myth.severity === "High") {
+          toast({
+            title: "Alert: Trend Change",
+            description: `"${myth.title}" is now rapidly spreading`,
+            variant: "default",
+          });
+        }
         
         // Update engagement rate based on trend
         if (myth.trend === "Rising") {
@@ -224,13 +247,36 @@ const ViralFarm = ({ fullPage = false }) => {
     setLoading(false);
   };
   
-  // Set up auto-refresh every 30 seconds
+  // Handle auto-refresh toggle
+  const toggleAutoRefresh = () => {
+    setAutoRefresh(prev => !prev);
+    if (!autoRefresh) {
+      toast({
+        title: "Auto-refresh enabled",
+        description: `Data will refresh every ${refreshInterval} seconds`,
+      });
+    }
+  };
+  
+  // Set up auto-refresh interval
+  useEffect(() => {
+    let intervalId: number | undefined;
+    
+    if (fullPage && autoRefresh) {
+      intervalId = window.setInterval(fetchRealTimeData, refreshInterval * 1000);
+    }
+    
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [autoRefresh, refreshInterval, fullPage]);
+  
+  // Initial data fetch
   useEffect(() => {
     if (fullPage) {
-      const intervalId = setInterval(fetchRealTimeData, 30000);
-      return () => clearInterval(intervalId);
+      fetchRealTimeData();
     }
-  }, [myths, timeSeriesData, fullPage]);
+  }, []);
   
   // Filter myths based on selected filters
   const filteredMyths = myths.filter(myth => {
@@ -244,6 +290,13 @@ const ViralFarm = ({ fullPage = false }) => {
   const clearFilters = () => {
     setFilter({});
     setActiveSource(null);
+  };
+  
+  // Handle chart legend click - FIX for TypeScript error
+  const handleLegendClick = (data: any) => {
+    if (typeof data.dataKey === 'string') {
+      setActiveSource(activeSource === data.dataKey ? null : data.dataKey);
+    }
   };
   
   // Component to render the myths list
@@ -413,7 +466,7 @@ const ViralFarm = ({ fullPage = false }) => {
             }} 
           />
           <Tooltip />
-          <Legend onClick={(e) => setActiveSource(activeSource === e.dataKey ? null : e.dataKey)} />
+          <Legend onClick={handleLegendClick} />
           {(!activeSource || activeSource === "twitter") && (
             <Line 
               type="monotone" 
@@ -459,6 +512,49 @@ const ViralFarm = ({ fullPage = false }) => {
     </div>
   );
   
+  // Settings panel for auto-refresh and interval
+  const SettingsPanel = () => (
+    <div className="mt-4 flex flex-col gap-2 p-4 bg-primary-dark/5 rounded-lg">
+      <h4 className="font-medium flex items-center gap-2 mb-2">
+        <SlidersHorizontal className="h-4 w-4" />
+        Monitoring Settings
+      </h4>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Auto-refresh data:</span>
+          <button
+            className={cn(
+              "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
+              autoRefresh ? "bg-primary" : "bg-gray-300"
+            )}
+            onClick={toggleAutoRefresh}
+          >
+            <span
+              className={cn(
+                "inline-block h-4 w-4 transform rounded-full bg-white transition-transform",
+                autoRefresh ? "translate-x-6" : "translate-x-1"
+              )}
+            />
+          </button>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Interval:</span>
+          <select
+            className="rounded border p-1 text-sm"
+            value={refreshInterval}
+            onChange={(e) => setRefreshInterval(Number(e.target.value))}
+            disabled={!autoRefresh}
+          >
+            <option value="5">5s</option>
+            <option value="10">10s</option>
+            <option value="30">30s</option>
+            <option value="60">1m</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+  
   return (
     <Card className={cn("module-card", fullPage && "w-full max-w-5xl mx-auto")}>
       <CardHeader className="pb-2">
@@ -486,7 +582,9 @@ const ViralFarm = ({ fullPage = false }) => {
                 variant="outline" 
                 onClick={clearFilters}
                 disabled={!filter.severity && !filter.trend && !filter.source}
+                className="gap-1"
               >
+                <Filter className="h-4 w-4" />
                 Clear Filters
               </Button>
             </div>
@@ -536,6 +634,8 @@ const ViralFarm = ({ fullPage = false }) => {
         <MythsList />
         
         {fullPage && <TrendChart />}
+        
+        {fullPage && <SettingsPanel />}
         
         <Alert className="mt-4">
           <AlertTitle className="flex items-center gap-2">
