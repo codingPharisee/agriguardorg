@@ -9,6 +9,7 @@ import FactCheck from "./pages/FactCheck";
 import NotFound from "./pages/NotFound";
 import ComingSoon from "./pages/ComingSoon";
 import About from "./pages/About";
+import ViralFarmPage from "./pages/ViralFarmPage";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/fact-check" element={<FactCheck />} />
-          <Route path="/viral-farm" element={<ComingSoon title="ViralFarm" />} />
+          <Route path="/viral-farm" element={<ViralFarmPage />} />
           <Route path="/myth-buster" element={<ComingSoon title="MythBuster Ag" />} />
           <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
           <Route path="/about" element={<About />} />
