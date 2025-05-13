@@ -21,8 +21,8 @@ const Index = () => {
       <main className="flex-grow">
         <Hero />
         
-        {/* Fact Check section now above Features */}
-        <section className="py-12 bg-white">
+        {/* Fact Check section now above Features with a class for scrolling */}
+        <section className="py-12 bg-white agrifactcheck-section">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
               <div className="p-4 lg:p-8 order-2 lg:order-1">

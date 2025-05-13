@@ -7,6 +7,14 @@ import ContactFormDialog from "@/components/forms/ContactFormDialog";
 const Hero = () => {
   const [contactFormOpen, setContactFormOpen] = useState(false);
 
+  const scrollToFactCheck = () => {
+    // Find the AgriFactCheck component and scroll to it
+    const factCheckSection = document.querySelector('.agrifactcheck-section');
+    if (factCheckSection) {
+      factCheckSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="bg-gradient-to-br from-primary-light/20 via-white to-earth-light/10 py-12 px-4 md:py-24 text-center">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -24,7 +32,7 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-wrap justify-center gap-4 pt-4">
-          <Button size="lg" className="gap-2">
+          <Button size="lg" className="gap-2" onClick={scrollToFactCheck}>
             <ShieldCheck className="h-5 w-5" />
             Start Fact Checking
           </Button>
