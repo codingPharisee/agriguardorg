@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="bg-amber-400 text-amber-900 px-3 py-2 font-bold">
               <div className="flex flex-col items-center">
                 <Leaf className="h-5 w-5 mb-1" />
-                <span className="text-sm">AGRO</span>
+                <span className="text-sm">AgriG</span>
               </div>
             </div>
             <span className="font-semibold text-amber-100 text-lg">AgriGuard</span>

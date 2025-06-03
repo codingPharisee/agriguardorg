@@ -47,7 +47,7 @@ const Header = () => {
           <Link to="/" className="bg-amber-400 text-black px-4 py-2 font-bold text-lg">
             <div className="flex flex-col items-center">
               <Leaf className="h-6 w-6 mb-1" />
-              <span>AGRO</span>
+              <span>AgriG</span>
             </div>
           </Link>
           <span className={`ml-3 font-bold text-xl ${isHomePage ? 'text-white' : 'text-amber-900'}`}>

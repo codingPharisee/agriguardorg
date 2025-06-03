@@ -59,26 +59,12 @@ const Hero = () => {
       {/* Tree overlay effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-amber-900/30"></div>
       
-      <div className="container mx-auto px-4 py-24 flex items-center justify-between relative z-10">
-        {/* Left side - African lady with phone image */}
-        <div className="hidden lg:flex flex-col items-start w-1/2">
-          <div className="relative">
-            <img 
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop"
-              alt="Happy African woman looking at phone"
-              className="w-96 h-96 object-cover rounded-lg shadow-2xl"
-            />
-            {/* Decorative elements similar to testimonial design */}
-            <div className="absolute -top-4 -right-4 w-8 h-8 bg-amber-400 rounded-full"></div>
-            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-amber-300 rounded-full"></div>
-          </div>
-        </div>
-        
-        {/* Right side - Content */}
-        <div className="w-full lg:w-1/2 text-center lg:text-left lg:pl-12">
+      <div className="container mx-auto px-4 py-24 flex items-center justify-center relative z-10">
+        {/* Centered Content */}
+        <div className="w-full text-center">
           <div className="mb-6">
             <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-white mb-4">
-              AGRO
+              AgriG
             </h1>
             <h2 className="text-4xl md:text-5xl font-bold tracking-wider text-white mb-6">
               FARMING COMPANY
@@ -88,19 +74,19 @@ const Hero = () => {
             </h3>
           </div>
           
-          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-6 mb-8">
-            <p className="text-lg md:text-xl text-white/95 max-w-2xl mx-auto lg:mx-0 mb-4 leading-relaxed">
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-4xl mx-auto">
+            <p className="text-lg md:text-xl text-white/95 mb-4 leading-relaxed">
               Your trusted source for accurate GMO (Genetically Modified Organism) information. 
               We combat agricultural misinformation and provide farmers with science-based facts 
               about modern farming technologies.
             </p>
-            <p className="text-md text-amber-200 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-md text-amber-200 leading-relaxed">
               Empowering farmers with reliable knowledge about crop genetics, biotechnology, 
               and sustainable agricultural practices for a food-secure future.
             </p>
           </div>
           
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button 
               size="lg" 
               className="bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
