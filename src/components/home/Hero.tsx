@@ -64,8 +64,8 @@ const Hero = () => {
         <div className="hidden lg:flex flex-col items-start w-1/2">
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=600&auto=format&fit=crop"
-              alt="African woman learning from phone in field"
+              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop"
+              alt="Happy African woman looking at phone"
               className="w-96 h-96 object-cover rounded-lg shadow-2xl"
             />
             {/* Decorative elements similar to testimonial design */}
