@@ -59,11 +59,11 @@ const Hero = () => {
       {/* Tree overlay effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-amber-900/30"></div>
       
-      {/* Lady with phone image - positioned on the left */}
+      {/* African lady with phone image - positioned on the left */}
       <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:block z-10">
         <img 
-          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop"
-          alt="Woman learning from phone"
+          src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=600&auto=format&fit=crop"
+          alt="African woman learning from phone in field"
           className="w-80 h-80 object-cover rounded-full border-4 border-amber-400 shadow-2xl"
         />
       </div>
