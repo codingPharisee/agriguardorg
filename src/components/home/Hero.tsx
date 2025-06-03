@@ -62,11 +62,8 @@ const Hero = () => {
             <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-white mb-4">
               AgriG
             </h1>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-wider text-white mb-6">
-              FARMING COMPANY
-            </h2>
             <h3 className="text-2xl md:text-3xl font-semibold text-green-300 mb-4">
-              AgriGuard Company
+              Agricultural Solutions
             </h3>
           </div>
           

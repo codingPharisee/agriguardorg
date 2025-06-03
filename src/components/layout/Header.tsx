@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Leaf, UserRound, MessageSquare, Info, ShoppingCart, ChevronDown } from "lucide-react";
+import { Leaf, UserRound, MessageSquare, Info, ShoppingCart, ChevronDown, LogIn } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   DropdownMenu,
@@ -50,9 +50,6 @@ const Header = () => {
               <span>AgriG</span>
             </div>
           </Link>
-          <span className={`ml-3 font-bold text-xl ${isHomePage ? 'text-white' : 'text-green-900'}`}>
-            AgriGuard Company
-          </span>
         </div>
 
         {/* Navigation */}
@@ -99,7 +96,15 @@ const Header = () => {
           <ShoppingCart className={getIconClasses()} />
           
           <Button 
-            className={`${getButtonClasses()} px-6 py-2 rounded-full font-medium tracking-wide transition-all`}
+            className={`${getButtonClasses()} px-6 py-2 rounded-full font-medium tracking-wide transition-all flex items-center gap-2`}
+          >
+            <LogIn className="h-4 w-4" />
+            LOGIN
+          </Button>
+          
+          <Button 
+            variant="outline"
+            className={`px-6 py-2 rounded-full font-medium tracking-wide transition-all ${isHomePage ? 'border-white text-white hover:bg-white hover:text-green-900' : 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white'}`}
             onClick={() => setContactFormOpen(true)}
           >
             CONTACT

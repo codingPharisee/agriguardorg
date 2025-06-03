@@ -14,11 +14,10 @@ const Footer = () => {
                 <span className="text-sm">AgriG</span>
               </div>
             </div>
-            <span className="font-semibold text-green-100 text-lg">AgriGuard</span>
           </div>
           <div className="text-green-200 text-center md:text-right">
             <div className="text-sm mb-1">
-              &copy; {new Date().getFullYear()} AgriGuard Agricultural Solutions
+              &copy; {new Date().getFullYear()} AgriG Agricultural Solutions
             </div>
             <div className="text-xs text-green-300">
               Combating agricultural misinformation with AI technology
