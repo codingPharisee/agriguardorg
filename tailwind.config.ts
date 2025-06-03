@@ -28,10 +28,10 @@ export default {
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
-					// AgriGuard custom colors
-					light: '#81C784',
-					DEFAULT: '#4CAF50',
-					dark: '#2E7D32',
+					// AgriGuard agricultural colors inspired by the image
+					light: '#F59E0B',
+					DEFAULT: '#D97706',
+					dark: '#92400E',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -67,11 +67,21 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for AgriGuard
+				// Custom agricultural colors matching the uploaded design
 				earth: {
-					light: '#A1887F',
-					DEFAULT: '#795548',
-					dark: '#5D4037',
+					light: '#D2B48C',
+					DEFAULT: '#8B4513',
+					dark: '#654321',
+				},
+				golden: {
+					light: '#FFE4B5',
+					DEFAULT: '#DAA520',
+					dark: '#B8860B',
+				},
+				harvest: {
+					light: '#F4A460',
+					DEFAULT: '#CD853F',
+					dark: '#A0522D',
 				},
 			},
 			borderRadius: {

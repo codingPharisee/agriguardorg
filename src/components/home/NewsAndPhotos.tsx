@@ -52,39 +52,39 @@ const newsItems = [
 
 const NewsAndPhotos = () => {
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-16 bg-gradient-to-b from-white to-amber-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-center">
-            Latest News & Resources
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-amber-900">
+            Latest Agricultural News & Resources
           </h2>
-          <Newspaper className="h-6 w-6 text-primary" />
+          <Newspaper className="h-8 w-8 text-amber-600" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {newsItems.map((item, index) => (
-            <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow border-amber-200 bg-white">
               <div className="relative">
-                <AspectRatio ratio={16/9} className="bg-gray-100">
+                <AspectRatio ratio={16/9} className="bg-amber-100">
                   <img 
                     src={item.imageUrl} 
                     alt={item.title}
                     className="w-full h-full object-cover"
                   />
                 </AspectRatio>
-                <div className="absolute top-2 right-2">
+                <div className="absolute top-3 right-3">
                   <Badge type={item.type} />
                 </div>
               </div>
-              <CardHeader className="p-4">
-                <CardTitle className="text-lg font-semibold line-clamp-2">{item.title}</CardTitle>
-                <div className="text-xs text-gray-500">{item.date}</div>
+              <CardHeader className="p-6">
+                <CardTitle className="text-lg font-semibold line-clamp-2 text-amber-900">{item.title}</CardTitle>
+                <div className="text-sm text-amber-700 font-medium">{item.date}</div>
               </CardHeader>
-              <CardContent className="p-4 pt-0">
-                <p className="text-gray-600 text-sm line-clamp-3">{item.excerpt}</p>
+              <CardContent className="p-6 pt-0">
+                <p className="text-gray-700 text-sm line-clamp-3 leading-relaxed">{item.excerpt}</p>
               </CardContent>
-              <CardFooter className="p-4 pt-0">
-                <Button variant="outline" size="sm" className="w-full">
+              <CardFooter className="p-6 pt-0">
+                <Button variant="outline" size="sm" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50">
                   Read More
                 </Button>
               </CardFooter>
@@ -92,13 +92,13 @@ const NewsAndPhotos = () => {
           ))}
         </div>
         
-        <div className="flex justify-center mt-8 gap-4">
-          <Button className="gap-2">
-            <Newspaper className="h-4 w-4" />
+        <div className="flex justify-center mt-12 gap-4">
+          <Button className="gap-2 bg-amber-600 hover:bg-amber-700 px-6 py-3">
+            <Newspaper className="h-5 w-5" />
             View All Articles
           </Button>
-          <Button variant="outline" className="gap-2">
-            <Globe className="h-4 w-4" />
+          <Button variant="outline" className="gap-2 border-amber-300 text-amber-800 hover:bg-amber-50 px-6 py-3">
+            <Globe className="h-5 w-5" />
             News Sources
           </Button>
         </div>
@@ -107,24 +107,24 @@ const NewsAndPhotos = () => {
   );
 };
 
-// Badge component for indicating article type
+// Badge component for indicating article type with agricultural theme
 const Badge = ({ type }: { type: string }) => {
-  let bgColor = "bg-primary text-white";
+  let bgColor = "bg-amber-600 text-white";
   let icon = <Newspaper className="h-3 w-3 mr-1" />;
   
   if (type === "photo") {
-    bgColor = "bg-blue-500 text-white";
+    bgColor = "bg-blue-600 text-white";
     icon = <Image className="h-3 w-3 mr-1" />;
   } else if (type === "news") {
-    bgColor = "bg-amber-500 text-white";
+    bgColor = "bg-orange-600 text-white";
     icon = <Newspaper className="h-3 w-3 mr-1" />;
   } else if (type === "resource") {
-    bgColor = "bg-green-500 text-white";
+    bgColor = "bg-green-600 text-white";
     icon = <FileText className="h-3 w-3 mr-1" />;
   }
   
   return (
-    <span className={`text-xs px-2 py-1 rounded-full flex items-center ${bgColor}`}>
+    <span className={`text-xs px-3 py-1.5 rounded-full flex items-center font-medium ${bgColor}`}>
       {icon}
       {type.charAt(0).toUpperCase() + type.slice(1)}
     </span>
