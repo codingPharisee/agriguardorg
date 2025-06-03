@@ -53,7 +53,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black/40"></div>
       
       {/* Tree overlay effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-amber-900/30"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-green-900/30"></div>
       
       <div className="container mx-auto px-4 py-24 flex items-center justify-center relative z-10">
         {/* Centered Content */}
@@ -65,7 +65,7 @@ const Hero = () => {
             <h2 className="text-4xl md:text-5xl font-bold tracking-wider text-white mb-6">
               FARMING COMPANY
             </h2>
-            <h3 className="text-2xl md:text-3xl font-semibold text-amber-300 mb-4">
+            <h3 className="text-2xl md:text-3xl font-semibold text-green-300 mb-4">
               AgriGuard Company
             </h3>
           </div>
@@ -76,7 +76,7 @@ const Hero = () => {
               We combat agricultural misinformation and provide farmers with science-based facts 
               about modern farming technologies.
             </p>
-            <p className="text-md text-amber-200 leading-relaxed">
+            <p className="text-md text-green-200 leading-relaxed">
               Empowering farmers with reliable knowledge about crop genetics, biotechnology, 
               and sustainable agricultural practices for a food-secure future.
             </p>
@@ -85,7 +85,7 @@ const Hero = () => {
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
               size="lg" 
-              className="bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
+              className="bg-transparent border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
               onClick={scrollToFactCheck}
             >
               DISCOVER GMO FACTS

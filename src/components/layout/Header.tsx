@@ -20,23 +20,23 @@ const Header = () => {
   // Dynamic button colors based on current page
   const getButtonClasses = () => {
     if (isHomePage) {
-      return "bg-amber-400 text-black hover:bg-amber-500";
+      return "bg-green-500 text-white hover:bg-green-600";
     }
-    return "bg-amber-600 text-white hover:bg-amber-700";
+    return "bg-green-600 text-white hover:bg-green-700";
   };
 
   const getNavLinkClasses = () => {
     if (isHomePage) {
-      return "hover:text-amber-400 transition-colors font-medium tracking-wide text-white";
+      return "hover:text-green-400 transition-colors font-medium tracking-wide text-white";
     }
-    return "hover:text-amber-400 transition-colors font-medium tracking-wide text-amber-900";
+    return "hover:text-green-400 transition-colors font-medium tracking-wide text-green-900";
   };
 
   const getIconClasses = () => {
     if (isHomePage) {
-      return "h-5 w-5 text-white hover:text-amber-400 cursor-pointer transition-colors";
+      return "h-5 w-5 text-white hover:text-green-400 cursor-pointer transition-colors";
     }
-    return "h-5 w-5 text-amber-800 hover:text-amber-600 cursor-pointer transition-colors";
+    return "h-5 w-5 text-green-800 hover:text-green-600 cursor-pointer transition-colors";
   };
 
   return (
@@ -44,13 +44,13 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center">
-          <Link to="/" className="bg-amber-400 text-black px-4 py-2 font-bold text-lg">
+          <Link to="/" className="bg-green-500 text-white px-4 py-2 font-bold text-lg">
             <div className="flex flex-col items-center">
               <Leaf className="h-6 w-6 mb-1" />
               <span>AgriG</span>
             </div>
           </Link>
-          <span className={`ml-3 font-bold text-xl ${isHomePage ? 'text-white' : 'text-amber-900'}`}>
+          <span className={`ml-3 font-bold text-xl ${isHomePage ? 'text-white' : 'text-green-900'}`}>
             AgriGuard Company
           </span>
         </div>
@@ -66,19 +66,19 @@ const Header = () => {
             <DropdownMenuTrigger className={`${getNavLinkClasses()} flex items-center gap-1`}>
               PAGES <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white shadow-lg border border-amber-200">
+            <DropdownMenuContent className="bg-white shadow-lg border border-green-200">
               <DropdownMenuItem asChild>
-                <Link to="/about" className="text-amber-900 hover:text-amber-600 hover:bg-amber-50">
+                <Link to="/about" className="text-green-900 hover:text-green-600 hover:bg-green-50">
                   About Us
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/fact-check" className="text-amber-900 hover:text-amber-600 hover:bg-amber-50">
+                <Link to="/fact-check" className="text-green-900 hover:text-green-600 hover:bg-green-50">
                   Fact Check
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/viral-farm" className="text-amber-900 hover:text-amber-600 hover:bg-amber-50">
+                <Link to="/viral-farm" className="text-green-900 hover:text-green-600 hover:bg-green-50">
                   Viral Farm
                 </Link>
               </DropdownMenuItem>
