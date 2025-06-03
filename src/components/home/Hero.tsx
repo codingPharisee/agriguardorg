@@ -48,7 +48,7 @@ const Hero = () => {
 
   return (
     <div 
-      className="relative min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat transition-all duration-1000"
+      className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat transition-all duration-1000"
       style={{
         backgroundImage: `url('${cropBackgrounds[currentCropIndex].image}')`
       }}
@@ -59,57 +59,64 @@ const Hero = () => {
       {/* Tree overlay effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-amber-900/30"></div>
       
-      {/* African lady with phone image - positioned on the left */}
-      <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:block z-10">
-        <img 
-          src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=600&auto=format&fit=crop"
-          alt="African woman learning from phone in field"
-          className="w-80 h-80 object-cover rounded-full border-4 border-amber-400 shadow-2xl"
-        />
-      </div>
-      
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-24 lg:ml-auto lg:mr-16">
-        <div className="mb-6">
-          <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-white mb-4">
-            AGRO
-          </h1>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-wider text-white mb-6">
-            FARMING COMPANY
-          </h2>
-          <h3 className="text-2xl md:text-3xl font-semibold text-amber-300 mb-4">
-            AgriGuard Company
-          </h3>
+      <div className="container mx-auto px-4 py-24 flex items-center justify-between relative z-10">
+        {/* Left side - African lady with phone image */}
+        <div className="hidden lg:flex flex-col items-start w-1/2">
+          <div className="relative">
+            <img 
+              src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=600&auto=format&fit=crop"
+              alt="African woman learning from phone in field"
+              className="w-96 h-96 object-cover rounded-lg shadow-2xl"
+            />
+            {/* Decorative elements similar to testimonial design */}
+            <div className="absolute -top-4 -right-4 w-8 h-8 bg-amber-400 rounded-full"></div>
+            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-amber-300 rounded-full"></div>
+          </div>
         </div>
         
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg p-6 mb-8">
-          <p className="text-lg md:text-xl text-white/95 max-w-2xl mx-auto mb-4 leading-relaxed">
-            Your trusted source for accurate GMO (Genetically Modified Organism) information. 
-            We combat agricultural misinformation and provide farmers with science-based facts 
-            about modern farming technologies.
-          </p>
-          <p className="text-md text-amber-200 max-w-2xl mx-auto leading-relaxed">
-            Empowering farmers with reliable knowledge about crop genetics, biotechnology, 
-            and sustainable agricultural practices for a food-secure future.
-          </p>
-        </div>
-        
-        <div className="flex flex-wrap justify-center gap-4">
-          <Button 
-            size="lg" 
-            className="bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
-            onClick={scrollToFactCheck}
-          >
-            DISCOVER GMO FACTS
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
-            onClick={() => setContactFormOpen(true)}
-          >
-            Learn More
-          </Button>
+        {/* Right side - Content */}
+        <div className="w-full lg:w-1/2 text-center lg:text-left lg:pl-12">
+          <div className="mb-6">
+            <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-white mb-4">
+              AGRO
+            </h1>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-wider text-white mb-6">
+              FARMING COMPANY
+            </h2>
+            <h3 className="text-2xl md:text-3xl font-semibold text-amber-300 mb-4">
+              AgriGuard Company
+            </h3>
+          </div>
+          
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-6 mb-8">
+            <p className="text-lg md:text-xl text-white/95 max-w-2xl mx-auto lg:mx-0 mb-4 leading-relaxed">
+              Your trusted source for accurate GMO (Genetically Modified Organism) information. 
+              We combat agricultural misinformation and provide farmers with science-based facts 
+              about modern farming technologies.
+            </p>
+            <p className="text-md text-amber-200 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Empowering farmers with reliable knowledge about crop genetics, biotechnology, 
+              and sustainable agricultural practices for a food-secure future.
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+            <Button 
+              size="lg" 
+              className="bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
+              onClick={scrollToFactCheck}
+            >
+              DISCOVER GMO FACTS
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-black px-8 py-3 rounded-full font-medium tracking-wider transition-all duration-300"
+              onClick={() => setContactFormOpen(true)}
+            >
+              Learn More
+            </Button>
+          </div>
         </div>
       </div>
 
