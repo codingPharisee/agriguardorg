@@ -8,33 +8,29 @@ const Hero = () => {
   const [contactFormOpen, setContactFormOpen] = useState(false);
   const [currentCropIndex, setCurrentCropIndex] = useState(0);
 
-  // Dynamic crop backgrounds
+  // Dynamic crop backgrounds - wheat, green corn, and poppy plants
   const cropBackgrounds = [
     {
       name: "Wheat",
       image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2000&auto=format&fit=crop"
     },
     {
-      name: "Maize",
+      name: "Green Corn",
       image: "https://images.unsplash.com/photo-1551803091-e20673f1bb2e?q=80&w=2000&auto=format&fit=crop"
     },
     {
-      name: "Sugarcane",
-      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=2000&auto=format&fit=crop"
-    },
-    {
-      name: "Rice",
-      image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=2000&auto=format&fit=crop"
+      name: "Poppy Plant",
+      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2000&auto=format&fit=crop"
     }
   ];
 
-  // Change background every 5 seconds
+  // Change background every 10 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCropIndex((prevIndex) => 
         (prevIndex + 1) % cropBackgrounds.length
       );
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
