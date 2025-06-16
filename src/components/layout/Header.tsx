@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Leaf, UserRound, MessageSquare, Info, ShoppingCart, ChevronDown, LogIn } from "lucide-react";
+import { Leaf, UserRound, MessageSquare, Info, ChevronDown, LogIn, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   DropdownMenu,
@@ -11,11 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ContactFormDialog from "@/components/forms/ContactFormDialog";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [contactFormOpen, setContactFormOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const { user, signInWithGoogle, signOut, loading } = useAuth();
 
   // Dynamic button colors based on current page
   const getButtonClasses = () => {
@@ -92,15 +94,33 @@ const Header = () => {
 
         {/* Right Section */}
         <div className="flex items-center gap-4">
-          <UserRound className={getIconClasses()} />
-          <ShoppingCart className={getIconClasses()} />
-          
-          <Button 
-            className={`${getButtonClasses()} px-6 py-2 rounded-full font-medium tracking-wide transition-all flex items-center gap-2`}
-          >
-            <LogIn className="h-4 w-4" />
-            LOGIN
-          </Button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.user_metadata?.avatar_url} />
+                  <AvatarFallback>
+                    <UserRound className="h-5 w-5" />
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white shadow-lg border border-green-200">
+                <DropdownMenuItem onClick={signOut} className="text-green-900 hover:text-green-600 hover:bg-green-50 cursor-pointer">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button 
+              className={`${getButtonClasses()} px-6 py-2 rounded-full font-medium tracking-wide transition-all flex items-center gap-2`}
+              onClick={signInWithGoogle}
+              disabled={loading}
+            >
+              <LogIn className="h-4 w-4" />
+              LOGIN WITH GOOGLE
+            </Button>
+          )}
           
           <Button 
             variant="outline"
