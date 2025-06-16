@@ -11,6 +11,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 // Example FAQ data
 const FAQS = [
@@ -59,67 +60,48 @@ const FactCheck = () => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [factCheckResults, setFactCheckResults] = useState<null | {
-    isTrue: boolean;
+    isTrue: boolean | null;
     explanation: string;
     source: string;
   }>(null);
   const [activeTab, setActiveTab] = useState("search");
   const { toast } = useToast();
   
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
     
     setIsLoading(true);
+    setFactCheckResults(null);
     
-    // Simulate API call to fact checking service
-    setTimeout(() => {
-      // This is where you'd typically query an actual fact-checking API
-      // For demonstration, we'll check for keywords and return appropriate responses
-      const lowercaseQuery = query.toLowerCase();
-      
-      let result;
-      if (lowercaseQuery.includes("gmo") && (lowercaseQuery.includes("safe") || lowercaseQuery.includes("eat"))) {
-        result = {
-          isTrue: true,
-          explanation: "Scientific consensus from major health and research organizations confirms that approved GMO foods currently on the market are as safe as their conventional counterparts.",
-          source: "World Health Organization (WHO), American Medical Association (AMA)"
-        };
-      } else if (lowercaseQuery.includes("organic") && lowercaseQuery.includes("better")) {
-        result = {
-          isTrue: false,
-          explanation: "While organic farming has certain environmental benefits, studies show that its overall environmental impact depends on many factors. It's not universally 'better' than conventional farming in all aspects.",
-          source: "Journal of Environmental Management, 2023"
-        };
-      } else if (lowercaseQuery.includes("pesticide") || lowercaseQuery.includes("roundup")) {
-        result = {
-          isTrue: false,
-          explanation: "The relationship between pesticides and health outcomes is complex. Different pesticides have different safety profiles, and proper application according to regulations significantly reduces risks.",
-          source: "Environmental Protection Agency (EPA), 2023"
-        };
-      } else {
-        result = {
-          isTrue: null,
-          explanation: "This claim requires more context to evaluate accurately. Specific GMO technologies have different purposes and outcomes that should be assessed individually.",
-          source: "Agricultural Science Review, 2022"
-        };
-      }
-      
-      setFactCheckResults(result);
-      setIsLoading(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('fact-check-ai', {
+        body: { query: query.trim() }
+      });
+
+      if (error) throw error;
+
+      setFactCheckResults(data);
       
       toast({
         title: "Fact check complete",
-        description: "We've analyzed your query based on scientific consensus",
+        description: "AI analysis based on African agricultural research",
       });
-    }, 1500);
+    } catch (error) {
+      console.error('Error fact-checking:', error);
+      toast({
+        title: "Error",
+        description: "Unable to fact-check the claim. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCommonClaimClick = (claim: string) => {
     setQuery(claim);
     setActiveTab("search");
-    // Auto-submit if desired
-    // handleSearch(new Event('submit') as React.FormEvent);
   };
 
   return (
@@ -170,7 +152,7 @@ const FactCheck = () => {
                       </div>
                       
                       <p className="text-sm text-muted-foreground">
-                        Example: "Are GMOs safe to eat?" or "Do organic foods contain pesticides?"
+                        Example: "Are drought-resistant crops effective in Africa?" or "Do organic methods work better in African farming?"
                       </p>
                     </form>
                     
@@ -195,11 +177,6 @@ const FactCheck = () => {
                             )}
                           </div>
                           <div>
-                            <p className="font-medium">
-                              {factCheckResults.isTrue === true ? 'Claim is supported by evidence' : 
-                               factCheckResults.isTrue === false ? 'Claim is not supported by evidence' : 
-                               'Claim needs more context'}
-                            </p>
                             <p className="mt-1 text-sm">{factCheckResults.explanation}</p>
                             <p className="mt-3 text-xs text-muted-foreground">Source: {factCheckResults.source}</p>
                           </div>
@@ -210,7 +187,7 @@ const FactCheck = () => {
                     {!factCheckResults && !isLoading && (
                       <div className="flex flex-col items-center justify-center p-10 text-center border rounded-md bg-gray-50">
                         <MessageSquare className="h-10 w-10 text-muted-foreground/50 mb-2" />
-                        <p className="text-muted-foreground">Enter a claim about agriculture or GMOs to fact check</p>
+                        <p className="text-muted-foreground">Enter a claim about agriculture to fact check using AI</p>
                       </div>
                     )}
                   </TabsContent>

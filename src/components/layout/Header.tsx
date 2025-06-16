@@ -1,141 +1,162 @@
 
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Menu, X, Leaf, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Leaf, UserRound, MessageSquare, Info, ChevronDown, LogIn, LogOut } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useState } from "react";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ContactFormDialog from "@/components/forms/ContactFormDialog";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
-  const [contactFormOpen, setContactFormOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  const { user, signInWithGoogle, signOut, loading } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
-  // Dynamic button colors based on current page
-  const getButtonClasses = () => {
-    if (isHomePage) {
-      return "bg-green-500 text-white hover:bg-green-600";
-    }
-    return "bg-green-600 text-white hover:bg-green-700";
-  };
+  const navigationItems = [
+    { name: "Home", href: "/" },
+    { name: "News", href: "/news" },
+    { name: "Fact Check", href: "/fact-check" },
+    { name: "About", href: "/about" },
+  ];
 
-  const getNavLinkClasses = () => {
-    if (isHomePage) {
-      return "hover:text-green-400 transition-colors font-medium tracking-wide text-white";
-    }
-    return "hover:text-green-400 transition-colors font-medium tracking-wide text-green-900";
-  };
+  const toolsItems = [
+    { name: "ViralFarm", href: "/viral-farm" },
+    { name: "MythBuster Ag", href: "/myth-buster" },
+    { name: "Integrated Ecosystem", href: "/ecosystem" },
+  ];
 
-  const getIconClasses = () => {
-    if (isHomePage) {
-      return "h-5 w-5 text-white hover:text-green-400 cursor-pointer transition-colors";
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
-    return "h-5 w-5 text-green-800 hover:text-green-600 cursor-pointer transition-colors";
   };
 
   return (
-    <header className={`${isHomePage ? 'absolute' : 'relative'} top-0 left-0 right-0 z-20 ${isHomePage ? 'bg-transparent' : 'bg-white shadow-md'}`}>
-      <div className="container mx-auto px-4 pt-0 pb-4 flex justify-between items-center">
-        {/* Logo Section */}
-        <div className="flex items-center">
-          <Link to="/" className="bg-green-500 text-white px-4 py-2 font-bold text-lg">
-            <div className="flex flex-col items-center">
-              <Leaf className="h-6 w-6 mb-1" />
-              <span>AgriGuard</span>
+    <header className="bg-white border-b border-green-200 sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3">
+            <div className="bg-green-600 text-white px-3 py-2 font-bold rounded">
+              <div className="flex flex-col items-center">
+                <Leaf className="h-5 w-5 mb-1" />
+                <span className="text-sm">AgriGuard</span>
+              </div>
             </div>
           </Link>
-        </div>
 
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className={getNavLinkClasses()}>
-            HOME
-          </Link>
-          
-          {/* Pages Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger className={`${getNavLinkClasses()} flex items-center gap-1`}>
-              PAGES <ChevronDown className="h-4 w-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white shadow-lg border border-green-200">
-              <DropdownMenuItem asChild>
-                <Link to="/about" className="text-green-900 hover:text-green-600 hover:bg-green-50">
-                  About Us
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/fact-check" className="text-green-900 hover:text-green-600 hover:bg-green-50">
-                  Fact Check
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/viral-farm" className="text-green-900 hover:text-green-600 hover:bg-green-50">
-                  Viral Farm
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          
-          <Link to="/news" className={getNavLinkClasses()}>
-            NEWS
-          </Link>
-          <Link to="/viral-farm" className={getNavLinkClasses()}>
-            BLOG
-          </Link>
-        </nav>
-
-        {/* Right Section */}
-        <div className="flex items-center gap-4">
-          {user ? (
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navigationItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-gray-700 hover:text-green-600 transition-colors font-medium"
+              >
+                {item.name}
+              </Link>
+            ))}
+            
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-2">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.user_metadata?.avatar_url} />
-                  <AvatarFallback>
-                    <UserRound className="h-5 w-5" />
-                  </AvatarFallback>
-                </Avatar>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-gray-700 hover:text-green-600">
+                  Tools <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow-lg border border-green-200">
-                <DropdownMenuItem onClick={signOut} className="text-green-900 hover:text-green-600 hover:bg-green-50 cursor-pointer">
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </DropdownMenuItem>
+              <DropdownMenuContent>
+                {toolsItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.href}>{item.name}</Link>
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <Button 
-              className={`${getButtonClasses()} px-6 py-2 rounded-full font-medium tracking-wide transition-all flex items-center gap-2`}
-              onClick={signInWithGoogle}
-              disabled={loading}
-            >
-              <LogIn className="h-4 w-4" />
-              LOGIN WITH GOOGLE
+          </nav>
+
+          {/* Desktop CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-50" asChild>
+              <Link to="/contact">Contact</Link>
             </Button>
-          )}
-          
-          <Button 
-            variant="outline"
-            className={`px-6 py-2 rounded-full font-medium tracking-wide transition-all ${isHomePage ? 'border-white text-white hover:bg-white hover:text-green-900' : 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white'}`}
-            onClick={() => setContactFormOpen(true)}
-          >
-            CONTACT
-          </Button>
+            
+            {user ? (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600">Welcome!</span>
+                <Button onClick={handleSignOut} variant="outline">
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Button className="bg-green-600 hover:bg-green-700" asChild>
+                <Link to="/auth">Login</Link>
+              </Button>
+            )}
+          </div>
+
+          {/* Mobile Menu */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <div className="flex flex-col space-y-4 mt-6">
+                {navigationItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-gray-700 hover:text-green-600 transition-colors font-medium py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                
+                <div className="border-t pt-4">
+                  <h3 className="font-semibold text-gray-900 mb-2">Tools</h3>
+                  {toolsItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="block text-gray-600 hover:text-green-600 transition-colors py-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+                
+                <div className="border-t pt-4 space-y-3">
+                  <Button variant="outline" className="w-full text-green-600 border-green-600 hover:bg-green-50" asChild>
+                    <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+                  </Button>
+                  
+                  {user ? (
+                    <div className="space-y-2">
+                      <p className="text-sm text-gray-600">Welcome!</p>
+                      <Button onClick={() => { handleSignOut(); setIsOpen(false); }} variant="outline" className="w-full">
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button className="w-full bg-green-600 hover:bg-green-700" asChild>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>Login</Link>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      <ContactFormDialog 
-        open={contactFormOpen} 
-        onOpenChange={setContactFormOpen} 
-      />
     </header>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
 
 // Enhanced FAQ data from African agricultural organizations
 const FAQS = [
@@ -137,44 +137,37 @@ const AgriFactCheck = () => {
     }
   }, [selectedOrg]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
     
     setIsLoading(true);
     setFactCheckResult(null);
     
-    // Simulate API call to fact-checking service
-    setTimeout(() => {
-      const lowercaseQuery = query.toLowerCase();
-      let result = null;
-      
-      // Match query with appropriate response from database
-      for (const [keyword, response] of Object.entries(FACT_CHECK_DATABASE)) {
-        if (lowercaseQuery.includes(keyword)) {
-          result = response;
-          break;
-        }
-      }
-      
-      // Fallback response if no keyword matches
-      if (!result) {
-        result = {
-          isTrue: null,
-          explanation: "This specific claim requires more analysis. Consider consulting agricultural extension officers or check resources from FARA, AGRA, or other trusted African agricultural research organizations.",
-          source: "General recommendation"
-        };
-      }
-      
-      setFactCheckResult(result);
-      setIsLoading(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('fact-check-ai', {
+        body: { query: query.trim() }
+      });
+
+      if (error) throw error;
+
+      setFactCheckResult(data);
       setShowResults(true);
       
       toast({
         title: "Fact check complete",
-        description: "Analysis based on data from African agricultural organizations",
+        description: "AI analysis based on African agricultural research",
       });
-    }, 1500);
+    } catch (error) {
+      console.error('Error fact-checking:', error);
+      toast({
+        title: "Error",
+        description: "Unable to fact-check the claim. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleTopicClick = (topic: string) => {
@@ -236,11 +229,6 @@ const AgriFactCheck = () => {
                     )}
                   </span>
                   <div>
-                    <p className="font-medium">
-                      {factCheckResult.isTrue === true ? 'Claim is supported by evidence' : 
-                       factCheckResult.isTrue === false ? 'Claim is not supported by evidence' : 
-                       'Claim needs more context'}
-                    </p>
                     <p className="text-sm mt-1">
                       {factCheckResult.explanation}
                     </p>
