@@ -11,13 +11,13 @@ const Footer = () => {
             <div className="bg-green-500 text-white px-3 py-2 font-bold">
               <div className="flex flex-col items-center">
                 <Leaf className="h-5 w-5 mb-1" />
-                <span className="text-sm">AgriG</span>
+                <span className="text-sm">AgriGuard</span>
               </div>
             </div>
           </div>
           <div className="text-green-200 text-center md:text-right">
             <div className="text-sm mb-1">
-              &copy; {new Date().getFullYear()} AgriG Agricultural Solutions
+              &copy; {new Date().getFullYear()} AgriGuard Technological Solutions
             </div>
             <div className="text-xs text-green-300">
               Combating agricultural misinformation with AI technology

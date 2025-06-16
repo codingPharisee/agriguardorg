@@ -47,7 +47,7 @@ const Header = () => {
           <Link to="/" className="bg-green-500 text-white px-4 py-2 font-bold text-lg">
             <div className="flex flex-col items-center">
               <Leaf className="h-6 w-6 mb-1" />
-              <span>AgriG</span>
+              <span>AgriGuard</span>
             </div>
           </Link>
         </div>
@@ -82,8 +82,8 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          <Link to="/fact-check" className={getNavLinkClasses()}>
-            SHOP
+          <Link to="/news" className={getNavLinkClasses()}>
+            NEWS
           </Link>
           <Link to="/viral-farm" className={getNavLinkClasses()}>
             BLOG

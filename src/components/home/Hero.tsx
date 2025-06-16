@@ -60,10 +60,10 @@ const Hero = () => {
         <div className="w-full text-center">
           <div className="mb-6">
             <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-white mb-4">
-              AgriG
+              AgriGuard
             </h1>
             <h3 className="text-2xl md:text-3xl font-semibold text-green-300 mb-4">
-              Agricultural Solutions
+              Technological Solutions
             </h3>
           </div>
           
