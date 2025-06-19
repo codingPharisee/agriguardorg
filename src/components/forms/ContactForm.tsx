@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -36,19 +37,37 @@ const ContactForm = ({ onSuccess }: ContactFormProps) => {
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log("Form submitted:", data);
     
-    // In a real application, you would send this data to your backend
-    toast.success("Thank you for your interest!", {
-      description: "We'll be in touch soon.",
-    });
-    
-    if (onSuccess) {
-      onSuccess();
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([{
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          interests: data.interests,
+          newsletter: data.newsletter,
+        }]);
+
+      if (error) throw error;
+
+      toast.success("Thank you for your interest!", {
+        description: "We'll be in touch soon.",
+      });
+      
+      if (onSuccess) {
+        onSuccess();
+      }
+      
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to submit form", {
+        description: "Please try again later.",
+      });
     }
-    
-    form.reset();
   };
 
   return (
@@ -134,7 +153,7 @@ const ContactForm = ({ onSuccess }: ContactFormProps) => {
           )}
         />
         
-        <Button type="submit" className="w-full">Submit</Button>
+        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">Submit</Button>
       </form>
     </Form>
   );

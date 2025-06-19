@@ -13,8 +13,27 @@ import ComingSoon from "./pages/ComingSoon";
 import About from "./pages/About";
 import ViralFarmPage from "./pages/ViralFarmPage";
 import Contact from "./pages/Contact";
+import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  useScrollPosition();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/fact-check" element={<FactCheck />} />
+      <Route path="/news" element={<News />} />
+      <Route path="/viral-farm" element={<ViralFarmPage />} />
+      <Route path="/myth-buster" element={<ComingSoon title="MythBuster Ag" />} />
+      <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -23,17 +42,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/fact-check" element={<FactCheck />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/viral-farm" element={<ViralFarmPage />} />
-            <Route path="/myth-buster" element={<ComingSoon title="MythBuster Ag" />} />
-            <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppContent />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
