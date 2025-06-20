@@ -176,86 +176,117 @@ const AgriFactCheck = () => {
   };
 
   return (
-    <Card className="module-card border-2 border-primary shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
-      <CardHeader className="pb-2 bg-primary/10 rounded-t-lg">
-        <CardTitle className="module-header">
-          <MessageSquare className="h-5 w-5" />
+    <Card className="relative overflow-hidden border-0 shadow-xl bg-gradient-to-br from-green-50 via-emerald-50/80 to-green-100/60 backdrop-blur-sm">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-emerald-400/5 to-green-600/10"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/20 to-emerald-500/20 rounded-full -translate-y-16 translate-x-16"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-300/15 to-green-400/15 rounded-full translate-y-12 -translate-x-12"></div>
+      
+      <CardHeader className="relative pb-3 bg-gradient-to-r from-green-600/90 to-emerald-600/90 text-white">
+        <CardTitle className="flex items-center gap-3 text-xl font-bold">
+          <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
+            <MessageSquare className="h-6 w-6" />
+          </div>
           AgriFactCheck
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-green-50/90 text-sm leading-relaxed">
           African agricultural fact checking via AI chatbot and SMS system
         </p>
       </CardHeader>
-      <CardContent className="pt-4">
+      
+      <CardContent className="relative pt-6 pb-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-3 mb-4">
-            <TabsTrigger value="chat">Chat</TabsTrigger>
-            <TabsTrigger value="faqs">FAQs</TabsTrigger>
-            <TabsTrigger value="topics">Topics</TabsTrigger>
+          <TabsList className="grid grid-cols-3 mb-6 bg-green-100/60 p-1 rounded-lg">
+            <TabsTrigger 
+              value="chat" 
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
+            >
+              Chat
+            </TabsTrigger>
+            <TabsTrigger 
+              value="faqs"
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
+            >
+              FAQs
+            </TabsTrigger>
+            <TabsTrigger 
+              value="topics"
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
+            >
+              Topics
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="chat" className="mt-0 space-y-4">
-            <form onSubmit={handleSubmit} className="flex gap-2">
+            <form onSubmit={handleSubmit} className="flex gap-3">
               <Input
                 placeholder="Ask about agricultural claims or myths in Africa..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1"
+                className="flex-1 border-green-200 focus:border-green-500 focus:ring-green-500/20 bg-white/80 backdrop-blur-sm"
                 disabled={isLoading}
               />
-              <Button type="submit" disabled={isLoading || !query.trim()}>
+              <Button 
+                type="submit" 
+                disabled={isLoading || !query.trim()}
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 shadow-lg"
+              >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               </Button>
             </form>
             
             {showResults && factCheckResult && (
-              <div className={`border-2 rounded-md p-4 space-y-2 animate-fade-in ${
-                factCheckResult.isTrue === true ? 'border-green-500 bg-green-50/30' : 
-                factCheckResult.isTrue === false ? 'border-red-500 bg-red-50/30' : 
-                'border-amber-500 bg-amber-50/30'
+              <div className={`border-2 rounded-lg p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
+                factCheckResult.isTrue === true ? 'border-emerald-400 bg-emerald-50/80' : 
+                factCheckResult.isTrue === false ? 'border-red-400 bg-red-50/80' : 
+                'border-amber-400 bg-amber-50/80'
               }`}>
-                <div className="flex items-start gap-2">
-                  <span className={`rounded-full p-1 mt-0.5 ${
-                    factCheckResult.isTrue === true ? 'bg-green-500' : 
+                <div className="flex items-start gap-3">
+                  <span className={`rounded-full p-2 mt-0.5 shadow-sm ${
+                    factCheckResult.isTrue === true ? 'bg-emerald-500' : 
                     factCheckResult.isTrue === false ? 'bg-red-500' : 
                     'bg-amber-500'
                   }`}>
                     {factCheckResult.isTrue === true ? (
-                      <Check className="h-3 w-3 text-white" />
+                      <Check className="h-4 w-4 text-white" />
                     ) : factCheckResult.isTrue === false ? (
-                      <X className="h-3 w-3 text-white" />
+                      <X className="h-4 w-4 text-white" />
                     ) : (
-                      <MessageSquare className="h-3 w-3 text-white" />
+                      <MessageSquare className="h-4 w-4 text-white" />
                     )}
                   </span>
-                  <div>
-                    <p className="text-sm mt-1">
+                  <div className="flex-1">
+                    <p className="text-sm leading-relaxed text-gray-700">
                       {factCheckResult.explanation}
                     </p>
                   </div>
                 </div>
                 
-                <div className="pt-2 text-sm text-muted-foreground border-t flex items-center gap-2">
-                  <Globe className="h-3 w-3" />
-                  <span>Source: {factCheckResult.source}</span>
+                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60 flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-green-600" />
+                  <span className="font-medium">Source:</span>
+                  <span>{factCheckResult.source}</span>
                 </div>
               </div>
             )}
             
             {!showResults && !isLoading && (
-              <div className="flex flex-col items-center justify-center p-10 text-center border rounded-md bg-primary/5">
-                <MessageSquare className="h-10 w-10 text-primary mb-2" />
-                <p className="text-muted-foreground">Ask a question about agricultural myths or claims in Africa</p>
+              <div className="flex flex-col items-center justify-center p-12 text-center rounded-lg bg-gradient-to-br from-green-50/60 to-emerald-50/60 border border-green-200/40">
+                <div className="p-4 bg-green-100/60 rounded-full mb-4">
+                  <MessageSquare className="h-12 w-12 text-green-600" />
+                </div>
+                <p className="text-gray-600 font-medium">Ask a question about agricultural myths or claims in Africa</p>
+                <p className="text-gray-500 text-sm mt-1">Get instant AI-powered fact checking with citations</p>
               </div>
             )}
           </TabsContent>
           
           <TabsContent value="faqs" className="mt-0">
-            <div className="mb-4 flex items-center gap-2">
-              <Book className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">Filter by organization:</span>
+            <div className="mb-4 flex items-center gap-3 p-3 bg-green-50/60 rounded-lg border border-green-200/40">
+              <Book className="h-5 w-5 text-green-600" />
+              <span className="text-sm font-medium text-gray-700">Filter by organization:</span>
               <Select value={selectedOrg} onValueChange={setSelectedOrg}>
-                <SelectTrigger className="w-[220px]">
+                <SelectTrigger className="w-[240px] border-green-200 focus:border-green-500">
                   <SelectValue placeholder="All Organizations" />
                 </SelectTrigger>
                 <SelectContent>
@@ -266,18 +297,21 @@ const AgriFactCheck = () => {
               </Select>
             </div>
             
-            <ScrollArea className="h-[300px] pr-4">
+            <ScrollArea className="h-[320px] pr-4">
               <div className="space-y-4">
                 {filteredFaqs.length > 0 ? (
                   filteredFaqs.map((faq) => (
-                    <div key={faq.id} className="border rounded-md p-4 bg-card hover:bg-primary/5 transition-colors">
-                      <h4 className="font-medium mb-2">{faq.question}</h4>
-                      <p className="text-sm mb-2">{faq.answer}</p>
-                      <p className="text-xs text-muted-foreground">Source: {faq.source}</p>
+                    <div key={faq.id} className="border border-green-200/60 rounded-lg p-4 bg-white/70 backdrop-blur-sm hover:bg-green-50/80 hover:border-green-300/60 transition-all cursor-pointer">
+                      <h4 className="font-semibold mb-3 text-gray-800">{faq.question}</h4>
+                      <p className="text-sm text-gray-700 mb-3 leading-relaxed">{faq.answer}</p>
+                      <p className="text-xs text-green-700 font-medium bg-green-100/60 px-2 py-1 rounded inline-block">
+                        Source: {faq.source}
+                      </p>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-4 text-muted-foreground">
+                  <div className="text-center py-8 text-gray-500">
+                    <Book className="h-8 w-8 mx-auto mb-2 text-gray-400" />
                     No FAQs available for this organization
                   </div>
                 )}
@@ -286,13 +320,16 @@ const AgriFactCheck = () => {
           </TabsContent>
           
           <TabsContent value="topics" className="mt-0">
-            <p className="text-sm text-muted-foreground mb-4">Click on a topic to ask about it:</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="p-4 bg-green-50/60 rounded-lg border border-green-200/40 mb-4">
+              <p className="text-sm text-gray-700 font-medium mb-1">Popular Agricultural Topics</p>
+              <p className="text-xs text-gray-600">Click on any topic to ask about it</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
               {COMMON_TOPICS.map((topic, index) => (
                 <Badge 
                   key={index}
                   variant="outline"
-                  className="text-sm py-2 px-3 cursor-pointer hover:bg-primary/10 transition-colors"
+                  className="text-sm py-2 px-4 cursor-pointer border-green-300 text-green-700 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all shadow-sm bg-white/70 backdrop-blur-sm"
                   onClick={() => handleTopicClick(topic)}
                 >
                   {topic}
