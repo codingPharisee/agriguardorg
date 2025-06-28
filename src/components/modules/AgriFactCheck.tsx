@@ -126,6 +126,8 @@ const AgriFactCheck = () => {
     isTrue: boolean | null;
     explanation: string;
     source: string;
+    confidence?: string;
+    retrievedDocs?: number;
   } | null>(null);
   const { toast } = useToast();
 
@@ -145,7 +147,8 @@ const AgriFactCheck = () => {
     setFactCheckResult(null);
     
     try {
-      const { data, error } = await supabase.functions.invoke('fact-check-ai', {
+      // Use the new RAG-enabled fact-checking function
+      const { data, error } = await supabase.functions.invoke('rag-fact-check', {
         body: { query: query.trim() }
       });
 
@@ -156,7 +159,7 @@ const AgriFactCheck = () => {
       
       toast({
         title: "Fact check complete",
-        description: "AI analysis based on African agricultural research",
+        description: `Analysis based on ${data.retrievedDocs || 0} relevant documents`,
       });
     } catch (error) {
       console.error('Error fact-checking:', error);
@@ -187,10 +190,10 @@ const AgriFactCheck = () => {
           <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
             <MessageSquare className="h-6 w-6" />
           </div>
-          AgriFactCheck
+          AgriFactCheck AI
         </CardTitle>
         <p className="text-green-50/90 text-sm leading-relaxed">
-          African agricultural fact checking via AI chatbot and SMS system
+          RAG-powered agricultural fact checking with verified African research sources
         </p>
       </CardHeader>
       
@@ -201,7 +204,7 @@ const AgriFactCheck = () => {
               value="chat" 
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
             >
-              Chat
+              AI Chat
             </TabsTrigger>
             <TabsTrigger 
               value="faqs"
@@ -259,13 +262,32 @@ const AgriFactCheck = () => {
                     <p className="text-sm leading-relaxed text-gray-700">
                       {factCheckResult.explanation}
                     </p>
+                    {factCheckResult.confidence && (
+                      <div className="mt-2">
+                        <Badge variant="outline" className={`text-xs ${
+                          factCheckResult.confidence === 'high' ? 'border-green-400 text-green-700' :
+                          factCheckResult.confidence === 'low' ? 'border-red-400 text-red-700' :
+                          'border-yellow-400 text-yellow-700'
+                        }`}>
+                          {factCheckResult.confidence} confidence
+                        </Badge>
+                      </div>
+                    )}
                   </div>
                 </div>
                 
-                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60 flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-green-600" />
-                  <span className="font-medium">Source:</span>
-                  <span>{factCheckResult.source}</span>
+                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Globe className="h-4 w-4 text-green-600" />
+                    <span className="font-medium">Sources:</span>
+                    <span>{factCheckResult.source}</span>
+                  </div>
+                  {factCheckResult.retrievedDocs && (
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <Book className="h-3 w-3" />
+                      <span>Analyzed {factCheckResult.retrievedDocs} relevant documents</span>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -276,7 +298,7 @@ const AgriFactCheck = () => {
                   <MessageSquare className="h-12 w-12 text-green-600" />
                 </div>
                 <p className="text-gray-600 font-medium">Ask a question about agricultural myths or claims in Africa</p>
-                <p className="text-gray-500 text-sm mt-1">Get instant AI-powered fact checking with citations</p>
+                <p className="text-gray-500 text-sm mt-1">Get instant AI-powered fact checking with verified sources</p>
               </div>
             )}
           </TabsContent>

@@ -13,6 +13,7 @@ import ComingSoon from "./pages/ComingSoon";
 import About from "./pages/About";
 import ViralFarmPage from "./pages/ViralFarmPage";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const AppContent = () => {
       <Route path="/viral-farm" element={<ViralFarmPage />} />
       <Route path="/myth-buster" element={<ComingSoon title="MythBuster Ag" />} />
       <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<NotFound />} />
