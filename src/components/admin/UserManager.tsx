@@ -14,10 +14,8 @@ interface AdminUser {
   user_id: string;
   role: string;
   created_at: string;
-  profiles?: {
-    email?: string;
-    full_name?: string;
-  };
+  email?: string;
+  full_name?: string;
 }
 
 interface UserManagerProps {
@@ -41,16 +39,33 @@ const UserManager: React.FC<UserManagerProps> = ({ adminRole }) => {
   const fetchAdminUsers = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      
+      // First get admin users
+      const { data: adminData, error: adminError } = await supabase
         .from('admin_users')
-        .select(`
-          *,
-          profiles!inner(email, full_name)
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setAdminUsers(data || []);
+      if (adminError) throw adminError;
+
+      // Then get profile information for each admin user
+      const adminUsersWithProfiles = await Promise.all(
+        (adminData || []).map(async (adminUser) => {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('email, full_name')
+            .eq('id', adminUser.user_id)
+            .single();
+
+          return {
+            ...adminUser,
+            email: profile?.email,
+            full_name: profile?.full_name
+          };
+        })
+      );
+
+      setAdminUsers(adminUsersWithProfiles);
     } catch (error) {
       console.error('Error fetching admin users:', error);
       toast({
@@ -172,8 +187,8 @@ const UserManager: React.FC<UserManagerProps> = ({ adminRole }) => {
   };
 
   const filteredUsers = adminUsers.filter(user => 
-    user.profiles?.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.profiles?.full_name?.toLowerCase().includes(searchQuery.toLowerCase())
+    user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.full_name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -242,13 +257,13 @@ const UserManager: React.FC<UserManagerProps> = ({ adminRole }) => {
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <h3 className="font-semibold">
-                            {user.profiles?.full_name || 'No name'}
+                            {user.full_name || 'No name'}
                           </h3>
                           <Badge className={getRoleColor(user.role)}>
                             {user.role.replace('_', ' ')}
                           </Badge>
                         </div>
-                        <p className="text-sm text-gray-600">{user.profiles?.email}</p>
+                        <p className="text-sm text-gray-600">{user.email}</p>
                         <p className="text-xs text-gray-400 mt-1">
                           Added: {new Date(user.created_at).toLocaleDateString()}
                         </p>

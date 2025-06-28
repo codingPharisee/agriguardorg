@@ -18,8 +18,11 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  let videoId: string;
+  
   try {
-    const { videoId, prompt, title } = await req.json();
+    const { videoId: requestVideoId, prompt, title } = await req.json();
+    videoId = requestVideoId;
     
     if (!videoId || !prompt || !title) {
       throw new Error('VideoId, prompt, and title are required');

@@ -53,7 +53,8 @@ serve(async (req) => {
     const queryEmbedding = embeddingData.data[0].embedding;
 
     // Step 2: Search for similar documents using vector similarity
-    const { data: similarDocs, error: searchError } = await supabase.rpc('match_documents', {
+    let similarDocs;
+    const { data: vectorDocs, error: searchError } = await supabase.rpc('match_documents', {
       query_embedding: queryEmbedding,
       match_threshold: 0.7,
       match_count: 3
@@ -69,6 +70,8 @@ serve(async (req) => {
         .limit(3);
       
       similarDocs = fallbackDocs || [];
+    } else {
+      similarDocs = vectorDocs || [];
     }
 
     // Step 3: Prepare context from retrieved documents
