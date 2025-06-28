@@ -30,7 +30,7 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('Processing RAG fact-check query:', query);
+    console.log('Processing enhanced RAG fact-check query:', query);
 
     // Step 1: Generate embedding for the query
     const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
@@ -56,8 +56,8 @@ serve(async (req) => {
     let similarDocs;
     const { data: vectorDocs, error: searchError } = await supabase.rpc('match_documents', {
       query_embedding: queryEmbedding,
-      match_threshold: 0.7,
-      match_count: 3
+      match_threshold: 0.6,
+      match_count: 5
     });
 
     if (searchError) {
@@ -67,7 +67,7 @@ serve(async (req) => {
         .from('documents')
         .select('title, content, source, document_type')
         .textSearch('content', query.split(' ').join(' | '), { config: 'english' })
-        .limit(3);
+        .limit(5);
       
       similarDocs = fallbackDocs || [];
     } else {
@@ -75,11 +75,12 @@ serve(async (req) => {
     }
 
     // Step 3: Prepare context from retrieved documents
-    const context = similarDocs.map((doc: any) => 
-      `Title: ${doc.title}\nContent: ${doc.content}\nSource: ${doc.source || 'Unknown'}\n---`
-    ).join('\n');
+    const documentContext = similarDocs.length > 0 ? 
+      similarDocs.map((doc: any) => 
+        `Document: ${doc.title}\nContent: ${doc.content}\nSource: ${doc.source || 'Unknown'}\nType: ${doc.document_type || 'Unknown'}\n---`
+      ).join('\n') : 'No specific documents found in the database.';
 
-    // Step 4: Generate fact-check response using GPT with retrieved context
+    // Step 4: Enhanced fact-check response using OpenAI with both document context and its own knowledge
     const factCheckResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -91,58 +92,96 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: `You are an expert agricultural fact-checker specializing in African agriculture. Based on the provided context from verified sources, analyze the user's query and provide a fact-check response.
+            content: `You are an expert agricultural fact-checker with deep knowledge of African agriculture. You have access to both a custom document database and your training data.
 
-Response format:
-1. Determine if the claim is: true, false, or partially true/needs context
-2. Provide a clear explanation based on the evidence
-3. Include confidence level (high/medium/low)
-4. Cite specific sources when possible
+Your task is to fact-check agricultural claims by analyzing:
+1. The provided documents from the custom database (if any)
+2. Your own knowledge of agricultural science and African farming
 
-Context from verified agricultural sources:
-${context}
+Response format (be precise):
+- **Verdict**: [TRUE/FALSE/PARTIALLY TRUE/NEEDS CONTEXT]
+- **Confidence**: [HIGH/MEDIUM/LOW]
+- **Explanation**: Provide a clear, detailed explanation that references both the custom documents (if relevant) and general agricultural knowledge
+- **Document Evidence**: If documents are provided, specifically mention what they say
+- **Additional Context**: Add relevant information from your training data
+- **Sources**: Distinguish between custom documents and general agricultural knowledge
 
-If the context doesn't contain relevant information, say so and provide general guidance based on established agricultural science.`
+Custom documents from database:
+${documentContext}
+
+Guidelines:
+- Be thorough but concise
+- Cross-reference document evidence with your knowledge
+- If documents contradict your knowledge, explain the discrepancy
+- Provide actionable insights for African farmers when possible
+- If no documents are available, rely on your agricultural knowledge but mention this limitation`
           },
           {
             role: 'user',
             content: `Please fact-check this agricultural claim or question: "${query}"`
           }
         ],
-        max_tokens: 500,
+        max_tokens: 800,
+        temperature: 0.3,
       }),
     });
 
     if (!factCheckResponse.ok) {
-      throw new Error('Failed to generate fact-check response');
+      throw new Error('Failed to generate enhanced fact-check response');
     }
 
     const factCheckData = await factCheckResponse.json();
     const analysis = factCheckData.choices[0].message.content;
 
-    // Parse the response to extract structured data
-    const isTrue = analysis.toLowerCase().includes('true') && !analysis.toLowerCase().includes('false') ? true :
-                   analysis.toLowerCase().includes('false') ? false : null;
+    console.log('Enhanced fact-check analysis:', analysis.substring(0, 200) + '...');
 
-    const sources = similarDocs.map((doc: any) => doc.source).filter(Boolean).join('; ') || 
-                   'African Agricultural Research Databases';
+    // Step 5: Parse the structured response
+    const parseVerdict = (text: string) => {
+      const lower = text.toLowerCase();
+      if (lower.includes('verdict**: true') || lower.includes('verdict: true')) return true;
+      if (lower.includes('verdict**: false') || lower.includes('verdict: false')) return false;
+      if (lower.includes('partially true') || lower.includes('needs context')) return null;
+      return null;
+    };
 
-    console.log('RAG fact-check completed successfully');
+    const parseConfidence = (text: string) => {
+      const lower = text.toLowerCase();
+      if (lower.includes('confidence**: high') || lower.includes('confidence: high')) return 'high';
+      if (lower.includes('confidence**: low') || lower.includes('confidence: low')) return 'low';
+      return 'medium';
+    };
+
+    const isTrue = parseVerdict(analysis);
+    const confidence = parseConfidence(analysis);
+
+    // Determine sources - combine document sources with OpenAI knowledge indication
+    const documentSources = similarDocs.length > 0 ? 
+      similarDocs.map((doc: any) => doc.source).filter(Boolean).join('; ') : '';
+    
+    const sources = documentSources ? 
+      `Custom Documents: ${documentSources}; Enhanced with OpenAI Agricultural Knowledge` : 
+      'OpenAI Agricultural Knowledge (No custom documents found)';
+
+    console.log('Enhanced RAG fact-check completed successfully');
 
     return new Response(JSON.stringify({
       isTrue,
       explanation: analysis,
       source: sources,
       retrievedDocs: similarDocs.length,
-      confidence: analysis.toLowerCase().includes('high confidence') ? 'high' : 
-                 analysis.toLowerCase().includes('low confidence') ? 'low' : 'medium'
+      confidence,
+      hasCustomDocs: similarDocs.length > 0,
+      enhancedWithAI: true
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('Error in RAG fact-check:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('Error in enhanced RAG fact-check:', error);
+    return new Response(JSON.stringify({ 
+      error: error.message,
+      enhancedWithAI: false 
+    }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Send, Check, X, Loader2, Globe, Book } from "lucide-react";
+import { MessageSquare, Send, Loader2, Sparkles } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
+import AgriFactCheckResults from "./AgriFactCheckResults";
 
 // Enhanced FAQ data from African agricultural organizations
 const FAQS = [
@@ -128,6 +129,8 @@ const AgriFactCheck = () => {
     source: string;
     confidence?: string;
     retrievedDocs?: number;
+    hasCustomDocs?: boolean;
+    enhancedWithAI?: boolean;
   } | null>(null);
   const { toast } = useToast();
 
@@ -147,7 +150,7 @@ const AgriFactCheck = () => {
     setFactCheckResult(null);
     
     try {
-      // Use the new RAG-enabled fact-checking function
+      // Use the enhanced RAG-enabled fact-checking function
       const { data, error } = await supabase.functions.invoke('rag-fact-check', {
         body: { query: query.trim() }
       });
@@ -157,9 +160,12 @@ const AgriFactCheck = () => {
       setFactCheckResult(data);
       setShowResults(true);
       
+      const docCount = data.retrievedDocs || 0;
+      const enhancement = data.enhancedWithAI ? " with AI enhancement" : "";
+      
       toast({
-        title: "Fact check complete",
-        description: `Analysis based on ${data.retrievedDocs || 0} relevant documents`,
+        title: "Enhanced fact check complete",
+        description: `Analysis based on ${docCount} documents${enhancement}`,
       });
     } catch (error) {
       console.error('Error fact-checking:', error);
@@ -188,12 +194,12 @@ const AgriFactCheck = () => {
       <CardHeader className="relative pb-3 bg-gradient-to-r from-green-600/90 to-emerald-600/90 text-white">
         <CardTitle className="flex items-center gap-3 text-xl font-bold">
           <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
-            <MessageSquare className="h-6 w-6" />
+            <Sparkles className="h-6 w-6" />
           </div>
-          AgriFactCheck AI
+          AgriFactCheck AI Pro
         </CardTitle>
         <p className="text-green-50/90 text-sm leading-relaxed">
-          RAG-powered agricultural fact checking with verified African research sources
+          Enhanced RAG + OpenAI powered fact checking with custom documents and global agricultural knowledge
         </p>
       </CardHeader>
       
@@ -239,66 +245,16 @@ const AgriFactCheck = () => {
             </form>
             
             {showResults && factCheckResult && (
-              <div className={`border-2 rounded-lg p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
-                factCheckResult.isTrue === true ? 'border-emerald-400 bg-emerald-50/80' : 
-                factCheckResult.isTrue === false ? 'border-red-400 bg-red-50/80' : 
-                'border-amber-400 bg-amber-50/80'
-              }`}>
-                <div className="flex items-start gap-3">
-                  <span className={`rounded-full p-2 mt-0.5 shadow-sm ${
-                    factCheckResult.isTrue === true ? 'bg-emerald-500' : 
-                    factCheckResult.isTrue === false ? 'bg-red-500' : 
-                    'bg-amber-500'
-                  }`}>
-                    {factCheckResult.isTrue === true ? (
-                      <Check className="h-4 w-4 text-white" />
-                    ) : factCheckResult.isTrue === false ? (
-                      <X className="h-4 w-4 text-white" />
-                    ) : (
-                      <MessageSquare className="h-4 w-4 text-white" />
-                    )}
-                  </span>
-                  <div className="flex-1">
-                    <p className="text-sm leading-relaxed text-gray-700">
-                      {factCheckResult.explanation}
-                    </p>
-                    {factCheckResult.confidence && (
-                      <div className="mt-2">
-                        <Badge variant="outline" className={`text-xs ${
-                          factCheckResult.confidence === 'high' ? 'border-green-400 text-green-700' :
-                          factCheckResult.confidence === 'low' ? 'border-red-400 text-red-700' :
-                          'border-yellow-400 text-yellow-700'
-                        }`}>
-                          {factCheckResult.confidence} confidence
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Globe className="h-4 w-4 text-green-600" />
-                    <span className="font-medium">Sources:</span>
-                    <span>{factCheckResult.source}</span>
-                  </div>
-                  {factCheckResult.retrievedDocs && (
-                    <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <Book className="h-3 w-3" />
-                      <span>Analyzed {factCheckResult.retrievedDocs} relevant documents</span>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <AgriFactCheckResults result={factCheckResult} />
             )}
             
             {!showResults && !isLoading && (
               <div className="flex flex-col items-center justify-center p-12 text-center rounded-lg bg-gradient-to-br from-green-50/60 to-emerald-50/60 border border-green-200/40">
                 <div className="p-4 bg-green-100/60 rounded-full mb-4">
-                  <MessageSquare className="h-12 w-12 text-green-600" />
+                  <Sparkles className="h-12 w-12 text-green-600" />
                 </div>
                 <p className="text-gray-600 font-medium">Ask a question about agricultural myths or claims in Africa</p>
-                <p className="text-gray-500 text-sm mt-1">Get instant AI-powered fact checking with verified sources</p>
+                <p className="text-gray-500 text-sm mt-1">Get enhanced AI fact-checking with your documents + global knowledge</p>
               </div>
             )}
           </TabsContent>
