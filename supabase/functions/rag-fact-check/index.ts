@@ -37,15 +37,18 @@ serve(async (req) => {
     let retrievedDocCount = 0;
 
     try {
-      // Step 1: Try to generate embedding for the query (only if we have documents)
-      const { data: docCount } = await supabase
+      // Step 1: Check if we have documents in the database
+      const { count: docCount } = await supabase
         .from('documents')
-        .select('id', { count: 'exact', head: true });
+        .select('*', { count: 'exact', head: true });
+      
+      console.log(`Found ${docCount || 0} documents in database`);
       
       if (docCount && docCount > 0) {
-        console.log(`Found ${docCount} documents in database, attempting vector search...`);
+        console.log('Attempting vector search with embeddings...');
         
         try {
+          // Generate embedding for the query
           const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
             method: 'POST',
             headers: {
@@ -54,15 +57,27 @@ serve(async (req) => {
             },
             body: JSON.stringify({
               model: 'text-embedding-ada-002',
-              input: query,
+              input: query.trim(),
             }),
           });
 
-          if (embeddingResponse.ok) {
-            const embeddingData = await embeddingResponse.json();
-            const queryEmbedding = embeddingData.data[0].embedding;
+          if (!embeddingResponse.ok) {
+            const errorData = await embeddingResponse.text();
+            console.error('OpenAI embedding API error:', errorData);
+            throw new Error(`OpenAI API error: ${embeddingResponse.status}`);
+          }
 
-            // Step 2: Search for similar documents using vector similarity
+          const embeddingData = await embeddingResponse.json();
+          
+          if (!embeddingData.data || !embeddingData.data[0] || !embeddingData.data[0].embedding) {
+            throw new Error('Invalid embedding response from OpenAI');
+          }
+
+          const queryEmbedding = embeddingData.data[0].embedding;
+          console.log('Successfully generated query embedding');
+
+          // Try to search for similar documents using vector similarity
+          try {
             const { data: vectorDocs, error: searchError } = await supabase.rpc('match_documents', {
               query_embedding: queryEmbedding,
               match_threshold: 0.6,
@@ -90,12 +105,25 @@ serve(async (req) => {
                 console.log(`Keyword search successful: found ${retrievedDocCount} relevant documents`);
               }
             }
-          } else {
-            console.log('Failed to generate embeddings, proceeding without document retrieval');
+          } catch (rpcError) {
+            console.log('RPC match_documents not available, trying keyword search:', rpcError);
+            // Fallback to keyword search if RPC doesn't exist
+            const { data: fallbackDocs } = await supabase
+              .from('documents')
+              .select('title, content, source, document_type')
+              .textSearch('content', query.split(' ').join(' | '), { config: 'english' })
+              .limit(5);
+            
+            if (fallbackDocs && fallbackDocs.length > 0) {
+              similarDocs = fallbackDocs;
+              hasCustomDocs = true;
+              retrievedDocCount = fallbackDocs.length;
+              console.log(`Fallback keyword search successful: found ${retrievedDocCount} relevant documents`);
+            }
           }
         } catch (embeddingError) {
-          console.log('Embedding generation failed:', embeddingError);
-          // Try keyword search as fallback
+          console.error('Failed to generate embeddings:', embeddingError);
+          // Try keyword search as final fallback
           const { data: fallbackDocs } = await supabase
             .from('documents')
             .select('title, content, source, document_type')
@@ -106,23 +134,24 @@ serve(async (req) => {
             similarDocs = fallbackDocs;
             hasCustomDocs = true;
             retrievedDocCount = fallbackDocs.length;
-            console.log(`Fallback keyword search successful: found ${retrievedDocCount} relevant documents`);
+            console.log(`Emergency keyword search successful: found ${retrievedDocCount} relevant documents`);
           }
         }
       } else {
         console.log('No documents found in database, proceeding with OpenAI-only analysis');
       }
     } catch (error) {
-      console.log('Document retrieval failed, proceeding with OpenAI-only analysis:', error);
+      console.error('Document retrieval failed:', error);
+      console.log('Proceeding with OpenAI-only analysis');
     }
 
-    // Step 3: Prepare context from retrieved documents (if any)
+    // Step 2: Prepare context from retrieved documents (if any)
     const documentContext = hasCustomDocs ? 
       similarDocs.map((doc: any) => 
         `Document: ${doc.title}\nContent: ${doc.content}\nSource: ${doc.source || 'Unknown'}\nType: ${doc.document_type || 'Unknown'}\n---`
       ).join('\n') : 'No custom documents found in the database.';
 
-    // Step 4: Create system prompt based on whether we have documents or not
+    // Step 3: Create system prompt based on whether we have documents or not
     const systemPrompt = hasCustomDocs ? 
       `You are an expert agricultural fact-checker with deep knowledge of African agriculture. You have access to both a custom document database and your training data.
 
@@ -167,7 +196,9 @@ Guidelines:
 - Note any limitations in your knowledge or areas where local expertise would be valuable
 - Clearly indicate that this analysis is based on general agricultural knowledge rather than specific uploaded documents`;
 
-    // Step 5: Get fact-check response from OpenAI
+    // Step 4: Get fact-check response from OpenAI
+    console.log('Sending request to OpenAI for fact-check analysis...');
+    
     const factCheckResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -192,15 +223,21 @@ Guidelines:
     });
 
     if (!factCheckResponse.ok) {
-      throw new Error('Failed to generate enhanced fact-check response');
+      const errorData = await factCheckResponse.text();
+      console.error('OpenAI chat completion error:', errorData);
+      throw new Error(`Failed to generate fact-check response: ${factCheckResponse.status}`);
     }
 
     const factCheckData = await factCheckResponse.json();
-    const analysis = factCheckData.choices[0].message.content;
+    
+    if (!factCheckData.choices || !factCheckData.choices[0] || !factCheckData.choices[0].message) {
+      throw new Error('Invalid response from OpenAI chat completion');
+    }
 
+    const analysis = factCheckData.choices[0].message.content;
     console.log('Enhanced fact-check analysis generated successfully');
 
-    // Step 6: Parse the structured response
+    // Step 5: Parse the structured response
     const parseVerdict = (text: string) => {
       const lower = text.toLowerCase();
       if (lower.includes('verdict**: true') || lower.includes('verdict: true')) return true;
@@ -219,7 +256,7 @@ Guidelines:
     const isTrue = parseVerdict(analysis);
     const confidence = parseConfidence(analysis);
 
-    // Step 7: Determine sources based on what was used
+    // Step 6: Determine sources based on what was used
     const sources = hasCustomDocs ? 
       `Custom Documents (${retrievedDocCount} found) + OpenAI Agricultural Knowledge` : 
       'OpenAI Agricultural Knowledge (No custom documents available)';
