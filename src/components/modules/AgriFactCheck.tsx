@@ -1,16 +1,14 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Send, Loader2, Sparkles, Book } from "lucide-react";
+import { MessageSquare, Send, Check, X, Loader2, Globe, Book } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import AgriFactCheckResults from "./AgriFactCheckResults";
 
 // Enhanced FAQ data from African agricultural organizations
 const FAQS = [
@@ -128,10 +126,6 @@ const AgriFactCheck = () => {
     isTrue: boolean | null;
     explanation: string;
     source: string;
-    confidence?: string;
-    retrievedDocs?: number;
-    hasCustomDocs?: boolean;
-    enhancedWithAI?: boolean;
   } | null>(null);
   const { toast } = useToast();
 
@@ -151,8 +145,7 @@ const AgriFactCheck = () => {
     setFactCheckResult(null);
     
     try {
-      // Use the enhanced RAG-enabled fact-checking function
-      const { data, error } = await supabase.functions.invoke('rag-fact-check', {
+      const { data, error } = await supabase.functions.invoke('fact-check-ai', {
         body: { query: query.trim() }
       });
 
@@ -161,12 +154,9 @@ const AgriFactCheck = () => {
       setFactCheckResult(data);
       setShowResults(true);
       
-      const docCount = data.retrievedDocs || 0;
-      const enhancement = data.enhancedWithAI ? " with AI enhancement" : "";
-      
       toast({
-        title: "Enhanced fact check complete",
-        description: `Analysis based on ${docCount} documents${enhancement}`,
+        title: "Fact check complete",
+        description: "AI analysis based on African agricultural research",
       });
     } catch (error) {
       console.error('Error fact-checking:', error);
@@ -195,12 +185,12 @@ const AgriFactCheck = () => {
       <CardHeader className="relative pb-3 bg-gradient-to-r from-green-600/90 to-emerald-600/90 text-white">
         <CardTitle className="flex items-center gap-3 text-xl font-bold">
           <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
-            <Sparkles className="h-6 w-6" />
+            <MessageSquare className="h-6 w-6" />
           </div>
-          AgriFactCheck AI Pro
+          AgriFactCheck
         </CardTitle>
         <p className="text-green-50/90 text-sm leading-relaxed">
-          Enhanced RAG + OpenAI powered fact checking with custom documents and global agricultural knowledge
+          African agricultural fact checking via AI chatbot and SMS system
         </p>
       </CardHeader>
       
@@ -211,7 +201,7 @@ const AgriFactCheck = () => {
               value="chat" 
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
             >
-              AI Chat
+              Chat
             </TabsTrigger>
             <TabsTrigger 
               value="faqs"
@@ -246,16 +236,47 @@ const AgriFactCheck = () => {
             </form>
             
             {showResults && factCheckResult && (
-              <AgriFactCheckResults result={factCheckResult} />
+              <div className={`border-2 rounded-lg p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
+                factCheckResult.isTrue === true ? 'border-emerald-400 bg-emerald-50/80' : 
+                factCheckResult.isTrue === false ? 'border-red-400 bg-red-50/80' : 
+                'border-amber-400 bg-amber-50/80'
+              }`}>
+                <div className="flex items-start gap-3">
+                  <span className={`rounded-full p-2 mt-0.5 shadow-sm ${
+                    factCheckResult.isTrue === true ? 'bg-emerald-500' : 
+                    factCheckResult.isTrue === false ? 'bg-red-500' : 
+                    'bg-amber-500'
+                  }`}>
+                    {factCheckResult.isTrue === true ? (
+                      <Check className="h-4 w-4 text-white" />
+                    ) : factCheckResult.isTrue === false ? (
+                      <X className="h-4 w-4 text-white" />
+                    ) : (
+                      <MessageSquare className="h-4 w-4 text-white" />
+                    )}
+                  </span>
+                  <div className="flex-1">
+                    <p className="text-sm leading-relaxed text-gray-700">
+                      {factCheckResult.explanation}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60 flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-green-600" />
+                  <span className="font-medium">Source:</span>
+                  <span>{factCheckResult.source}</span>
+                </div>
+              </div>
             )}
             
             {!showResults && !isLoading && (
               <div className="flex flex-col items-center justify-center p-12 text-center rounded-lg bg-gradient-to-br from-green-50/60 to-emerald-50/60 border border-green-200/40">
                 <div className="p-4 bg-green-100/60 rounded-full mb-4">
-                  <Sparkles className="h-12 w-12 text-green-600" />
+                  <MessageSquare className="h-12 w-12 text-green-600" />
                 </div>
                 <p className="text-gray-600 font-medium">Ask a question about agricultural myths or claims in Africa</p>
-                <p className="text-gray-500 text-sm mt-1">Get enhanced AI fact-checking with your documents + global knowledge</p>
+                <p className="text-gray-500 text-sm mt-1">Get instant AI-powered fact checking with citations</p>
               </div>
             )}
           </TabsContent>
