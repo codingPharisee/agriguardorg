@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -145,18 +146,24 @@ const AgriFactCheck = () => {
     setFactCheckResult(null);
     
     try {
-      const { data, error } = await supabase.functions.invoke('fact-check-ai', {
+      console.log('Submitting fact-check query:', query);
+      
+      const { data, error } = await supabase.functions.invoke('rag-fact-check', {
         body: { query: query.trim() }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
 
+      console.log('Fact-check response:', data);
       setFactCheckResult(data);
       setShowResults(true);
       
       toast({
         title: "Fact check complete",
-        description: "AI analysis based on African agricultural research",
+        description: "AI analysis based on agricultural research and expert knowledge",
       });
     } catch (error) {
       console.error('Error fact-checking:', error);

@@ -75,7 +75,7 @@ const FactCheck = () => {
     setFactCheckResults(null);
     
     try {
-      const { data, error } = await supabase.functions.invoke('fact-check-ai', {
+      const { data, error } = await supabase.functions.invoke('rag-fact-check', {
         body: { query: query.trim() }
       });
 
