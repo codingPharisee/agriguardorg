@@ -58,6 +58,8 @@ const VideoGenerator: React.FC = () => {
 
     setIsGenerating(true);
     try {
+      console.log('Starting video generation for topic:', topic);
+      
       // First, enhance the script automatically
       const scriptResponse = await supabase.functions.invoke('script-enhance', {
         body: {
@@ -68,11 +70,22 @@ const VideoGenerator: React.FC = () => {
         }
       });
 
-      if (scriptResponse.error) throw scriptResponse.error;
+      console.log('Script response:', scriptResponse);
+
+      if (scriptResponse.error) {
+        console.error('Script generation error:', scriptResponse.error);
+        throw new Error(`Script generation failed: ${scriptResponse.error.message || 'Unknown error'}`);
+      }
+
+      if (!scriptResponse.data?.script) {
+        throw new Error('No script generated from the AI service');
+      }
 
       const generatedScript = scriptResponse.data.script;
       const topicLabel = GMO_TOPICS.find(t => t.value === formData.topic)?.label || topic;
       const autoTitle = `Understanding ${topicLabel}`;
+
+      console.log('Generated script length:', generatedScript.length);
 
       // Then generate the video
       const videoResponse = await supabase.functions.invoke('video-generate', {
@@ -85,7 +98,16 @@ const VideoGenerator: React.FC = () => {
         }
       });
 
-      if (videoResponse.error) throw videoResponse.error;
+      console.log('Video response:', videoResponse);
+
+      if (videoResponse.error) {
+        console.error('Video generation error:', videoResponse.error);
+        throw new Error(`Video generation failed: ${videoResponse.error.message || 'Unknown error'}`);
+      }
+
+      if (!videoResponse.data?.video_id) {
+        throw new Error('No video ID returned from the video service');
+      }
 
       setGeneratedVideoId(videoResponse.data.video_id);
       toast({
@@ -94,9 +116,10 @@ const VideoGenerator: React.FC = () => {
       });
     } catch (error) {
       console.error('Error generating video:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       toast({
         title: "Generation Failed",
-        description: "Failed to generate video automatically. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
