@@ -30,8 +30,9 @@ serve(async (req) => {
     // Get AI Studios API key
     const aiStudiosKey = Deno.env.get('aistudios');
     if (!aiStudiosKey) {
+      console.error('AI Studios API key not found in environment');
       return new Response(
-        JSON.stringify({ error: 'AI Studios API key not configured' }),
+        JSON.stringify({ error: 'AI Studios API key not configured. Please add the aistudios secret.' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
       );
     }
@@ -104,11 +105,23 @@ serve(async (req) => {
       }),
     });
 
-    const aiStudiosData = await aiStudiosResponse.json();
-    console.log('AI Studios response:', aiStudiosData);
-
     if (!aiStudiosResponse.ok) {
-      console.error('AI Studios API error:', aiStudiosData);
+      const responseText = await aiStudiosResponse.text();
+      console.error('AI Studios API error - Status:', aiStudiosResponse.status);
+      console.error('AI Studios API error - Response:', responseText);
+      
+      let errorMessage = 'AI Studios API error';
+      try {
+        const errorData = JSON.parse(responseText);
+        errorMessage = errorData.message || errorMessage;
+      } catch (e) {
+        // Response is not JSON, likely HTML error page
+        if (responseText.includes('<!DOCTYPE')) {
+          errorMessage = 'Invalid AI Studios API endpoint or authentication failed';
+        } else {
+          errorMessage = responseText.slice(0, 200); // First 200 chars of error
+        }
+      }
       
       // Update database with error status
       await supabase
@@ -117,16 +130,19 @@ serve(async (req) => {
           status: 'failed',
           metadata: { 
             ...videoRecord.metadata,
-            error: aiStudiosData.message || 'AI Studios API error'
+            error: errorMessage
           }
         })
         .eq('id', videoRecord.id);
 
       return new Response(
-        JSON.stringify({ error: 'Failed to generate video', details: aiStudiosData.message }),
+        JSON.stringify({ error: 'Failed to generate video', details: errorMessage }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
       );
     }
+
+    const aiStudiosData = await aiStudiosResponse.json();
+    console.log('AI Studios response:', aiStudiosData);
 
     // Update database with AI Studios project ID
     const { error: updateError } = await supabase
