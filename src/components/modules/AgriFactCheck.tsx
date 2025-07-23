@@ -263,13 +263,9 @@ const AgriFactCheck = () => {
                     )}
                   </span>
                   <div className="flex-1">
-                    <div className="text-sm leading-relaxed text-gray-700 space-y-3">
-                      {factCheckResult.explanation.split(/[.!?]+(?:\s+|$)/).filter(sentence => sentence.trim()).map((sentence, index) => (
-                        <p key={index} className="mb-2 last:mb-0">
-                          {sentence.trim()}{sentence.includes('.') || sentence.includes('!') || sentence.includes('?') ? '' : '.'}
-                        </p>
-                      ))}
-                    </div>
+                    <p className="text-sm leading-relaxed text-gray-700">
+                      {factCheckResult.explanation}
+                    </p>
                   </div>
                 </div>
                 
