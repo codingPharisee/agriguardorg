@@ -33,8 +33,7 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <Mail className="h-4 w-4 text-green-400 mt-1" />
                 <div className="text-green-200 text-sm">
-                  <p>info@agriguard.com</p>
-                  <p>support@agriguard.com</p>
+                  <p>agriguardtech@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
