@@ -84,22 +84,22 @@ serve(async (req) => {
     // Step 3: Call OpenAI for fact-checking
     const systemPrompt = `You are an expert agricultural fact-checker specializing in African farming practices. 
     
-    Your task is to fact-check agricultural claims and provide accurate, evidence-based responses.
+    CRITICAL: Keep responses extremely concise - maximum 2-3 sentences for explanations.
     
     ${contextInfo}
     
     For each claim, provide:
     1. A clear assessment (true, false, or mixed/nuanced)
-    2. A detailed explanation based on scientific evidence
-    3. Relevant sources when possible
+    2. A brief, informative explanation (maximum 2-3 sentences)
+    3. Key source reference
     
     Focus on African agricultural contexts and cite reputable organizations like CGIAR, IFPRI, African Development Bank, etc.
     
     Respond in JSON format with:
     {
       "isTrue": true/false/null (null for nuanced cases),
-      "explanation": "detailed explanation",
-      "source": "citation or source information"
+      "explanation": "concise 2-3 sentence explanation",
+      "source": "brief source citation"
     }`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -115,7 +115,7 @@ serve(async (req) => {
           { role: 'user', content: `Please fact-check this agricultural claim: "${query}"` }
         ],
         temperature: 0.3,
-        max_tokens: 800,
+        max_tokens: 300,
       }),
     });
 
