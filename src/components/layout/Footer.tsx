@@ -40,8 +40,8 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <Phone className="h-4 w-4 text-green-400 mt-1" />
                 <div className="text-green-200 text-sm">
-                  <p>+1 (555) 123-AGRI</p>
-                  <p>+1 (555) FACT-NOW</p>
+                  <p>+254 799330345</p>
+                  <p>+254 794920532</p>
                 </div>
               </div>
             </div>
@@ -52,11 +52,11 @@ const Footer = () => {
             <h3 className="text-green-100 font-semibold mb-4">Address</h3>
             <div className="flex items-start gap-3">
               <MapPin className="h-4 w-4 text-green-400 mt-1" />
-              <div className="text-green-200 text-sm">
-                <p>123 Agricultural Innovation Drive</p>
-                <p>Farm City, FC 12345</p>
-                <p>United States</p>
-              </div>
+               <div className="text-green-200 text-sm">
+                <p>Agri-Tech Plaza, Westlands</p>
+                <p>Nairobi, 00100</p>
+                <p>Kenya</p>
+               </div>
             </div>
           </div>
 
@@ -101,7 +101,7 @@ const Footer = () => {
         <div className="bg-green-800/50 rounded-lg p-4 text-center">
           <p className="text-sm text-green-200 font-medium">
             📞 For urgent agricultural misinformation alerts, 
-            call our 24/7 hotline: <span className="text-green-300 font-bold">+1 (555) FACT-NOW</span>
+            call our 24/7 hotline: <span className="text-green-300 font-bold">+254 799330345</span>
           </p>
         </div>
       </div>
