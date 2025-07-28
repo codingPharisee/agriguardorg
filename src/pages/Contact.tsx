@@ -45,8 +45,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                      <p className="text-gray-600">+1 (555) 123-AGRI</p>
-                      <p className="text-gray-600">+1 (555) 123-2474</p>
+                      <p className="text-gray-600">+254 799330345</p>
+                      <p className="text-gray-600">+254 794920532</p>
                     </div>
                   </div>
 
@@ -57,9 +57,9 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
                       <p className="text-gray-600">
-                        123 Agricultural Innovation Drive<br />
-                        Farm City, FC 12345<br />
-                        United States
+                        Agri-Tech Plaza, Westlands<br />
+                        Nairobi, 00100<br />
+                        Kenya
                       </p>
                     </div>
                   </div>
