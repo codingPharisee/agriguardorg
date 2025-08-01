@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Send, Check, X, Loader2, Globe, Book } from "lucide-react";
+import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
@@ -87,6 +87,23 @@ const ORGANIZATIONS = [
   { value: "CTA", label: "Technical Centre for Agricultural and Rural Cooperation" }
 ];
 
+// Supported languages for fact-checking
+const LANGUAGES = [
+  { value: "auto", label: "Auto-detect", flag: "🌍" },
+  { value: "en", label: "English", flag: "🇬🇧" },
+  { value: "sw", label: "Kiswahili", flag: "🇰🇪" },
+  { value: "am", label: "አማርኛ (Amharic)", flag: "🇪🇹" },
+  { value: "ha", label: "Hausa", flag: "🇳🇬" },
+  { value: "yo", label: "Yorùbá", flag: "🇳🇬" },
+  { value: "ig", label: "Igbo", flag: "🇳🇬" },
+  { value: "zu", label: "isiZulu", flag: "🇿🇦" },
+  { value: "xh", label: "isiXhosa", flag: "🇿🇦" },
+  { value: "af", label: "Afrikaans", flag: "🇿🇦" },
+  { value: "fr", label: "Français", flag: "🇫🇷" },
+  { value: "ar", label: "العربية", flag: "🇪🇬" },
+  { value: "pt", label: "Português", flag: "🇵🇹" }
+];
+
 // Mock database of fact-checking responses
 const FACT_CHECK_DATABASE = {
   "gmo": {
@@ -123,6 +140,7 @@ const AgriFactCheck = () => {
   const [activeTab, setActiveTab] = useState("chat");
   const [filteredFaqs, setFilteredFaqs] = useState(FAQS);
   const [selectedOrg, setSelectedOrg] = useState("all");
+  const [selectedLanguage, setSelectedLanguage] = useState("auto");
   const [factCheckResult, setFactCheckResult] = useState<{
     isTrue: boolean | null;
     explanation: string;
@@ -149,7 +167,10 @@ const AgriFactCheck = () => {
       console.log('Submitting fact-check query:', query);
       
       const { data, error } = await supabase.functions.invoke('rag-fact-check', {
-        body: { query: query.trim() }
+        body: { 
+          query: query.trim(),
+          language: selectedLanguage 
+        }
       });
 
       if (error) {
@@ -225,9 +246,35 @@ const AgriFactCheck = () => {
           </TabsList>
           
           <TabsContent value="chat" className="mt-0 space-y-4">
+            <div className="mb-4 flex items-center gap-3 p-3 bg-green-50/60 rounded-lg border border-green-200/40">
+              <Languages className="h-5 w-5 text-green-600" />
+              <span className="text-sm font-medium text-gray-700">Language:</span>
+              <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                <SelectTrigger className="w-[200px] border-green-200 focus:border-green-500">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  {LANGUAGES.map((lang) => (
+                    <SelectItem key={lang.value} value={lang.value}>
+                      <span className="flex items-center gap-2">
+                        <span>{lang.flag}</span>
+                        <span>{lang.label}</span>
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
             <form onSubmit={handleSubmit} className="flex gap-3">
               <Input
-                placeholder="Ask about agricultural claims or myths in Africa..."
+                placeholder={selectedLanguage === "sw" ? "Uliza kuhusu madai ya kilimo Afrika..." : 
+                            selectedLanguage === "am" ? "ስለ አፍሪካ ግብርና አባባሎች ይጠይቁ..." :
+                            selectedLanguage === "ha" ? "Yi tambaya game da da'awar noma a Afirka..." :
+                            selectedLanguage === "yo" ? "Béèrè nípa àwọn ìjápọ̀ àgbàtójọ ní Áfíríkà..." :
+                            selectedLanguage === "fr" ? "Posez des questions sur les affirmations agricoles en Afrique..." :
+                            selectedLanguage === "ar" ? "اسأل عن الادعاءات الزراعية في أفريقيا..." :
+                            "Ask about agricultural claims or myths in Africa..."}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="flex-1 border-green-200 focus:border-green-500 focus:ring-green-500/20 bg-white/80 backdrop-blur-sm"
@@ -286,8 +333,24 @@ const AgriFactCheck = () => {
                 <div className="p-4 bg-green-100/60 rounded-full mb-4">
                   <MessageSquare className="h-12 w-12 text-green-600" />
                 </div>
-                <p className="text-gray-600 font-medium">Ask a question about agricultural myths or claims in Africa</p>
-                <p className="text-gray-500 text-sm mt-1">Get instant AI-powered fact checking with citations</p>
+                <p className="text-gray-600 font-medium">
+                  {selectedLanguage === "sw" ? "Uliza swali kuhusu hadithi au madai ya kilimo Afrika" :
+                   selectedLanguage === "am" ? "ስለ አፍሪካ ግብርና አወያይ ወይም ጥያቄዎች ይጠይቁ" :
+                   selectedLanguage === "ha" ? "Yi tambaya game da tatsuniyoyi ko da'awar noma a Afirka" :
+                   selectedLanguage === "yo" ? "Béèrè ìbéèrè nípa àwọn àròsọ tàbí ìjápọ̀ àgbàtójọ ní Áfíríkà" :
+                   selectedLanguage === "fr" ? "Posez une question sur les mythes ou affirmations agricoles en Afrique" :
+                   selectedLanguage === "ar" ? "اسأل سؤالاً عن الأساطير أو الادعاءات الزراعية في أفريقيا" :
+                   "Ask a question about agricultural myths or claims in Africa"}
+                </p>
+                <p className="text-gray-500 text-sm mt-1">
+                  {selectedLanguage === "sw" ? "Pata ukaguzi wa haraka wa ukweli unaotumia AI pamoja na marejeo" :
+                   selectedLanguage === "am" ? "በ AI የተደገፈ ፈጣን የእውነት ማረጋገጫ ከዋቢዎች ጋር ያግኙ" :
+                   selectedLanguage === "ha" ? "Samu binciken gaskiya na gaggawa da AI tare da ambato" :
+                   selectedLanguage === "yo" ? "Gba àyẹ̀wò òtítọ́ kíá pẹ̀lú AI àti àwọn ìtọ́kasí" :
+                   selectedLanguage === "fr" ? "Obtenez une vérification instantanée des faits alimentée par l'IA avec citations" :
+                   selectedLanguage === "ar" ? "احصل على فحص فوري للحقائق مدعوم بالذكاء الاصطناعي مع المراجع" :
+                   "Get instant AI-powered fact checking with citations"}
+                </p>
               </div>
             )}
           </TabsContent>

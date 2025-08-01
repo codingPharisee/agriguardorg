@@ -15,7 +15,7 @@ serve(async (req) => {
   }
 
   try {
-    const { query } = await req.json();
+    const { query, language = 'auto' } = await req.json();
     
     if (!query) {
       throw new Error('Query is required');
@@ -81,8 +81,29 @@ serve(async (req) => {
       contextInfo = 'No specific documents found in the database. Please use your general knowledge about African agriculture.\n\n';
     }
 
+    // Language mapping for response instructions
+    const languageInstructions = {
+      'auto': 'Respond in the same language as the user\'s query. If the query is in English, respond in English. If in Swahili, respond in Swahili, etc.',
+      'en': 'Respond in English.',
+      'sw': 'Respond in Kiswahili (Swahili). Translate all your response including the source field.',
+      'am': 'Respond in Amharic (አማርኛ). Translate all your response including the source field.',
+      'ha': 'Respond in Hausa. Translate all your response including the source field.',
+      'yo': 'Respond in Yoruba. Translate all your response including the source field.',
+      'ig': 'Respond in Igbo. Translate all your response including the source field.',
+      'zu': 'Respond in Zulu. Translate all your response including the source field.',
+      'xh': 'Respond in Xhosa. Translate all your response including the source field.',
+      'af': 'Respond in Afrikaans. Translate all your response including the source field.',
+      'fr': 'Respond in French. Translate all your response including the source field.',
+      'ar': 'Respond in Arabic. Translate all your response including the source field.',
+      'pt': 'Respond in Portuguese. Translate all your response including the source field.'
+    };
+
+    const languageInstruction = languageInstructions[language] || languageInstructions['auto'];
+
     // Step 3: Call OpenAI for fact-checking
     const systemPrompt = `You are an expert agricultural fact-checker specializing in African farming practices. 
+    
+    LANGUAGE INSTRUCTION: ${languageInstruction}
     
     CRITICAL: Keep responses extremely concise - maximum 2-3 sentences for explanations.
     
@@ -90,16 +111,16 @@ serve(async (req) => {
     
     For each claim, provide:
     1. A clear assessment (true, false, or mixed/nuanced)
-    2. A brief, informative explanation (maximum 2-3 sentences)
-    3. Key source reference
+    2. A brief, informative explanation (maximum 2-3 sentences) in the requested language
+    3. Key source reference in the requested language
     
     Focus on African agricultural contexts and cite reputable organizations like CGIAR, IFPRI, African Development Bank, etc.
     
     Respond in JSON format with:
     {
       "isTrue": true/false/null (null for nuanced cases),
-      "explanation": "concise 2-3 sentence explanation",
-      "source": "brief source citation"
+      "explanation": "concise 2-3 sentence explanation in the requested language",
+      "source": "brief source citation in the requested language"
     }`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {

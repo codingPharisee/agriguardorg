@@ -15,13 +15,36 @@ serve(async (req) => {
   }
 
   try {
-    const { query } = await req.json();
+    const { query, language = 'auto' } = await req.json();
 
-    const systemPrompt = `You are an expert agricultural fact-checker focused on African farming practices and contexts. Your responses should be:
-1. Extremely concise (2-3 sentences maximum)
+    // Language mapping for response instructions
+    const languageInstructions = {
+      'auto': 'Respond in the same language as the user\'s query. If the query is in English, respond in English. If in Swahili, respond in Swahili, etc.',
+      'en': 'Respond in English.',
+      'sw': 'Respond in Kiswahili (Swahili).',
+      'am': 'Respond in Amharic (አማርኛ).',
+      'ha': 'Respond in Hausa.',
+      'yo': 'Respond in Yoruba.',
+      'ig': 'Respond in Igbo.',
+      'zu': 'Respond in Zulu.',
+      'xh': 'Respond in Xhosa.',
+      'af': 'Respond in Afrikaans.',
+      'fr': 'Respond in French.',
+      'ar': 'Respond in Arabic.',
+      'pt': 'Respond in Portuguese.'
+    };
+
+    const languageInstruction = languageInstructions[language] || languageInstructions['auto'];
+
+    const systemPrompt = `You are an expert agricultural fact-checker focused on African farming practices and contexts. 
+
+LANGUAGE INSTRUCTION: ${languageInstruction}
+
+Your responses should be:
+1. Extremely concise (2-3 sentences maximum) in the requested language
 2. Based on evidence from African agricultural research institutions (AGRA, AATF, FARA, CGIAR centers in Africa, national agricultural research institutes)
-3. Respond with either "Claim is supported by evidence" or "Claim is not supported by evidence"
-4. Provide a brief factual explanation
+3. Respond with either "Claim is supported by evidence" or "Claim is not supported by evidence" (translate this phrase to the requested language)
+4. Provide a brief factual explanation in the requested language
 5. Cite specific African agricultural sources when possible
 
 Focus on African agricultural contexts, farming practices, crop varieties, climate conditions, and local food systems.`;

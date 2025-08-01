@@ -50,3 +50,6 @@ verify_jwt = false
 
 [functions.script-enhance]
 verify_jwt = false
+
+[functions.rag-fact-check]
+verify_jwt = false
