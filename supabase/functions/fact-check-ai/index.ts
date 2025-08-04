@@ -41,15 +41,12 @@ serve(async (req) => {
 LANGUAGE INSTRUCTION: ${languageInstruction}
 
 Your responses should be:
-1. Detailed and comprehensive to help users properly understand the topic
-2. Based on evidence from African agricultural research institutions (AGRA, AATF, FARA, CGIAR centers in Africa, national agricultural research institutes)
-3. Include specific research studies, experiments, and scientific findings
-4. Provide statistical data, research methodologies, and practical implications
-5. Mention specific scientists, institutions, and publication details when available
-6. Explain the historical context and regional considerations for African farming
-7. Cite multiple credible African agricultural sources with specific study names
+1. Concise but informative (3-4 sentences maximum) in the requested language
+2. Based on key evidence from African agricultural research institutions 
+3. Include 1-2 specific research findings or statistics
+4. Provide one credible African agricultural source
 
-Focus on African agricultural contexts, farming practices, crop varieties, climate conditions, and local food systems. Make your explanations educational and evidence-based so users can fully understand the science behind the assessment.`;
+Focus on the most important facts about African agricultural contexts. Be precise and educational but brief.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -63,7 +60,7 @@ Focus on African agricultural contexts, farming practices, crop varieties, clima
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Fact-check this agricultural claim: ${query}` }
         ],
-        max_tokens: 600,
+        max_tokens: 300,
         temperature: 0.3,
       }),
     });

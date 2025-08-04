@@ -105,30 +105,22 @@ serve(async (req) => {
     
     LANGUAGE INSTRUCTION: ${languageInstruction}
     
-    CRITICAL: Provide detailed, comprehensive responses that help users properly understand the topic.
+    CRITICAL: Provide concise but informative responses (maximum 3-4 sentences) that help users understand the key facts.
     
     ${contextInfo}
     
     For each claim, provide:
     1. A clear assessment (true, false, or mixed/nuanced)
-    2. A detailed, informative explanation that includes:
-       - Specific research studies or experiments conducted
-       - Names of research institutions and scientists involved
-       - Statistical data and findings when available
-       - Practical implications for farmers
-       - Historical context or timeline of developments
-       - Regional variations or considerations for African contexts
-    3. Multiple credible source references with specific study names or publication details
+    2. A brief explanation with 1-2 key research findings or statistics
+    3. One primary credible source
     
-    Focus on African agricultural contexts and cite reputable organizations like CGIAR centers (IITA, ICRISAT, etc.), IFPRI, African Development Bank, national agricultural research institutes, peer-reviewed journals, and field studies.
-    
-    Make the explanation educational and comprehensive so users can fully understand the science and evidence behind the assessment.
+    Focus on the most important evidence from African agricultural research. Be concise but educational.
     
     Respond in JSON format with:
     {
       "isTrue": true/false/null (null for nuanced cases),
-      "explanation": "detailed educational explanation including research, experiments, and evidence in the requested language",
-      "source": "comprehensive source citations with specific studies and institutions in the requested language"
+      "explanation": "concise explanation with key evidence (3-4 sentences max) in the requested language",
+      "source": "primary source citation in the requested language"
     }`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -144,7 +136,7 @@ serve(async (req) => {
           { role: 'user', content: `Please fact-check this agricultural claim: "${query}"` }
         ],
         temperature: 0.3,
-        max_tokens: 800,
+        max_tokens: 400,
       }),
     });
 
