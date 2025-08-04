@@ -8,7 +8,6 @@ import ViralFarm from "@/components/modules/ViralFarm";
 import AgriFactCheck from "@/components/modules/AgriFactCheck";
 import MythBusterAg from "@/components/modules/MythBusterAg";
 import NewsAndPhotos from "@/components/home/NewsAndPhotos";
-import GMOGuide from "@/components/gmo/GMOGuide";
 import { Button } from "@/components/ui/button";
 import ContactFormDialog from "@/components/forms/ContactFormDialog";
 import useScrollPosition from "@/hooks/useScrollPosition";
@@ -72,8 +71,6 @@ const Index = () => {
         <Features />
         
         <NewsAndPhotos />
-        
-        <GMOGuide />
         
         {/* AI Modules section with enhanced styling */}
         <section className="py-16 bg-gradient-to-br from-green-50 via-amber-50/30 to-green-50">

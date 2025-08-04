@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageSquare, Search, Check, X, Loader2, Home } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -12,6 +13,23 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+
+// Language options for fact-checking
+const LANGUAGES = [
+  { value: 'auto', label: 'Auto-detect' },
+  { value: 'en', label: 'English' },
+  { value: 'sw', label: 'Kiswahili' },
+  { value: 'am', label: 'Amharic (አማርኛ)' },
+  { value: 'ha', label: 'Hausa' },
+  { value: 'yo', label: 'Yoruba' },
+  { value: 'ig', label: 'Igbo' },
+  { value: 'zu', label: 'Zulu' },
+  { value: 'xh', label: 'Xhosa' },
+  { value: 'af', label: 'Afrikaans' },
+  { value: 'fr', label: 'French' },
+  { value: 'ar', label: 'Arabic' },
+  { value: 'pt', label: 'Portuguese' }
+];
 
 // Example FAQ data
 const FAQS = [
@@ -58,6 +76,7 @@ const COMMON_CLAIMS = [
 
 const FactCheck = () => {
   const [query, setQuery] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("auto");
   const [isLoading, setIsLoading] = useState(false);
   const [factCheckResults, setFactCheckResults] = useState<null | {
     isTrue: boolean | null;
@@ -76,7 +95,7 @@ const FactCheck = () => {
     
     try {
       const { data, error } = await supabase.functions.invoke('rag-fact-check', {
-        body: { query: query.trim() }
+        body: { query: query.trim(), language: selectedLanguage }
       });
 
       if (error) throw error;
@@ -137,9 +156,28 @@ const FactCheck = () => {
                   
                   <TabsContent value="search" className="space-y-4">
                     <form onSubmit={handleSearch} className="space-y-4">
+                      <div className="flex gap-2 mb-4">
+                        <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                          <SelectTrigger className="w-[200px]">
+                            <SelectValue placeholder="Select language" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {LANGUAGES.map((lang) => (
+                              <SelectItem key={lang.value} value={lang.value}>
+                                {lang.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                       <div className="flex gap-2">
                         <Input
-                          placeholder="Enter an agricultural claim to fact check..."
+                          placeholder={selectedLanguage === 'sw' ? "Ingiza madai ya kilimo kwa ukaguzi..." : 
+                                     selectedLanguage === 'am' ? "የግብርና ክስተትን ለማረጋገጥ ያስገቡ..." :
+                                     selectedLanguage === 'ha' ? "Shigar da ikirarin aikin gona don bincike..." :
+                                     selectedLanguage === 'fr' ? "Entrez une affirmation agricole à vérifier..." :
+                                     selectedLanguage === 'ar' ? "أدخل ادعاءً زراعياً للتحقق منه..." :
+                                     "Enter an agricultural claim to fact check..."}
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
                           disabled={isLoading}

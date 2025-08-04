@@ -25,6 +25,7 @@ const Header = () => {
   ];
 
   const toolsItems = [
+    { name: "All Tools", href: "/tools" },
     { name: "ViralFarm", href: "/viral-farm" },
     { name: "MythBuster Ag", href: "/myth-buster" },
     { name: "Integrated Ecosystem", href: "/ecosystem" },

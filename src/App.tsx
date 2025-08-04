@@ -15,6 +15,7 @@ import About from "./pages/About";
 import ViralFarmPage from "./pages/ViralFarmPage";
 import Contact from "./pages/Contact";
 import VideoGeneration from "./pages/VideoGeneration";
+import Tools from "./pages/Tools";
 import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const AppContent = () => {
       <Route path="/news" element={<News />} />
       <Route path="/viral-farm" element={<ViralFarmPage />} />
       <Route path="/myth-buster" element={<VideoGeneration />} />
+      <Route path="/tools" element={<Tools />} />
       <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
