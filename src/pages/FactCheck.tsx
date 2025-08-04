@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { supabase } from '@/integrations/supabase/client';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Search, MessageSquare, HelpCircle, Lightbulb, Mic, MicOff, Volume2, VolumeX, Home } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MessageSquare, Search, Check, X, Loader2, Home } from "lucide-react";
+import { useVoiceRecording } from '@/hooks/useVoiceRecording';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 
 // Language options for fact-checking
 const LANGUAGES = [
@@ -74,24 +76,34 @@ const COMMON_CLAIMS = [
   "GMOs can solve world hunger"
 ];
 
+const getPlaceholderText = (language: string) => {
+  switch (language) {
+    case 'sw': return "Ingiza madai ya kilimo kwa ukaguzi...";
+    case 'am': return "የግብርና ክስተትን ለማረጋገጥ ያስገቡ...";
+    case 'ha': return "Shigar da ikirarin aikin gona don bincike...";
+    case 'fr': return "Entrez une affirmation agricole à vérifier...";
+    case 'ar': return "أدخل ادعاءً زراعياً للتحقق منه...";
+    default: return "Enter an agricultural claim to fact check...";
+  }
+};
+
 const FactCheck = () => {
-  const [query, setQuery] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("auto");
-  const [isLoading, setIsLoading] = useState(false);
-  const [factCheckResults, setFactCheckResults] = useState<null | {
-    isTrue: boolean | null;
-    explanation: string;
-    source: string;
-  }>(null);
-  const [activeTab, setActiveTab] = useState("search");
   const { toast } = useToast();
+  const [query, setQuery] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('auto');
+  const [isLoading, setIsLoading] = useState(false);
+  const [factCheckResult, setFactCheckResult] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('search');
   
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Voice features
+  const { isRecording, isProcessing, startRecording, stopRecording } = useVoiceRecording();
+  const { speak, stop: stopSpeaking, isPlaying, isGenerating } = useTextToSpeech();
+
+  const handleSearch = async () => {
     if (!query.trim()) return;
     
     setIsLoading(true);
-    setFactCheckResults(null);
+    setFactCheckResult(null);
     
     try {
       const { data, error } = await supabase.functions.invoke('rag-fact-check', {
@@ -100,7 +112,7 @@ const FactCheck = () => {
 
       if (error) throw error;
 
-      setFactCheckResults(data);
+      setFactCheckResult(data);
       
       toast({
         title: "Fact check complete",
@@ -120,7 +132,30 @@ const FactCheck = () => {
 
   const handleCommonClaimClick = (claim: string) => {
     setQuery(claim);
-    setActiveTab("search");
+    setActiveTab('search');
+  };
+
+  const handleVoiceRecording = async () => {
+    if (isRecording) {
+      const transcribedText = await stopRecording();
+      if (transcribedText) {
+        setQuery(transcribedText);
+        toast({
+          title: "Voice Recorded",
+          description: "Your voice has been transcribed successfully.",
+        });
+      }
+    } else {
+      await startRecording();
+    }
+  };
+
+  const handlePlayResponse = () => {
+    if (isPlaying) {
+      stopSpeaking();
+    } else if (factCheckResult?.explanation) {
+      speak(factCheckResult.explanation);
+    }
   };
 
   return (
@@ -155,77 +190,93 @@ const FactCheck = () => {
                   </TabsList>
                   
                   <TabsContent value="search" className="space-y-4">
-                    <form onSubmit={handleSearch} className="space-y-4">
-                      <div className="flex gap-2 mb-4">
-                        <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                          <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="Select language" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {LANGUAGES.map((lang) => (
-                              <SelectItem key={lang.value} value={lang.value}>
-                                {lang.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex gap-2">
+                    <div className="flex gap-2 mb-4">
+                      <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                        <SelectTrigger className="w-[200px]">
+                          <SelectValue placeholder="Select language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {LANGUAGES.map((lang) => (
+                            <SelectItem key={lang.value} value={lang.value}>
+                              {lang.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="flex-1 relative">
                         <Input
-                          placeholder={selectedLanguage === 'sw' ? "Ingiza madai ya kilimo kwa ukaguzi..." : 
-                                     selectedLanguage === 'am' ? "የግብርና ክስተትን ለማረጋገጥ ያስገቡ..." :
-                                     selectedLanguage === 'ha' ? "Shigar da ikirarin aikin gona don bincike..." :
-                                     selectedLanguage === 'fr' ? "Entrez une affirmation agricole à vérifier..." :
-                                     selectedLanguage === 'ar' ? "أدخل ادعاءً زراعياً للتحقق منه..." :
-                                     "Enter an agricultural claim to fact check..."}
+                          placeholder={getPlaceholderText(selectedLanguage)}
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
-                          disabled={isLoading}
-                          className="flex-1"
+                          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                          className="pr-12"
                         />
-                        <Button type="submit" disabled={isLoading || !query.trim()}>
-                          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
-                          {!isLoading && <span className="ml-1 hidden sm:inline">Check</span>}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                          onClick={handleVoiceRecording}
+                          disabled={isProcessing}
+                        >
+                          {isRecording ? (
+                            <MicOff className="h-4 w-4 text-red-500" />
+                          ) : (
+                            <Mic className="h-4 w-4" />
+                          )}
                         </Button>
                       </div>
-                      
-                      <p className="text-sm text-muted-foreground">
-                        Example: "Are drought-resistant crops effective in Africa?" or "Do organic methods work better in African farming?"
-                      </p>
-                    </form>
-                    
-                    {factCheckResults && (
-                      <div className={`mt-6 p-4 rounded-lg border ${
-                        factCheckResults.isTrue === true ? 'bg-green-50 border-green-200' : 
-                        factCheckResults.isTrue === false ? 'bg-red-50 border-red-200' : 
-                        'bg-yellow-50 border-yellow-200'
-                      }`}>
-                        <div className="flex items-start gap-2">
-                          <div className={`rounded-full p-1 mt-0.5 ${
-                            factCheckResults.isTrue === true ? 'bg-green-500' : 
-                            factCheckResults.isTrue === false ? 'bg-red-500' : 
-                            'bg-yellow-500'
-                          }`}>
-                            {factCheckResults.isTrue === true ? (
-                              <Check className="h-3 w-3 text-white" />
-                            ) : factCheckResults.isTrue === false ? (
-                              <X className="h-3 w-3 text-white" />
+                      <Button onClick={handleSearch} disabled={isLoading || !query.trim()}>
+                        <Search className="h-4 w-4 mr-2" />
+                        {isLoading ? 'Checking...' : 'Check'}
+                      </Button>
+                    </div>
+
+                    {factCheckResult && (
+                      <div className="mt-6 p-4 bg-muted rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <div className={`w-3 h-3 rounded-full ${
+                              factCheckResult.isTrue === true ? 'bg-green-500' : 
+                              factCheckResult.isTrue === false ? 'bg-red-500' : 'bg-yellow-500'
+                            }`} />
+                            <span className="font-medium">
+                              {factCheckResult.isTrue === true ? 'Supported' : 
+                               factCheckResult.isTrue === false ? 'Not Supported' : 'Mixed Evidence'}
+                            </span>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handlePlayResponse}
+                            disabled={isGenerating}
+                            className="h-8 w-8 p-0"
+                          >
+                            {isPlaying ? (
+                              <VolumeX className="h-4 w-4" />
                             ) : (
-                              <Search className="h-3 w-3 text-white" />
+                              <Volume2 className="h-4 w-4" />
                             )}
-                          </div>
-                          <div>
-                            <p className="mt-1 text-sm">{factCheckResults.explanation}</p>
-                            <p className="mt-3 text-xs text-muted-foreground">Source: {factCheckResults.source}</p>
-                          </div>
+                          </Button>
                         </div>
+                        <p className="text-sm mb-2">{factCheckResult.explanation}</p>
+                        <p className="text-xs text-muted-foreground">Source: {factCheckResult.source}</p>
                       </div>
                     )}
-                    
-                    {!factCheckResults && !isLoading && (
-                      <div className="flex flex-col items-center justify-center p-10 text-center border rounded-md bg-gray-50">
-                        <MessageSquare className="h-10 w-10 text-muted-foreground/50 mb-2" />
-                        <p className="text-muted-foreground">Enter a claim about agriculture to fact check using AI</p>
+
+                    {(isProcessing || isGenerating) && (
+                      <div className="mt-4 text-center text-sm text-muted-foreground">
+                        {isProcessing && "Processing voice..."}
+                        {isGenerating && "Generating audio..."}
+                      </div>
+                    )}
+
+                    {!factCheckResult && (
+                      <div className="mt-6 text-center text-muted-foreground">
+                        <MessageSquare className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                        <p>Enter a claim above to get started with fact-checking</p>
+                        <p className="text-xs mt-2">Use the microphone button to record your voice</p>
                       </div>
                     )}
                   </TabsContent>
