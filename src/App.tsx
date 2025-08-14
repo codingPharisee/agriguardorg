@@ -16,6 +16,7 @@ import ViralFarmPage from "./pages/ViralFarmPage";
 import Contact from "./pages/Contact";
 import VideoGeneration from "./pages/VideoGeneration";
 import Tools from "./pages/Tools";
+import Auth from "./pages/Auth";
 import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const AppContent = () => {
       <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/auth" element={<Auth />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
