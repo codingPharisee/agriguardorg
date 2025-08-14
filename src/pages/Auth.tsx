@@ -13,6 +13,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 const Auth = () => {
+  console.log('Auth component rendering...');
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
