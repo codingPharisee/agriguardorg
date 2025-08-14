@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -26,7 +25,6 @@ const Auth = () => {
   // Redirect authenticated users
   useEffect(() => {
     if (user) {
-      console.log('User authenticated, redirecting to home...');
       navigate('/');
     }
   }, [user, navigate]);
@@ -45,8 +43,7 @@ const Auth = () => {
     setLoading(true);
     try {
       if (isSignUp) {
-        console.log('Attempting sign up for:', email);
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -55,7 +52,6 @@ const Auth = () => {
         });
 
         if (error) {
-          console.error('Sign up error:', error);
           if (error.message.includes('User already registered')) {
             toast({
               title: "Account exists",
@@ -67,46 +63,28 @@ const Auth = () => {
             throw error;
           }
         } else {
-          console.log('Sign up successful:', data);
-          if (data.user && !data.session) {
-            toast({
-              title: "Check your email",
-              description: "We've sent you a confirmation link to complete your registration.",
-            });
-          } else if (data.session) {
-            toast({
-              title: "Welcome!",
-              description: "Your account has been created successfully.",
-            });
-            navigate('/');
-          }
+          toast({
+            title: "Check your email",
+            description: "We've sent you a confirmation link to complete your registration.",
+          });
         }
       } else {
-        console.log('Attempting sign in for:', email);
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
 
         if (error) {
-          console.error('Sign in error:', error);
           if (error.message.includes('Invalid login credentials')) {
             toast({
               title: "Invalid credentials",
               description: "Please check your email and password and try again.",
               variant: "destructive",
             });
-          } else if (error.message.includes('Email not confirmed')) {
-            toast({
-              title: "Email not confirmed",
-              description: "Please check your email and click the confirmation link before signing in.",
-              variant: "destructive",
-            });
           } else {
             throw error;
           }
         } else {
-          console.log('Sign in successful:', data);
           toast({
             title: "Welcome back!",
             description: "You have been signed in successfully.",
@@ -115,7 +93,6 @@ const Auth = () => {
         }
       }
     } catch (error: any) {
-      console.error('Authentication error:', error);
       toast({
         title: "Authentication Error",
         description: error.message || "An unexpected error occurred",
@@ -128,13 +105,11 @@ const Auth = () => {
 
   const handleGoogleAuth = async () => {
     try {
-      console.log('Starting Google auth...');
       await signInWithGoogle();
     } catch (error: any) {
-      console.error('Google auth error:', error);
       toast({
         title: "Google Sign In Error",
-        description: error.message || "Failed to sign in with Google. Please try again.",
+        description: error.message || "Failed to sign in with Google",
         variant: "destructive",
       });
     }
@@ -216,7 +191,6 @@ const Auth = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  minLength={6}
                 />
               </div>
               <Button type="submit" className="w-full" disabled={loading}>
