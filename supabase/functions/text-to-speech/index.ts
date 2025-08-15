@@ -1,5 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts"
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -7,49 +6,46 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    const { text, voice = 'Rachel' } = await req.json()
-    
+    const { text, voice } = await req.json()
+
     if (!text) {
       throw new Error('Text is required')
     }
 
-    console.log('Generating speech for text:', text.substring(0, 50) + '...')
-
-    const elevenlabsApiKey = Deno.env.get('ELEVENLABS_API_KEY')
-    if (!elevenlabsApiKey) {
+    const elevenLabsApiKey = Deno.env.get('ELEVENLABS_API_KEY')
+    if (!elevenLabsApiKey) {
       throw new Error('ElevenLabs API key not configured')
     }
 
-    // Use Rachel voice ID (good for educational content)
-    const voiceId = 'EXAVITQu4vr4xnSDxMaL' // Rachel
+    // Use default voice 'Rachel' if not specified
+    const voiceId = voice || '21m00Tcm4TlvDq8ikWAM'
 
+    // Generate speech from text using ElevenLabs API
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
       method: 'POST',
       headers: {
         'Accept': 'audio/mpeg',
         'Content-Type': 'application/json',
-        'xi-api-key': elevenlabsApiKey,
+        'xi-api-key': elevenLabsApiKey,
       },
       body: JSON.stringify({
-        text,
+        text: text,
         model_id: 'eleven_multilingual_v2',
         voice_settings: {
           stability: 0.5,
-          similarity_boost: 0.5,
-          style: 0.0,
-          use_speaker_boost: true
+          similarity_boost: 0.5
         }
       }),
     })
 
     if (!response.ok) {
       const error = await response.text()
-      console.error('ElevenLabs API error:', error)
       throw new Error(`ElevenLabs API error: ${error}`)
     }
 
@@ -59,8 +55,6 @@ serve(async (req) => {
       String.fromCharCode(...new Uint8Array(arrayBuffer))
     )
 
-    console.log('Speech generation completed')
-
     return new Response(
       JSON.stringify({ audioContent: base64Audio }),
       {
@@ -68,11 +62,11 @@ serve(async (req) => {
       },
     )
   } catch (error) {
-    console.error('Error in text-to-speech function:', error)
+    console.error('Text-to-speech error:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       {
-        status: 500,
+        status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       },
     )

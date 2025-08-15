@@ -6,34 +6,8 @@ import ContactFormDialog from "@/components/forms/ContactFormDialog";
 
 const Hero = () => {
   const [contactFormOpen, setContactFormOpen] = useState(false);
-  const [currentCropIndex, setCurrentCropIndex] = useState(0);
-
-  // Dynamic crop backgrounds - wheat, green corn, and poppy plants
-  const cropBackgrounds = [
-    {
-      name: "Wheat",
-      image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2000&auto=format&fit=crop"
-    },
-    {
-      name: "Green Corn",
-      image: "https://images.unsplash.com/photo-1551803091-e20673f1bb2e?q=80&w=2000&auto=format&fit=crop"
-    },
-    {
-      name: "Poppy Plant",
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2000&auto=format&fit=crop"
-    }
-  ];
-
-  // Change background every 10 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCropIndex((prevIndex) => 
-        (prevIndex + 1) % cropBackgrounds.length
-      );
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // Static wheat background
+  const wheatBackground = "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2000&auto=format&fit=crop";
 
   const scrollToFactCheck = () => {
     const factCheckSection = document.querySelector('.agrifactcheck-section');
@@ -44,9 +18,9 @@ const Hero = () => {
 
   return (
     <div 
-      className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat transition-all duration-1000"
+      className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url('${cropBackgrounds[currentCropIndex].image}')`
+        backgroundImage: `url('${wheatBackground}')`
       }}
     >
       {/* Dark overlay for readability */}

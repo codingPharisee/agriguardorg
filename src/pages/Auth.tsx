@@ -104,6 +104,7 @@ const Auth = () => {
   };
 
   const handleGoogleAuth = async () => {
+    setLoading(true);
     try {
       await signInWithGoogle();
     } catch (error: any) {
@@ -112,6 +113,8 @@ const Auth = () => {
         description: error.message || "Failed to sign in with Google",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,6 +140,7 @@ const Auth = () => {
               onClick={handleGoogleAuth}
               className="w-full"
               type="button"
+              disabled={loading}
             >
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                 <path
