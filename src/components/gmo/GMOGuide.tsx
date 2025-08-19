@@ -14,6 +14,10 @@ export interface GMOItem {
   status: string;
   comparisonImageUrl?: string;
   secondaryTraits?: string[];
+  verdict: string;
+  coreFact: string;
+  punchlineExplanation: string;
+  source?: string;
 }
 
 // Sample data based on ISAAA GM approval database
@@ -33,7 +37,11 @@ const gmoData: GMOItem[] = [
       "Safer for beneficial insects"
     ],
     status: "Commercially Available",
-    secondaryTraits: ["Insect Resistance"]
+    secondaryTraits: ["Insect Resistance"],
+    verdict: "CONFIRMED",
+    coreFact: "Bt cotton successfully reduces pesticide use while maintaining crop yields through built-in insect resistance.",
+    punchlineExplanation: "The cotton plant essentially becomes its own pesticide factory, producing a protein toxic only to specific harmful insects while leaving beneficial ones unharmed.",
+    source: "Extensively studied and approved by regulatory agencies worldwide including FDA and USDA."
   },
   {
     id: "2",
@@ -50,7 +58,10 @@ const gmoData: GMOItem[] = [
       "Simplified farm management"
     ],
     status: "Commercially Available",
-    secondaryTraits: ["Herbicide Tolerance"]
+    secondaryTraits: ["Herbicide Tolerance"],
+    verdict: "CONFIRMED",
+    coreFact: "Herbicide-tolerant soybeans allow farmers to use targeted weed control without damaging crops.",
+    punchlineExplanation: "Think of it as giving crops a 'shield' against herbicides - weeds die while the protected crops thrive."
   },
   {
     id: "3",
@@ -67,7 +78,11 @@ const gmoData: GMOItem[] = [
       "Sustainable nutritional solution"
     ],
     status: "Under Development",
-    secondaryTraits: ["Nutritional Enhancement"]
+    secondaryTraits: ["Nutritional Enhancement"],
+    verdict: "CONFIRMED",
+    coreFact: "Golden Rice successfully produces vitamin A precursors to combat deficiency in populations dependent on rice.",
+    punchlineExplanation: "It's like adding a natural vitamin supplement directly into the food itself - solving malnutrition where it's needed most.",
+    source: "Developed by IRRI with support from WHO to address vitamin A deficiency affecting 250 million children worldwide."
   },
   {
     id: "4",
@@ -83,7 +98,11 @@ const gmoData: GMOItem[] = [
       "Year-round production capability",
       "Same nutritional profile as conventional salmon"
     ],
-    status: "Commercially Available"
+    status: "Commercially Available",
+    verdict: "CONFIRMED",
+    coreFact: "AquAdvantage salmon grows to market size in half the time while maintaining identical nutritional content.",
+    punchlineExplanation: "It's like fast-forwarding a salmon's growth without changing anything else - same fish, just reaching maturity faster.",
+    source: "FDA approved after extensive safety testing, making it the first GM animal approved for food consumption."
   },
   {
     id: "5",
@@ -100,7 +119,10 @@ const gmoData: GMOItem[] = [
       "Improved farmer safety"
     ],
     status: "Commercially Available",
-    secondaryTraits: ["Insect Resistance"]
+    secondaryTraits: ["Insect Resistance"],
+    verdict: "CONFIRMED",
+    coreFact: "Bt corn produces natural insect-killing proteins while reducing dangerous mycotoxins in grain.",
+    punchlineExplanation: "The corn fights back against pests naturally, making food safer and farming cleaner - it's nature's own pest control system."
   },
   {
     id: "6",
@@ -117,7 +139,11 @@ const gmoData: GMOItem[] = [
       "Sustainable disease management"
     ],
     status: "Commercially Available",
-    secondaryTraits: ["Disease Resistance"]
+    secondaryTraits: ["Disease Resistance"],
+    verdict: "CONFIRMED",
+    coreFact: "Virus-resistant papaya successfully saved Hawaii's papaya industry from complete collapse due to viral disease.",
+    punchlineExplanation: "The papaya was immunized like a vaccine - using the virus's own proteins to build resistance without causing disease.",
+    source: "Developed by Cornell University and approved after rigorous safety testing - a textbook example of beneficial genetic modification."
   }
 ];
 

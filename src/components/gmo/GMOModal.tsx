@@ -37,6 +37,43 @@ const GMOModal: React.FC<GMOModalProps> = ({ item, isOpen, onClose }) => {
         </DialogHeader>
 
         <div className="space-y-6">
+          {/* Structured Response Section */}
+          <div className="p-6 bg-gradient-to-br from-muted/30 to-muted/60 rounded-lg border-l-4 border-primary">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold text-muted-foreground">VERDICT:</span>
+                <Badge 
+                  className={`text-sm font-bold ${
+                    item.verdict === "CONFIRMED" 
+                      ? "bg-green-500/20 text-green-700 border-green-500/30"
+                      : item.verdict === "BUSTED"
+                      ? "bg-red-500/20 text-red-700 border-red-500/30" 
+                      : "bg-yellow-500/20 text-yellow-700 border-yellow-500/30"
+                  }`}
+                >
+                  {item.verdict}
+                </Badge>
+              </div>
+              
+              <div>
+                <span className="text-sm font-semibold text-muted-foreground">CORE FACT:</span>
+                <p className="text-foreground font-medium mt-1">{item.coreFact}</p>
+              </div>
+              
+              <div>
+                <span className="text-sm font-semibold text-muted-foreground">EXPLANATION:</span>
+                <p className="text-muted-foreground mt-1">{item.punchlineExplanation}</p>
+              </div>
+              
+              {item.source && (
+                <div>
+                  <span className="text-sm font-semibold text-muted-foreground">SOURCE:</span>
+                  <p className="text-xs text-muted-foreground mt-1 italic">{item.source}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Main Image */}
           <div className="aspect-[16/9] overflow-hidden rounded-lg">
             <img

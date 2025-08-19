@@ -42,7 +42,21 @@ const GMOCard: React.FC<GMOCardProps> = ({ item, onClick }) => {
           {item.primaryTrait}
         </Badge>
         
-        <div className="mt-3 flex items-center text-xs text-muted-foreground">
+        <div className="mt-3 mb-2">
+          <Badge 
+            className={`text-xs font-bold ${
+              item.verdict === "CONFIRMED" 
+                ? "bg-green-500/20 text-green-700 border-green-500/30"
+                : item.verdict === "BUSTED"
+                ? "bg-red-500/20 text-red-700 border-red-500/30" 
+                : "bg-yellow-500/20 text-yellow-700 border-yellow-500/30"
+            }`}
+          >
+            {item.verdict}
+          </Badge>
+        </div>
+        
+        <div className="mt-2 flex items-center text-xs text-muted-foreground">
           <div className={`w-2 h-2 rounded-full mr-2 ${
             item.status === "Commercially Available" 
               ? "bg-green-500" 
