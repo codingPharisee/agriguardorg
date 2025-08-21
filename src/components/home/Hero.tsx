@@ -20,9 +20,11 @@ const Hero = () => {
 
   return (
     <div 
-      className={`relative ${isMobile ? 'min-h-[70vh]' : 'min-h-screen'} flex items-center bg-cover bg-center bg-no-repeat`}
+      className={`relative ${isMobile ? 'min-h-[50vh]' : 'min-h-screen'} flex items-${isMobile ? 'start pt-16' : 'center'} bg-cover bg-center bg-no-repeat`}
       style={{
-        backgroundImage: `url('${wheatBackground}')`
+        backgroundImage: `url('${wheatBackground}')`,
+        backgroundSize: isMobile ? 'cover' : 'cover',
+        backgroundPosition: isMobile ? 'center top' : 'center center'
       }}
     >
       {/* Dark overlay for readability */}
@@ -31,22 +33,22 @@ const Hero = () => {
       {/* Tree overlay effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-green-900/30"></div>
       
-      <div className={`container mx-auto px-4 ${isMobile ? 'py-8' : 'py-24'} flex items-center justify-center relative z-10`}>
+      <div className={`container mx-auto px-4 ${isMobile ? 'py-4' : 'py-24'} flex items-center justify-center relative z-10`}>
         {/* Centered Content */}
         <div className="w-full text-center">
-          <div className={`${isMobile ? 'mb-4' : 'mb-6'}`}>
-            <h1 className={`${isMobile ? 'text-4xl' : 'text-6xl md:text-7xl'} font-bold tracking-tight text-white ${isMobile ? 'mb-2' : 'mb-4'}`}>
+          <div className={`${isMobile ? 'mb-2' : 'mb-6'}`}>
+            <h1 className={`${isMobile ? 'text-3xl' : 'text-6xl md:text-7xl'} font-bold tracking-tight text-white ${isMobile ? 'mb-1' : 'mb-4'}`}>
               AgriGuard
             </h1>
-            <h3 className={`${isMobile ? 'text-lg' : 'text-2xl md:text-3xl'} font-semibold text-green-300 ${isMobile ? 'mb-2' : 'mb-4'}`}>
+            <h3 className={`${isMobile ? 'text-base' : 'text-2xl md:text-3xl'} font-semibold text-green-300 ${isMobile ? 'mb-1' : 'mb-4'}`}>
               Technological Solutions
             </h3>
           </div>
           
-          <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-4 mb-4' : 'p-6 mb-8'} max-w-4xl mx-auto`}>
+          <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-3 mb-3' : 'p-6 mb-8'} max-w-4xl mx-auto`}>
             {isMobile ? (
-              <p className="text-sm text-white/95 leading-relaxed">
-                Your trusted source for accurate GMO information. Combat misinformation with science-based facts about modern farming.
+              <p className="text-xs text-white/95 leading-relaxed">
+                Trusted GMO information. Combat misinformation with science-based facts.
               </p>
             ) : (
               <>
@@ -63,18 +65,18 @@ const Hero = () => {
             )}
           </div>
           
-          <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'flex-wrap justify-center gap-4'}`}>
+          <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'flex-wrap justify-center gap-4'}`}>
             <Button 
-              size={isMobile ? "default" : "lg"}
-              className={`bg-transparent border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-black ${isMobile ? 'px-6 py-2 text-sm' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
+              size={isMobile ? "sm" : "lg"}
+              className={`bg-transparent border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-black ${isMobile ? 'px-4 py-1.5 text-xs' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
               onClick={scrollToFactCheck}
             >
               DISCOVER GMO FACTS
             </Button>
             <Button 
               variant="outline" 
-              size={isMobile ? "default" : "lg"}
-              className={`bg-white/10 border-2 border-white text-white hover:bg-white hover:text-black ${isMobile ? 'px-6 py-2 text-sm' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
+              size={isMobile ? "sm" : "lg"}
+              className={`bg-white/10 border-2 border-white text-white hover:bg-white hover:text-black ${isMobile ? 'px-4 py-1.5 text-xs' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
               onClick={() => setContactFormOpen(true)}
             >
               Learn More

@@ -71,7 +71,7 @@ const Header = () => {
                   Tools <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className="bg-white border border-green-200 shadow-lg rounded-md z-50 min-w-[180px]">
                 {toolsItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
                     <Link to={item.href}>{item.name}</Link>
@@ -108,26 +108,32 @@ const Header = () => {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col space-y-4 mt-6">
-                {navigationItems.map((item) => (
+            <SheetContent side="right" className="w-[250px] bg-gradient-to-br from-green-50 to-white border-l-4 border-green-400 shadow-xl">
+              <div className="flex flex-col space-y-3 mt-4">
+                <div className="text-center pb-3 border-b border-green-200">
+                  <h2 className="text-lg font-bold text-green-700">Menu</h2>
+                </div>
+                
+                {navigationItems.map((item, index) => (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-gray-700 hover:text-green-600 transition-colors font-medium py-2"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 transition-all duration-200 font-medium py-2 px-3 rounded-md text-sm animate-fade-in"
+                    style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
                 
-                <div className="border-t pt-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">Tools</h3>
-                  {toolsItems.map((item) => (
+                <div className="border-t border-green-200 pt-3">
+                  <h3 className="font-semibold text-green-700 mb-2 text-sm px-3">Tools</h3>
+                  {toolsItems.map((item, index) => (
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="block text-gray-600 hover:text-green-600 transition-colors py-1"
+                      className="block text-gray-600 hover:text-green-600 hover:bg-green-50 transition-all duration-200 py-1.5 px-3 rounded-md text-sm"
+                      style={{ animationDelay: `${(index + 4) * 50}ms` }}
                       onClick={() => setIsOpen(false)}
                     >
                       {item.name}
@@ -135,20 +141,20 @@ const Header = () => {
                   ))}
                 </div>
                 
-                <div className="border-t pt-4 space-y-3">
-                  <Button variant="outline" className="w-full text-green-600 border-green-600 hover:bg-green-50" asChild>
+                <div className="border-t border-green-200 pt-3 space-y-2">
+                  <Button variant="outline" size="sm" className="w-full text-green-600 border-green-400 hover:bg-green-50 text-xs" asChild>
                     <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
                   </Button>
                   
                   {user ? (
                     <div className="space-y-2">
-                      <p className="text-sm text-gray-600">Welcome!</p>
-                      <Button onClick={() => { handleSignOut(); setIsOpen(false); }} variant="outline" className="w-full">
+                      <p className="text-xs text-gray-600 text-center">Welcome!</p>
+                      <Button onClick={() => { handleSignOut(); setIsOpen(false); }} variant="outline" size="sm" className="w-full text-xs">
                         Sign Out
                       </Button>
                     </div>
                   ) : (
-                    <Button className="w-full bg-green-600 hover:bg-green-700" asChild>
+                    <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-xs" asChild>
                       <Link to="/auth" onClick={() => setIsOpen(false)}>Login</Link>
                     </Button>
                   )}
