@@ -37,18 +37,18 @@ const Hero = () => {
         {/* Centered Content */}
         <div className="w-full text-center">
           <div className={`${isMobile ? 'mb-2' : 'mb-6'}`}>
-            <h1 className={`${isMobile ? 'text-3xl' : 'text-6xl md:text-7xl'} font-bold tracking-tight text-white ${isMobile ? 'mb-1' : 'mb-4'}`}>
+            <h1 className={`${isMobile ? 'text-2xl' : 'text-6xl md:text-7xl'} font-bold tracking-tight text-white ${isMobile ? 'mb-1' : 'mb-4'}`}>
               AgriGuard
             </h1>
-            <h3 className={`${isMobile ? 'text-base' : 'text-2xl md:text-3xl'} font-semibold text-green-300 ${isMobile ? 'mb-1' : 'mb-4'}`}>
+            <h3 className={`${isMobile ? 'text-sm' : 'text-2xl md:text-3xl'} font-semibold text-green-300 ${isMobile ? 'mb-1' : 'mb-4'}`}>
               Technological Solutions
             </h3>
           </div>
           
-          <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-3 mb-3' : 'p-6 mb-8'} max-w-4xl mx-auto`}>
+          <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-2.5 mb-3 max-w-sm' : 'p-6 mb-8 max-w-4xl'} mx-auto`}>
             {isMobile ? (
-              <p className="text-xs text-white/95 leading-relaxed">
-                Trusted GMO information. Combat misinformation with science-based facts.
+              <p className="text-xs text-white/95 leading-relaxed text-center">
+                Trusted GMO information. Combat misinformation with science.
               </p>
             ) : (
               <>
@@ -65,21 +65,21 @@ const Hero = () => {
             )}
           </div>
           
-          <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'flex-wrap justify-center gap-4'}`}>
+          <div className={`flex ${isMobile ? 'flex-col items-center space-y-2 max-w-xs mx-auto' : 'flex-wrap justify-center gap-4'}`}>
             <Button 
               size={isMobile ? "sm" : "lg"}
-              className={`bg-transparent border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-black ${isMobile ? 'px-4 py-1.5 text-xs' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
+              className={`bg-transparent border border-green-400 text-green-400 hover:bg-green-400 hover:text-black ${isMobile ? 'px-3 py-1 text-xs w-full' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
               onClick={scrollToFactCheck}
             >
-              DISCOVER GMO FACTS
+              {isMobile ? 'GMO FACTS' : 'DISCOVER GMO FACTS'}
             </Button>
             <Button 
               variant="outline" 
               size={isMobile ? "sm" : "lg"}
-              className={`bg-white/10 border-2 border-white text-white hover:bg-white hover:text-black ${isMobile ? 'px-4 py-1.5 text-xs' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
+              className={`bg-white/10 border border-white text-white hover:bg-white hover:text-black ${isMobile ? 'px-3 py-1 text-xs w-full' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
               onClick={() => setContactFormOpen(true)}
             >
-              Learn More
+              {isMobile ? 'LEARN MORE' : 'Learn More'}
             </Button>
           </div>
         </div>
