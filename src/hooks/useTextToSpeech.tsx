@@ -23,7 +23,7 @@ export const useTextToSpeech = () => {
       if (error) {
         console.error('Text-to-speech error:', error);
         toast({
-          title: "Speech Error",
+          title: "Audio Generation Failed",
           description: "Could not generate audio. Please try again.",
           variant: "destructive",
         });
@@ -53,8 +53,8 @@ export const useTextToSpeech = () => {
           setIsPlaying(false);
           URL.revokeObjectURL(audioUrl);
           toast({
-            title: "Playback Error",
-            description: "Could not play audio.",
+            title: "Audio Playback Error",
+            description: "Could not play the generated audio.",
             variant: "destructive",
           });
         };
@@ -65,8 +65,8 @@ export const useTextToSpeech = () => {
       console.error('Error generating speech:', error);
       setIsGenerating(false);
       toast({
-        title: "Generation Error",
-        description: "Could not generate speech.",
+        title: "Text-to-Speech Error",
+        description: "Could not generate speech. Please check your internet connection and try again.",
         variant: "destructive",
       });
     }

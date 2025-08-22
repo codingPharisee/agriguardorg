@@ -252,8 +252,11 @@ const FactCheck = () => {
                             onClick={handlePlayResponse}
                             disabled={isGenerating}
                             className="h-8 w-8 p-0"
+                            title={isPlaying ? "Stop audio" : isGenerating ? "Generating audio..." : "Play audio"}
                           >
-                            {isPlaying ? (
+                            {isGenerating ? (
+                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                            ) : isPlaying ? (
                               <VolumeX className="h-4 w-4" />
                             ) : (
                               <Volume2 className="h-4 w-4" />

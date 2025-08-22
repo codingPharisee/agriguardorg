@@ -23,8 +23,8 @@ serve(async (req) => {
       throw new Error('ElevenLabs API key not configured')
     }
 
-    // Use default voice 'Rachel' if not specified
-    const voiceId = voice || '21m00Tcm4TlvDq8ikWAM'
+    // Use Sarah voice for better quality
+    const voiceId = voice || 'EXAVITQu4vr4xnSDxMaL'
 
     // Generate speech from text using ElevenLabs API
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
@@ -46,7 +46,18 @@ serve(async (req) => {
 
     if (!response.ok) {
       const error = await response.text()
-      throw new Error(`ElevenLabs API error: ${error}`)
+      console.error('ElevenLabs API error:', response.status, error)
+      
+      // Better error handling for different status codes
+      if (response.status === 401) {
+        throw new Error('Invalid ElevenLabs API key. Please check your configuration.');
+      } else if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again later.');
+      } else if (response.status === 400) {
+        throw new Error('Invalid text input. Please try with different text.');
+      } else {
+        throw new Error(`Text-to-speech service unavailable (${response.status}). Please try again later.`);
+      }
     }
 
     // Convert audio buffer to base64
@@ -64,9 +75,9 @@ serve(async (req) => {
   } catch (error) {
     console.error('Text-to-speech error:', error)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "Could not generate audio due to technical issues. Please try again." }),
       {
-        status: 400,
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       },
     )
