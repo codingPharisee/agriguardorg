@@ -200,7 +200,7 @@ serve(async (req) => {
     // Return a user-friendly error response
     const errorResponse = {
       isTrue: null,
-      explanation: `I apologize, but I'm currently unable to fact-check this claim due to a technical issue: ${error.message}. Please try again later or contact support if the problem persists.`,
+      explanation: "I apologize, but I'm currently experiencing technical issues and cannot fact-check this claim right now. Please try again later.",
       source: 'System Error'
     };
 

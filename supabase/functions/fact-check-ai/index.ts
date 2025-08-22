@@ -81,7 +81,11 @@ Focus on the most important facts about African agricultural contexts. Be precis
     });
   } catch (error) {
     console.error('Error in fact-check-ai function:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({
+      isTrue: null,
+      explanation: "I apologize, but I'm currently experiencing technical issues and cannot fact-check this claim right now. Please try again later.",
+      source: "System Error"
+    }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
