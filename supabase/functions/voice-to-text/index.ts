@@ -53,16 +53,32 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured')
     }
 
-    console.log('Processing audio transcription...')
+    console.log('Processing audio transcription...', { audioLength: audio.length })
 
-    // Process audio in chunks
-    const binaryAudio = processBase64Chunks(audio)
+    // Decode base64 audio more safely
+    let binaryAudio: Uint8Array;
+    try {
+      // Handle audio data that might have data URL prefix
+      let cleanBase64 = audio;
+      if (audio.includes(',')) {
+        cleanBase64 = audio.split(',')[1];
+      }
+      
+      binaryAudio = processBase64Chunks(cleanBase64);
+      console.log('Audio processed successfully, size:', binaryAudio.length);
+    } catch (decodeError) {
+      console.error('Error decoding base64 audio:', decodeError);
+      throw new Error('Invalid audio data format');
+    }
     
-    // Prepare form data
+    // Prepare form data with proper audio format
     const formData = new FormData()
-    const blob = new Blob([binaryAudio], { type: 'audio/webm' })
-    formData.append('file', blob, 'audio.webm')
+    const blob = new Blob([binaryAudio], { type: 'audio/webm;codecs=opus' })
+    formData.append('file', blob, 'recording.webm')
     formData.append('model', 'whisper-1')
+    formData.append('language', 'en') // Optional: specify language for better accuracy
+
+    console.log('Sending to OpenAI Whisper API...')
 
     // Send to OpenAI
     const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -75,15 +91,29 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('OpenAI API error:', errorText)
-      throw new Error(`OpenAI API error: ${errorText}`)
+      console.error('OpenAI API error:', response.status, errorText)
+      
+      // Better error handling for different status codes
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again later.');
+      } else if (response.status === 401) {
+        throw new Error('Invalid API key. Please check your OpenAI configuration.');
+      } else if (response.status === 400) {
+        throw new Error('Invalid audio format. Please try recording again.');
+      } else {
+        throw new Error(`OpenAI API error (${response.status}): ${errorText}`);
+      }
     }
 
     const result = await response.json()
-    console.log('Transcription successful:', result.text)
+    console.log('Transcription successful:', { text: result.text, textLength: result.text?.length })
+
+    if (!result.text || result.text.trim().length === 0) {
+      throw new Error('No speech detected in audio. Please speak clearly and try again.');
+    }
 
     return new Response(
-      JSON.stringify({ text: result.text }),
+      JSON.stringify({ text: result.text.trim() }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
 
