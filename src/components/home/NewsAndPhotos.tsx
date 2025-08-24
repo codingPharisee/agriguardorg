@@ -75,8 +75,8 @@ const NewsAndPhotos = () => {
       source: "AGRA"
     },
     {
-      title: "New Research Debunks Myths About GMO Safety in African Food Systems",
-      description: "A comprehensive study by the African Union's Scientific, Technical and Research Commission provides evidence-based analysis on GMO safety for both human health and environmental conservation.",
+      title: "New Research Debunks Myths About Agricultural Technology Safety in African Food Systems",
+      description: "A comprehensive study by the African Union's Scientific, Technical and Research Commission provides evidence-based analysis on agricultural technology safety for both human health and environmental conservation.",
       url: "#",
       image_url: "https://images.unsplash.com/photo-1574943320219-5650d380a722?q=80&w=500&auto=format&fit=crop",
       published_at: new Date().toISOString(),

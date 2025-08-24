@@ -8,15 +8,15 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { GMOItem } from "./GMOGuide";
+import { AgricultureItem } from "./AgricultureGuide";
 
-interface GMOModalProps {
-  item: GMOItem | null;
+interface AgricultureModalProps {
+  item: AgricultureItem | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const GMOModal: React.FC<GMOModalProps> = ({ item, isOpen, onClose }) => {
+const AgricultureModal: React.FC<AgricultureModalProps> = ({ item, isOpen, onClose }) => {
   if (!item) return null;
 
   return (
@@ -150,4 +150,4 @@ const GMOModal: React.FC<GMOModalProps> = ({ item, isOpen, onClose }) => {
   );
 };
 
-export default GMOModal;
+export default AgricultureModal;

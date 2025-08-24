@@ -48,12 +48,12 @@ const Hero = () => {
           <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-2.5 mb-3 max-w-sm' : 'p-6 mb-8 max-w-4xl'} mx-auto`}>
             {isMobile ? (
               <p className="text-xs text-white/95 leading-relaxed text-center">
-                Trusted GMO information. Combat misinformation with science.
+                Trusted agricultural information. Combat misinformation with science.
               </p>
             ) : (
               <>
                 <p className="text-lg md:text-xl text-white/95 mb-4 leading-relaxed">
-                  Your trusted source for accurate GMO (Genetically Modified Organism) information. 
+                  Your trusted source for accurate agricultural biotechnology information. 
                   We combat agricultural misinformation and provide farmers with science-based facts 
                   about modern farming technologies.
                 </p>
@@ -71,7 +71,7 @@ const Hero = () => {
               className={`bg-transparent border border-green-400 text-green-400 hover:bg-green-400 hover:text-black ${isMobile ? 'px-3 py-1 text-xs w-full' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
               onClick={scrollToFactCheck}
             >
-              {isMobile ? 'GMO FACTS' : 'DISCOVER GMO FACTS'}
+              {isMobile ? 'AGRI FACTS' : 'DISCOVER AGRICULTURAL FACTS'}
             </Button>
             <Button 
               variant="outline" 

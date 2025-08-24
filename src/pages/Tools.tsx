@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import GMOGuide from "@/components/gmo/GMOGuide";
+import AgricultureGuide from "@/components/agriculture/AgricultureGuide";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -77,19 +77,19 @@ const Tools = () => {
             </Card>
           </div>
 
-          {/* GMO Guide Section */}
+          {/* Agricultural Technology Guide Section */}
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-6">
               <Sprout className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">GMO Information Guide</h2>
+              <h2 className="text-2xl font-bold">Agricultural Technology Guide</h2>
             </div>
             <p className="text-muted-foreground mb-8 max-w-3xl">
-              Comprehensive guide to genetically modified organisms in agriculture. 
-              Learn about different GMO crops and animals, their benefits, and the science behind them.
+              Comprehensive guide to agricultural biotechnology and modern farming innovations. 
+              Learn about different agricultural technologies, their benefits, and the science behind them.
             </p>
           </div>
 
-          <GMOGuide />
+          <AgricultureGuide />
         </div>
       </main>
       

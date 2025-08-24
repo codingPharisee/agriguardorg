@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import GMOFilters from "./GMOFilters";
-import GMOCard from "./GMOCard";
-import GMOModal from "./GMOModal";
+import AgricultureFilters from "./AgricultureFilters";
+import AgricultureCard from "./AgricultureCard";
+import AgricultureModal from "./AgricultureModal";
 
-export interface GMOItem {
+export interface AgricultureItem {
   id: string;
   name: string;
   type: "Crop" | "Animal";
@@ -21,7 +21,7 @@ export interface GMOItem {
 }
 
 // Sample data based on ISAAA GM approval database
-const gmoData: GMOItem[] = [
+const agricultureData: AgricultureItem[] = [
   {
     id: "1",
     name: "Bt Cotton",
@@ -147,12 +147,12 @@ const gmoData: GMOItem[] = [
   }
 ];
 
-const GMOGuide: React.FC = () => {
+const AgricultureGuide: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const [selectedSecondaryFilter, setSelectedSecondaryFilter] = useState<string>("");
-  const [selectedItem, setSelectedItem] = useState<GMOItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<AgricultureItem | null>(null);
 
-  const filteredItems = gmoData.filter(item => {
+  const filteredItems = agricultureData.filter(item => {
     if (selectedFilter === "All") return true;
     if (selectedFilter === "Crops") {
       if (selectedSecondaryFilter) {
@@ -171,16 +171,16 @@ const GMOGuide: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
-            A Guide to Genetically Modified Organisms (GMOs)
+            A Guide to Agricultural Technology and Biotechnology
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Explore the world of genetically modified crops and animals. Learn about their benefits, 
-            applications, and the science behind these innovative agricultural technologies that are 
+            Explore the world of modern agricultural innovations and biotechnology applications. Learn about their benefits, 
+            applications, and the science behind these innovative technologies that are 
             helping to address global food security challenges.
           </p>
         </div>
 
-        <GMOFilters
+        <AgricultureFilters
           selectedFilter={selectedFilter}
           onFilterChange={setSelectedFilter}
           selectedSecondaryFilter={selectedSecondaryFilter}
@@ -189,7 +189,7 @@ const GMOGuide: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {filteredItems.map((item) => (
-            <GMOCard
+            <AgricultureCard
               key={item.id}
               item={item}
               onClick={() => setSelectedItem(item)}
@@ -200,13 +200,13 @@ const GMOGuide: React.FC = () => {
         {filteredItems.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">
-              No GMOs found matching your current filters.
+              No agricultural items found matching your current filters.
             </p>
           </div>
         )}
       </div>
 
-      <GMOModal
+      <AgricultureModal
         item={selectedItem}
         isOpen={!!selectedItem}
         onClose={() => setSelectedItem(null)}
@@ -215,4 +215,4 @@ const GMOGuide: React.FC = () => {
   );
 };
 
-export default GMOGuide;
+export default AgricultureGuide;

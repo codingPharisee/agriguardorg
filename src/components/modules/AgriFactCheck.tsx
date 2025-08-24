@@ -15,8 +15,8 @@ import { supabase } from "@/integrations/supabase/client";
 const FAQS = [
   {
     id: 1,
-    question: "Are GMOs safe for African farmers to use?",
-    answer: "Scientific evidence supports that approved GMOs are safe to use and consume. Several African countries including South Africa, Kenya, Nigeria, and Ethiopia have adopted GMO crops with appropriate regulatory frameworks in place to ensure safety and effectiveness.",
+    question: "Are modern agricultural technologies safe for African farmers to use?",
+    answer: "Scientific evidence supports that approved agricultural biotechnologies are safe to use and consume. Several African countries including South Africa, Kenya, Nigeria, and Ethiopia have adopted modern crop technologies with appropriate regulatory frameworks in place to ensure safety and effectiveness.",
     source: "African Agricultural Technology Foundation (AATF), 2023",
     organization: "AATF"
   },
@@ -66,7 +66,7 @@ const FAQS = [
 
 // Common agricultural topics relevant to African farming
 const COMMON_TOPICS = [
-  "GMOs in African agriculture",
+  "Agricultural biotechnology in African agriculture",
   "Drought-resistant crops",
   "Pesticide safety",
   "Climate-smart farming",
@@ -106,9 +106,9 @@ const LANGUAGES = [
 
 // Mock database of fact-checking responses
 const FACT_CHECK_DATABASE = {
-  "gmo": {
+  "agricultural_biotech": {
     isTrue: true,
-    explanation: "Approved GMOs have been scientifically tested and are considered safe for consumption according to multiple African regulatory bodies including Kenya's National Biosafety Authority and South Africa's Department of Agriculture.",
+    explanation: "Approved agricultural biotechnologies have been scientifically tested and are considered safe for consumption according to multiple African regulatory bodies including Kenya's National Biosafety Authority and South Africa's Department of Agriculture.",
     source: "African Agricultural Technology Foundation (AATF), 2023"
   },
   "organic": {

@@ -1,14 +1,14 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GMOItem } from "./GMOGuide";
+import { AgricultureItem } from "./AgricultureGuide";
 
-interface GMOCardProps {
-  item: GMOItem;
+interface AgricultureCardProps {
+  item: AgricultureItem;
   onClick: () => void;
 }
 
-const GMOCard: React.FC<GMOCardProps> = ({ item, onClick }) => {
+const AgricultureCard: React.FC<AgricultureCardProps> = ({ item, onClick }) => {
   return (
     <Card 
       className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden border border-border/50 hover:border-primary/20"
@@ -69,4 +69,4 @@ const GMOCard: React.FC<GMOCardProps> = ({ item, onClick }) => {
   );
 };
 
-export default GMOCard;
+export default AgricultureCard;

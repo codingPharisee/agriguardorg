@@ -37,43 +37,43 @@ const LANGUAGES = [
 const FAQS = [
   {
     id: 1,
-    question: "Are GMOs safe to eat?",
-    answer: "Yes. The scientific consensus shows that currently approved GMO foods are safe to eat. Major scientific organizations worldwide, including the World Health Organization, have evaluated the safety of GMOs and found no evidence that they are harmful to humans.",
+    question: "Are modern agricultural technologies safe to eat?",
+    answer: "Yes. The scientific consensus shows that currently approved agricultural biotechnologies are safe to eat. Major scientific organizations worldwide, including the World Health Organization, have evaluated the safety of these technologies and found no evidence that they are harmful to humans.",
     source: "World Health Organization, 2023"
   },
   {
     id: 2,
-    question: "Do GMOs cause allergies?",
-    answer: "GMOs undergo extensive testing for potential allergenicity before approval. No approved GMO foods have been found to introduce new allergens. In fact, genetic engineering can be used to remove proteins that trigger allergic reactions.",
+    question: "Do modern agricultural technologies cause allergies?",
+    answer: "Agricultural biotechnologies undergo extensive testing for potential allergenicity before approval. No approved biotechnology foods have been found to introduce new allergens. In fact, genetic engineering can be used to remove proteins that trigger allergic reactions.",
     source: "Food and Agriculture Organization, 2022"
   },
   {
     id: 3,
-    question: "Do pesticides used with GMOs harm bees?",
-    answer: "The relationship between pesticides and bee health is complex. Some studies show certain pesticides like neonicotinoids can harm bees, while others show minimal impact when used according to label instructions. This is an active area of research not specific to GMOs.",
+    question: "Do pesticides used with modern crops harm bees?",
+    answer: "The relationship between pesticides and bee health is complex. Some studies show certain pesticides like neonicotinoids can harm bees, while others show minimal impact when used according to label instructions. This is an active area of research not specific to modern agricultural technologies.",
     source: "ISAAA Agricultural Research Report, 2023"
   },
   {
     id: 4,
-    question: "Can GMOs cross-pollinate with non-GMO crops?",
-    answer: "Yes, cross-pollination between GMO and non-GMO crops can occur naturally, just as it can between any compatible plant varieties. Farmers use buffer zones, timing planting to avoid overlapping pollination periods, and other management practices to minimize this when needed.",
+    question: "Can modern crops cross-pollinate with traditional crops?",
+    answer: "Yes, cross-pollination between modern and traditional crops can occur naturally, just as it can between any compatible plant varieties. Farmers use buffer zones, timing planting to avoid overlapping pollination periods, and other management practices to minimize this when needed.",
     source: "American Society of Agronomy, 2022"
   },
   {
     id: 5,
-    question: "Are GMOs environmentally harmful?",
-    answer: "GMO environmental impacts vary by application. Some GMO crops have reduced pesticide use and improved soil conservation through reduced tillage. Each GMO variety needs to be evaluated individually for its specific environmental effects rather than making broad generalizations.",
+    question: "Are modern agricultural technologies environmentally harmful?",
+    answer: "Modern agricultural technology environmental impacts vary by application. Some crop varieties have reduced pesticide use and improved soil conservation through reduced tillage. Each technology needs to be evaluated individually for its specific environmental effects rather than making broad generalizations.",
     source: "National Academies of Sciences, Engineering, and Medicine, 2023"
   },
 ];
 
 // Common claims data
 const COMMON_CLAIMS = [
-  "GMOs are unsafe for human consumption",
-  "GMOs increase crop yields",
+  "Modern agricultural technologies are unsafe for human consumption",
+  "Agricultural innovations increase crop yields",
   "Organic farming is better for the environment",
-  "GMOs cause cancer",
-  "GMOs can solve world hunger"
+  "Modern crop technologies cause cancer",
+  "Agricultural innovation can solve world hunger"
 ];
 
 const getPlaceholderText = (language: string) => {

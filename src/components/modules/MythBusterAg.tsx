@@ -11,11 +11,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const mockVideos = [
   {
     id: 1,
-    title: "The Truth About GMOs and Health",
+    title: "The Truth About Agricultural Biotechnology and Health",
     thumbnail: "https://source.unsplash.com/random/800x600/?farming",
     length: "2:45",
     views: 1240,
-    category: "GMOs",
+    category: "Agricultural Biotechnology",
     featured: true,
   },
   {

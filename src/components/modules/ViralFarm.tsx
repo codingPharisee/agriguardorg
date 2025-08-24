@@ -34,7 +34,7 @@ import { useToast } from "@/hooks/use-toast";
 const INITIAL_MYTHS = [
   {
     id: 1,
-    title: "GMOs cause cancer",
+    title: "Modern crop breeding causes cancer",
     severity: "High",
     trend: "Rising",
     source: "Twitter",
@@ -70,7 +70,7 @@ const INITIAL_MYTHS = [
   },
   {
     id: 5,
-    title: "Bees are dying because of GMOs",
+    title: "Bees are dying because of agricultural technologies",
     severity: "Medium",
     trend: "Stable",
     source: "Blogs",

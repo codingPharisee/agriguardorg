@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 
-interface GMOFiltersProps {
+interface AgricultureFiltersProps {
   selectedFilter: string;
   onFilterChange: (filter: string) => void;
   selectedSecondaryFilter: string;
@@ -16,7 +16,7 @@ const cropTraits = [
   "Nutritional Enhancement"
 ];
 
-const GMOFilters: React.FC<GMOFiltersProps> = ({
+const AgricultureFilters: React.FC<AgricultureFiltersProps> = ({
   selectedFilter,
   onFilterChange,
   selectedSecondaryFilter,
@@ -69,4 +69,4 @@ const GMOFilters: React.FC<GMOFiltersProps> = ({
   );
 };
 
-export default GMOFilters;
+export default AgricultureFilters;

@@ -79,7 +79,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div className="text-green-200 text-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mx-auto mb-2"></div>
-              GMO fact-checking and verification
+              Agricultural biotechnology fact-checking and verification
             </div>
             <div className="text-green-200 text-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mx-auto mb-2"></div>

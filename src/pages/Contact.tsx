@@ -17,7 +17,7 @@ const Contact = () => {
                 Contact AgriGuard Company
               </h1>
               <p className="text-lg text-gray-700 leading-relaxed">
-                Get in touch with our team for GMO information, agricultural guidance, 
+                Get in touch with our team for agricultural biotechnology information, agricultural guidance, 
                 or partnership opportunities.
               </p>
             </div>
@@ -84,7 +84,7 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold text-amber-900 mb-6">Our Mission</h2>
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   AgriGuard Company is dedicated to providing accurate, science-based information 
-                  about GMOs and modern agricultural practices. We work to combat misinformation 
+                  about agricultural biotechnology and modern agricultural practices. We work to combat misinformation 
                   and support farmers with reliable knowledge.
                 </p>
                 
@@ -92,7 +92,7 @@ const Contact = () => {
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
-                    GMO fact-checking and verification
+                    Agricultural biotechnology fact-checking and verification
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-amber-600 rounded-full"></div>

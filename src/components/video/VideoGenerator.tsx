@@ -12,15 +12,15 @@ import { Video, Sparkles, FileText, Play, Loader2, CheckCircle2, AlertTriangle }
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-const GMO_TOPICS = [
-  { value: 'safety', label: 'GMO Safety', description: 'Scientific evidence on GMO food safety' },
-  { value: 'environment', label: 'Environmental Impact', description: 'How GMOs affect the environment' },
-  { value: 'nutrition', label: 'Nutritional Benefits', description: 'Enhanced nutrition through genetic modification' },
-  { value: 'sustainability', label: 'Sustainable Agriculture', description: 'GMOs and sustainable farming practices' },
-  { value: 'economy', label: 'Economic Impact', description: 'Economic benefits and challenges of GMOs' },
-  { value: 'regulation', label: 'Regulation & Testing', description: 'How GMOs are regulated and tested' },
-  { value: 'myths', label: 'Common Myths', description: 'Debunking GMO misconceptions' },
-  { value: 'crops', label: 'GMO Crops', description: 'Types and benefits of GMO crops' }
+const AGRICULTURE_TOPICS = [
+  { value: 'safety', label: 'Agricultural Safety', description: 'Scientific evidence on agricultural technology safety' },
+  { value: 'environment', label: 'Environmental Impact', description: 'How agricultural technologies affect the environment' },
+  { value: 'nutrition', label: 'Nutritional Benefits', description: 'Enhanced nutrition through agricultural technology' },
+  { value: 'sustainability', label: 'Sustainable Agriculture', description: 'Agricultural technologies and sustainable farming practices' },
+  { value: 'economy', label: 'Economic Impact', description: 'Economic benefits and challenges of agricultural technologies' },
+  { value: 'regulation', label: 'Regulation & Testing', description: 'How agricultural technologies are regulated and tested' },
+  { value: 'myths', label: 'Common Myths', description: 'Debunking agricultural technology misconceptions' },
+  { value: 'crops', label: 'Modern Crops', description: 'Types and benefits of modern crop varieties' }
 ];
 
 const AVATARS = [
@@ -65,7 +65,7 @@ const VideoGenerator: React.FC = () => {
         body: {
           topic: topic,
           userScript: '',
-          category: 'GMO Education',
+          category: 'Agricultural Education',
           format: formData.format
         }
       });
@@ -82,7 +82,7 @@ const VideoGenerator: React.FC = () => {
       }
 
       const generatedScript = scriptResponse.data.script;
-      const topicLabel = GMO_TOPICS.find(t => t.value === formData.topic)?.label || topic;
+      const topicLabel = AGRICULTURE_TOPICS.find(t => t.value === formData.topic)?.label || topic;
       const autoTitle = `Understanding ${topicLabel}`;
 
       console.log('Generated script length:', generatedScript.length);
@@ -93,7 +93,7 @@ const VideoGenerator: React.FC = () => {
           title: autoTitle,
           prompt: topic,
           script: generatedScript,
-          category: 'GMO Education',
+          category: 'Agricultural Education',
           avatar_id: formData.avatar
         }
       });
@@ -112,7 +112,7 @@ const VideoGenerator: React.FC = () => {
       setGeneratedVideoId(videoResponse.data.video_id);
       toast({
         title: "Video Generation Started",
-        description: "Your GMO educational video is being generated automatically!",
+        description: "Your agricultural educational video is being generated automatically!",
       });
     } catch (error) {
       console.error('Error generating video:', error);
@@ -140,9 +140,9 @@ const VideoGenerator: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 fade-in">
       <div className="text-center space-y-2 fade-in-section visible">
-        <h1 className="text-3xl font-bold text-primary">GMO Myth Buster</h1>
+        <h1 className="text-3xl font-bold text-primary">Agricultural Technology Educator</h1>
         <p className="text-muted-foreground">
-          Simply enter a GMO topic and AI will automatically generate an educational video
+          Simply enter an agricultural topic and AI will automatically generate an educational video
         </p>
       </div>
 
@@ -159,13 +159,13 @@ const VideoGenerator: React.FC = () => {
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>GMO Topic</Label>
+              <Label>Agricultural Topic</Label>
               <Select value={formData.topic} onValueChange={handleTopicChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a GMO topic..." />
+                  <SelectValue placeholder="Select an agricultural topic..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {GMO_TOPICS.map(topic => (
+                  {AGRICULTURE_TOPICS.map(topic => (
                     <SelectItem key={topic.value} value={topic.value}>
                       <div>
                         <div className="font-medium">{topic.label}</div>
@@ -197,7 +197,7 @@ const VideoGenerator: React.FC = () => {
               <Label htmlFor="customTopic">Or Enter Your Own Topic</Label>
               <Input
                 id="customTopic"
-                placeholder="e.g., Are GMO foods safe to eat?"
+                placeholder="e.g., Are modern crop technologies safe?"
                 value={formData.customTopic}
                 onChange={(e) => setFormData(prev => ({ ...prev, customTopic: e.target.value }))}
               />
@@ -248,7 +248,7 @@ const VideoGenerator: React.FC = () => {
               <AlertDescription className="text-green-800">
                 <span className="font-medium">Video generation started!</span>
                 <br />
-                Your educational video about GMO is being created automatically. This may take 2-3 minutes.
+                Your educational video about agricultural technology is being created automatically. This may take 2-3 minutes.
                 <br />
                 Video ID: {generatedVideoId}
               </AlertDescription>
