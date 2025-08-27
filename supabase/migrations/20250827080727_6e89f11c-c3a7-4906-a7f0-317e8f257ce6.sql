@@ -1,0 +1,1 @@
+DELETE FROM mythbuster_videos;
