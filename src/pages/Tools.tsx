@@ -71,7 +71,7 @@ const Tools = () => {
                   AI-powered pest and disease identification through image recognition.
                 </p>
                 <Button asChild size="sm" className="w-full">
-                  <Link to="/fact-check">Open Pest ID</Link>
+                  <Link to="/pest-identification">Open Pest ID</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -88,7 +88,7 @@ const Tools = () => {
                   Personalized crop recommendations based on soil data and weather patterns.
                 </p>
                 <Button asChild size="sm" className="w-full">
-                  <Link to="/fact-check">Open Crop Rec</Link>
+                  <Link to="/crop-recommendations">Open Crop Rec</Link>
                 </Button>
               </CardContent>
             </Card>

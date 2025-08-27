@@ -28,6 +28,8 @@ const Header = () => {
     { name: "All Tools", href: "/tools" },
     { name: "ViralFarm", href: "/viral-farm" },
     { name: "MythBuster Ag", href: "/myth-buster" },
+    { name: "Pest Identification", href: "/pest-identification" },
+    { name: "Crop Recommendations", href: "/crop-recommendations" },
     { name: "Integrated Ecosystem", href: "/ecosystem" },
   ];
 

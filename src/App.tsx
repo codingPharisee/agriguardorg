@@ -19,6 +19,8 @@ import VideoGeneration from "./pages/VideoGeneration";
 import Tools from "./pages/Tools";
 import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
+import PestIdentification from "./pages/PestIdentification";
+import CropRecommendations from "./pages/CropRecommendations";
 import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
@@ -39,6 +41,8 @@ const AppContent = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/pest-identification" element={<PestIdentification />} />
+      <Route path="/crop-recommendations" element={<CropRecommendations />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
