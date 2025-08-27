@@ -45,24 +45,16 @@ const Hero = () => {
             </h3>
           </div>
           
-          <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-2.5 mb-3 max-w-sm' : 'p-6 mb-8 max-w-4xl'} mx-auto`}>
-            {isMobile ? (
-              <p className="text-xs text-white/95 leading-relaxed text-center">
-                Trusted agricultural information. Combat misinformation with science.
-              </p>
-            ) : (
-              <>
-                <p className="text-lg md:text-xl text-white/95 mb-4 leading-relaxed">
-                  Your trusted source for accurate agricultural biotechnology information. 
-                  We combat agricultural misinformation and provide farmers with science-based facts 
-                  about modern farming technologies.
-                </p>
-                <p className="text-md text-green-200 leading-relaxed">
-                  Empowering farmers with reliable knowledge about crop genetics, biotechnology, 
-                  and sustainable agricultural practices for a food-secure future.
-                </p>
-              </>
-            )}
+          <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-3 mb-3 max-w-sm' : 'p-6 mb-8 max-w-4xl'} mx-auto`}>
+            <p className={`${isMobile ? 'text-xs mb-2' : 'text-lg md:text-xl mb-4'} text-white/95 leading-relaxed text-center`}>
+              Your trusted source for accurate agricultural biotechnology information. 
+              We combat agricultural misinformation and provide farmers with science-based facts 
+              about modern farming technologies.
+            </p>
+            <p className={`${isMobile ? 'text-xs' : 'text-md'} text-green-200 leading-relaxed text-center`}>
+              Empowering farmers with reliable knowledge about crop genetics, biotechnology, 
+              and sustainable agricultural practices for a food-secure future.
+            </p>
           </div>
           
           <div className={`flex ${isMobile ? 'flex-col items-center space-y-2 max-w-xs mx-auto' : 'flex-wrap justify-center gap-4'}`}>
