@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages } from "lucide-react";
+import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages, Mic, Volume2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
+import { useVoiceRecording } from "@/hooks/useVoiceRecording";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 // Enhanced FAQ data from African agricultural organizations
 const FAQS = [
@@ -148,6 +150,10 @@ const AgriFactCheck = () => {
   } | null>(null);
   const { toast } = useToast();
 
+  // Voice functionality
+  const { isRecording, isProcessing, startRecording, stopRecording } = useVoiceRecording();
+  const { speak, stop: stopSpeaking, isPlaying, isGenerating } = useTextToSpeech();
+
   useEffect(() => {
     if (selectedOrg === "all") {
       setFilteredFaqs(FAQS);
@@ -201,6 +207,33 @@ const AgriFactCheck = () => {
   const handleTopicClick = (topic: string) => {
     setQuery(topic);
     setActiveTab("chat");
+  };
+
+  const handleVoiceRecording = async () => {
+    if (isRecording) {
+      const transcribedText = await stopRecording();
+      if (transcribedText) {
+        setQuery(transcribedText);
+        toast({
+          title: "Voice recorded",
+          description: "Audio has been transcribed successfully",
+        });
+      }
+    } else {
+      await startRecording();
+      toast({
+        title: "Recording started",
+        description: "Speak your question now...",
+      });
+    }
+  };
+
+  const handlePlayResponse = async () => {
+    if (isPlaying) {
+      stopSpeaking();
+    } else if (factCheckResult?.explanation) {
+      await speak(factCheckResult.explanation);
+    }
   };
 
   return (
@@ -281,6 +314,18 @@ const AgriFactCheck = () => {
                 disabled={isLoading}
               />
               <Button 
+                type="button"
+                onClick={handleVoiceRecording}
+                disabled={isLoading || isProcessing}
+                className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white shadow-lg`}
+              >
+                {isProcessing ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Mic className={`h-4 w-4 ${isRecording ? 'animate-pulse' : ''}`} />
+                )}
+              </Button>
+              <Button 
                 type="submit" 
                 disabled={isLoading || !query.trim()}
                 className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 shadow-lg"
@@ -320,10 +365,33 @@ const AgriFactCheck = () => {
                   </div>
                 </div>
                 
-                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60 flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-green-600" />
-                  <span className="font-medium">Source:</span>
-                  <span>{factCheckResult.source}</span>
+                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Globe className="h-4 w-4 text-green-600" />
+                    <span className="font-medium">Source:</span>
+                    <span>{factCheckResult.source}</span>
+                  </div>
+                  <Button
+                    onClick={handlePlayResponse}
+                    disabled={isGenerating}
+                    variant="outline"
+                    size="sm"
+                    className="ml-auto border-green-200 hover:bg-green-50"
+                  >
+                    {isGenerating ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : isPlaying ? (
+                      <>
+                        <X className="h-4 w-4 mr-1" />
+                        Stop
+                      </>
+                    ) : (
+                      <>
+                        <Volume2 className="h-4 w-4 mr-1" />
+                        Listen
+                      </>
+                    )}
+                  </Button>
                 </div>
               </div>
             )}
