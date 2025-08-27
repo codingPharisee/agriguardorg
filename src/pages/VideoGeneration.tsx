@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import VideoGenerator from '@/components/video/VideoGenerator';
 import { VideoUploadManager } from '@/components/video/VideoUploadManager';
+import MythBusterAg from '@/components/modules/MythBusterAg';
 
 const VideoGeneration: React.FC = () => {
   return (
@@ -15,18 +16,23 @@ const VideoGeneration: React.FC = () => {
           <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold text-center mb-8">Video Management Center</h1>
             
-            <Tabs defaultValue="generate" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="generate">Generate Videos</TabsTrigger>
+            <Tabs defaultValue="view" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="view">View Videos</TabsTrigger>
                 <TabsTrigger value="upload">Upload Videos</TabsTrigger>
+                <TabsTrigger value="generate">Generate Videos</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="generate" className="mt-6">
-                <VideoGenerator />
+              <TabsContent value="view" className="mt-6">
+                <MythBusterAg />
               </TabsContent>
               
               <TabsContent value="upload" className="mt-6">
                 <VideoUploadManager />
+              </TabsContent>
+              
+              <TabsContent value="generate" className="mt-6">
+                <VideoGenerator />
               </TabsContent>
             </Tabs>
           </div>
