@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface VideoData {
   id: string;
   title: string;
+  description?: string;
   thumbnail_url: string | null;
   video_url: string;
   duration: string | null;
@@ -166,70 +167,100 @@ const MythBusterAg = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            {featuredVideo && (
-              <div className="relative rounded-lg overflow-hidden border">
+             {featuredVideo && (
+               <div className="relative rounded-lg overflow-hidden border">
                  <AspectRatio ratio={16/9}>
-                   <video 
-                     controls
-                     className="w-full h-full object-cover"
-                     poster={featuredVideo.thumbnail_url}
-                     onPlay={() => incrementViews(featuredVideo.id)}
-                   >
-                     <source 
-                       src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(featuredVideo.video_url)}`}
-                       type="video/mp4" 
-                     />
-                     Your browser does not support the video tag.
-                   </video>
-                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
-                    <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-medium text-white">{featuredVideo.title}</h3>
-                      <Badge variant="outline" className="text-white border-white/50">
-                        {featuredVideo.duration || "N/A"}
-                      </Badge>
-                    </div>
-                    <Progress value={progress} className="h-1 bg-white/20" />
-                  </div>
-                </AspectRatio>
-              </div>
-            )}
+                   {featuredVideo.video_url.startsWith('sample-') ? (
+                     // Demo content placeholder
+                     <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex flex-col items-center justify-center text-center p-6">
+                       <Video className="h-16 w-16 mb-4 text-primary" />
+                       <h3 className="text-lg font-semibold mb-2">{featuredVideo.title}</h3>
+                       <p className="text-sm text-muted-foreground mb-4">{featuredVideo.description}</p>
+                       <Badge variant="outline" className="mb-2">
+                         Demo Content - {featuredVideo.duration}
+                       </Badge>
+                       <p className="text-xs text-muted-foreground">
+                         This is sample educational content. Upload real videos as admin to replace.
+                       </p>
+                     </div>
+                   ) : (
+                     // Actual video content
+                     <video 
+                       controls
+                       className="w-full h-full object-cover"
+                       poster={featuredVideo.thumbnail_url || undefined}
+                       onPlay={() => incrementViews(featuredVideo.id)}
+                       onError={(e) => {
+                         console.error('Video load error for:', featuredVideo.video_url);
+                       }}
+                     >
+                       <source 
+                         src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(featuredVideo.video_url)}`}
+                         type="video/mp4" 
+                       />
+                       Your browser does not support the video tag.
+                     </video>
+                   )}
+                   {!featuredVideo.video_url.startsWith('sample-') && (
+                     <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
+                       <div className="flex items-center justify-between mb-1">
+                         <h3 className="font-medium text-white">{featuredVideo.title}</h3>
+                         <Badge variant="outline" className="text-white border-white/50">
+                           {featuredVideo.duration || "N/A"}
+                         </Badge>
+                       </div>
+                       <Progress value={progress} className="h-1 bg-white/20" />
+                     </div>
+                   )}
+                 </AspectRatio>
+               </div>
+             )}
             
             {videos.filter(v => !v.is_featured).length > 0 && (
               <div>
                 <h3 className="font-medium mb-3">More Videos</h3>
                 <ScrollArea className="h-[200px]">
                   <div className="grid gap-3">
-                    {videos.filter(v => !v.is_featured).map((video) => (
-                       <div 
-                         key={video.id}
-                         className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
-                       >
-                         <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden">
-                           <video 
-                             className="w-full h-full object-cover"
-                             muted
-                             preload="metadata"
-                           >
-                             <source 
-                               src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(video.video_url)}`}
-                               type="video/mp4" 
-                             />
-                           </video>
-                           <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
-                             {video.duration || "N/A"}
-                           </div>
-                         </div>
-                         <div className="flex flex-col justify-between">
-                           <h4 className="font-medium text-sm line-clamp-2">{video.title}</h4>
-                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                             <span>{video.views} views</span>
-                             <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                               {video.category}
-                             </span>
-                           </div>
-                         </div>
-                       </div>
-                    ))}
+                     {videos.filter(v => !v.is_featured).map((video) => (
+                        <div 
+                          key={video.id}
+                          className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
+                        >
+                          <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden bg-muted">
+                            {video.video_url.startsWith('sample-') ? (
+                              <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/30 flex items-center justify-center">
+                                <Video className="h-6 w-6 text-primary" />
+                              </div>
+                            ) : (
+                              <video 
+                                className="w-full h-full object-cover"
+                                muted
+                                preload="metadata"
+                              >
+                                <source 
+                                  src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(video.video_url)}`}
+                                  type="video/mp4" 
+                                />
+                              </video>
+                            )}
+                            <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
+                              {video.duration || "N/A"}
+                            </div>
+                          </div>
+                          <div className="flex flex-col justify-between">
+                            <h4 className="font-medium text-sm line-clamp-2">{video.title}</h4>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <span>{video.views} views</span>
+                              <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                                {video.category}
+                              </span>
+                              {video.video_url.startsWith('sample-') && (
+                                <span className="text-orange-600 text-xs">Demo</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                     ))}
                   </div>
                 </ScrollArea>
               </div>
