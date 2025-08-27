@@ -29,8 +29,8 @@ redirect_uri = "http://127.0.0.1:54321/auth/v1/callback"
 
 [storage]
 enabled = true
-file_size_limit = "50MiB"
-allowed_mime_types = ["image/png", "image/jpeg", "image/gif", "image/webp"]
+file_size_limit = "100MiB"
+allowed_mime_types = ["image/png", "image/jpeg", "image/gif", "image/webp", "video/mp4", "video/avi", "video/mov", "video/quicktime", "video/webm"]
 
 [edge_runtime]
 enabled = true
@@ -52,4 +52,7 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.rag-fact-check]
+verify_jwt = false
+
+[functions.video-proxy]
 verify_jwt = false

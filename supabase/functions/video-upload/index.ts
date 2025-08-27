@@ -106,13 +106,13 @@ Deno.serve(async (req) => {
           .from('mythbuster-videos')
           .getPublicUrl(uploadData.path);
 
-        // Save video metadata to database
+        // Save video metadata to database (store file path for video-proxy)
         const { data: videoData, error: dbError } = await supabase
           .from('mythbuster_videos')
           .insert({
             title: title || file.name,
             description,
-            video_url: urlData.publicUrl,
+            video_url: uploadData.path, // Store file path for video-proxy
             category: 'user-upload',
             duration: null,
             created_by: user.id,
@@ -139,7 +139,7 @@ Deno.serve(async (req) => {
             success: true,
             video: {
               ...videoData,
-              public_url: urlData.publicUrl
+              stream_url: `https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(uploadData.path)}`
             }
           }),
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
