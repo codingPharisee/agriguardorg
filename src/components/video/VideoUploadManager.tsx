@@ -15,10 +15,13 @@ import {
   FileVideo,
   CheckCircle,
   AlertCircle,
-  Loader2
+  Loader2,
+  Shield
 } from 'lucide-react';
 import { useVideoUpload } from '@/hooks/useVideoUpload';
 import { formatFileSize } from '@/lib/utils';
+import { useAdminCheck } from '@/hooks/useAdminCheck';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface VideoUploadManagerProps {
   onVideoUploaded?: (video: any) => void;
@@ -31,6 +34,8 @@ export const VideoUploadManager: React.FC<VideoUploadManagerProps> = ({
   const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { isAdmin, loading: adminLoading } = useAdminCheck();
+  const { user } = useAuth();
   
   const { 
     uploadVideo, 
@@ -41,6 +46,21 @@ export const VideoUploadManager: React.FC<VideoUploadManagerProps> = ({
     isLoading,
     resetUploadProgress 
   } = useVideoUpload();
+
+  // Show access denied if not admin
+  if (!adminLoading && !isAdmin) {
+    return (
+      <Card>
+        <CardContent className="flex flex-col items-center justify-center py-12">
+          <Shield className="h-12 w-12 text-muted-foreground mb-4" />
+          <h3 className="text-lg font-medium mb-2">Access Restricted</h3>
+          <p className="text-muted-foreground text-center">
+            Only administrators can access the video upload functionality.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   useEffect(() => {
     fetchVideos();
