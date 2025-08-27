@@ -19,6 +19,12 @@ import {
   Play
 } from "lucide-react";
 
+// Import background images
+import pestDetectionBg from "@/assets/pest-detection-bg.jpg";
+import cropRecommendationBg from "@/assets/crop-recommendation-bg.jpg";
+import factCheckBg from "@/assets/fact-check-bg.jpg";
+import videoGenerationBg from "@/assets/video-generation-bg.jpg";
+
 interface AITool {
   id: string;
   title: string;
@@ -29,6 +35,7 @@ interface AITool {
   badge: string;
   gradient: string;
   shadowColor: string;
+  backgroundImage: string;
 }
 
 const aiTools: AITool[] = [
@@ -41,7 +48,8 @@ const aiTools: AITool[] = [
     link: "/pest-identification",
     badge: "AI Vision",
     gradient: "from-red-500 via-orange-500 to-amber-500",
-    shadowColor: "shadow-red-500/20"
+    shadowColor: "shadow-red-500/20",
+    backgroundImage: pestDetectionBg
   },
   {
     id: "crop-recommendations",
@@ -52,7 +60,8 @@ const aiTools: AITool[] = [
     link: "/crop-recommendations",
     badge: "Smart Agriculture",
     gradient: "from-green-500 via-emerald-500 to-teal-500",
-    shadowColor: "shadow-green-500/20"
+    shadowColor: "shadow-green-500/20",
+    backgroundImage: cropRecommendationBg
   },
   {
     id: "fact-check",
@@ -63,7 +72,8 @@ const aiTools: AITool[] = [
     link: "/fact-check",
     badge: "Truth Analysis",
     gradient: "from-blue-500 via-purple-500 to-indigo-500",
-    shadowColor: "shadow-blue-500/20"
+    shadowColor: "shadow-blue-500/20",
+    backgroundImage: factCheckBg
   },
   {
     id: "video-generation",
@@ -74,7 +84,8 @@ const aiTools: AITool[] = [
     link: "/video-generation",
     badge: "AI Media",
     gradient: "from-purple-500 via-pink-500 to-rose-500",
-    shadowColor: "shadow-purple-500/20"
+    shadowColor: "shadow-purple-500/20",
+    backgroundImage: videoGenerationBg
   }
 ];
 
@@ -137,81 +148,85 @@ const AIToolsCarousel = () => {
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {aiTools.map((tool, index) => (
-                <CarouselItem key={tool.id} className="pl-2 md:pl-4 md:basis-4/5 lg:basis-3/4">
+                <CarouselItem key={tool.id} className="pl-2 md:pl-4 md:basis-4/5 lg:basis-2/3">
                   <div className="p-1">
-                    <Card className={`relative overflow-hidden bg-gradient-to-br ${tool.gradient} ${tool.shadowColor} shadow-xl hover:shadow-2xl transition-all duration-500 border-0 group min-h-[480px] flex flex-col`}>
-                      {/* Glassmorphism overlay */}
-                      <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+                    <Card className={`relative overflow-hidden ${tool.shadowColor} shadow-xl hover:shadow-2xl transition-all duration-500 border-0 group h-80 flex flex-col`}>
+                      {/* Background Image */}
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: `url(${tool.backgroundImage})` }}
+                      />
+                      
+                      {/* Gradient overlay */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-85`}></div>
+                      
+                      {/* Dark overlay for better text readability */}
+                      <div className="absolute inset-0 bg-black/20"></div>
                       
                       {/* Content */}
-                      <div className="relative z-10 flex flex-col h-full">
-                        <CardHeader className="text-center pb-4 flex-shrink-0">
-                          {/* Icon */}
-                          <div className="flex items-center justify-center mb-4">
-                            <div className="p-4 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                      <div className="relative z-10 flex flex-col h-full p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          {/* Icon and Badge */}
+                          <div className="flex items-center gap-3">
+                            <div className="p-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 group-hover:scale-110 transition-transform duration-300">
                               <div className="text-white">
                                 {tool.icon}
                               </div>
                             </div>
+                            <Badge className="bg-white/20 text-white border-white/30 hover:bg-white/30 text-xs font-medium px-2 py-1">
+                              {tool.badge}
+                            </Badge>
                           </div>
-                          
-                          {/* Badge */}
-                          <Badge className="mx-auto mb-3 bg-white/20 text-white border-white/30 hover:bg-white/30 text-xs font-medium px-3 py-1">
-                            {tool.badge}
-                          </Badge>
-                          
-                          {/* Title */}
-                          <CardTitle className="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
+                        </div>
+                        
+                        {/* Title and Description */}
+                        <div className="flex-grow">
+                          <h3 className="text-lg md:text-xl font-bold text-white mb-2 leading-tight">
                             {tool.title}
-                          </CardTitle>
-                          
-                          {/* Description */}
-                          <p className="text-white/90 text-base max-w-md mx-auto leading-relaxed">
+                          </h3>
+                          <p className="text-white/90 text-sm leading-relaxed mb-4">
                             {tool.description}
                           </p>
-                        </CardHeader>
-                        
-                        <CardContent className="pt-0 flex-grow flex flex-col justify-between">
-                          {/* Features Grid */}
-                          <div className="grid grid-cols-2 gap-2 mb-6">
-                            {tool.features.map((feature, featureIndex) => (
+                          
+                          {/* Features */}
+                          <div className="grid grid-cols-2 gap-1 mb-4">
+                            {tool.features.slice(0, 4).map((feature, featureIndex) => (
                               <div 
                                 key={featureIndex}
-                                className="flex items-center gap-2 text-white/90 text-sm"
+                                className="flex items-center gap-1.5 text-white/80 text-xs"
                               >
-                                <div className="w-2 h-2 bg-white/60 rounded-full flex-shrink-0"></div>
+                                <div className="w-1.5 h-1.5 bg-white/60 rounded-full flex-shrink-0"></div>
                                 <span className="truncate">{feature}</span>
                               </div>
                             ))}
                           </div>
-                          
-                          {/* Action Buttons */}
-                          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-auto">
-                            <Button 
-                              asChild 
-                              className="bg-white text-gray-900 hover:bg-gray-100 font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl group-hover:scale-105"
-                            >
-                              <Link to={tool.link} className="flex items-center gap-2">
-                                <Play className="h-4 w-4" />
-                                Try Now
-                              </Link>
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              asChild 
-                              className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-semibold px-6 py-2.5 rounded-full transition-all duration-300"
-                            >
-                              <Link to="/tools" className="flex items-center gap-2">
-                                <Target className="h-4 w-4" />
-                                Learn More
-                              </Link>
-                            </Button>
-                          </div>
-                        </CardContent>
+                        </div>
+                        
+                        {/* Action Buttons */}
+                        <div className="flex gap-2 mt-auto">
+                          <Button 
+                            asChild 
+                            size="sm"
+                            className="bg-white text-gray-900 hover:bg-gray-100 font-semibold px-4 py-2 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl group-hover:scale-105 flex-1"
+                          >
+                            <Link to={tool.link} className="flex items-center justify-center gap-1.5">
+                              <Play className="h-3 w-3" />
+                              Try Now
+                            </Link>
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            asChild 
+                            size="sm"
+                            className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-semibold px-4 py-2 rounded-full transition-all duration-300 flex-1"
+                          >
+                            <Link to="/tools" className="flex items-center justify-center gap-1.5">
+                              <Target className="h-3 w-3" />
+                              Learn More
+                            </Link>
+                          </Button>
+                        </div>
                       </div>
-                      
-                      {/* Subtle pattern overlay */}
-                      <div className="absolute inset-0 opacity-10 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none"></div>
                     </Card>
                   </div>
                 </CarouselItem>
