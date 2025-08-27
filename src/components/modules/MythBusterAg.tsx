@@ -115,10 +115,6 @@ const MythBusterAg = () => {
               </AspectRatio>
             </div>
 
-            {/* Video Title */}
-            <div className="text-center">
-              <h3 className="text-lg font-medium">{currentVideo.title}</h3>
-            </div>
 
             {/* Navigation Controls */}
             <div className="flex items-center justify-between">
