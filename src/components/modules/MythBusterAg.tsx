@@ -112,31 +112,19 @@ const MythBusterAg = () => {
           <div className="space-y-4">
             {featuredVideo && (
               <div className="relative rounded-lg overflow-hidden border">
-                <AspectRatio ratio={16/9}>
-                  {featuredVideo.thumbnail_url ? (
-                    <img 
-                      src={featuredVideo.thumbnail_url} 
-                      alt={featuredVideo.title}
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-muted flex items-center justify-center">
-                      <Video className="h-12 w-12 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <Button 
-                      variant="outline" 
-                      size="icon"
-                      className="h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/40 transition-colors"
-                      onClick={() => togglePlay(featuredVideo.id)}
-                    >
-                      {isPlaying ? 
-                        <Volume2 className="h-6 w-6 text-white" /> : 
-                        <Play className="h-6 w-6 text-white ml-1" />
-                      }
-                    </Button>
-                  </div>
+                 <AspectRatio ratio={16/9}>
+                   <video 
+                     controls
+                     className="w-full h-full object-cover"
+                     poster={featuredVideo.thumbnail_url}
+                     onPlay={() => incrementViews(featuredVideo.id)}
+                   >
+                     <source 
+                       src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(featuredVideo.video_url)}`}
+                       type="video/mp4" 
+                     />
+                     Your browser does not support the video tag.
+                   </video>
                   <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="font-medium text-white">{featuredVideo.title}</h3>
@@ -156,33 +144,35 @@ const MythBusterAg = () => {
                 <ScrollArea className="h-[200px]">
                   <div className="grid gap-3">
                     {videos.filter(v => !v.is_featured).map((video) => (
-                      <div 
-                        key={video.id}
-                        className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
-                        onClick={() => togglePlay(video.id)}
-                      >
-                        <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden">
-                          {video.thumbnail_url ? (
-                            <img src={video.thumbnail_url} alt={video.title} className="object-cover w-full h-full" />
-                          ) : (
-                            <div className="w-full h-full bg-muted flex items-center justify-center">
-                              <Video className="h-4 w-4 text-muted-foreground" />
-                            </div>
-                          )}
-                          <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
-                            {video.duration || "N/A"}
-                          </div>
-                        </div>
-                        <div className="flex flex-col justify-between">
-                          <h4 className="font-medium text-sm line-clamp-2">{video.title}</h4>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span>{video.views} views</span>
-                            <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                              {video.category}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                       <div 
+                         key={video.id}
+                         className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
+                       >
+                         <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden">
+                           <video 
+                             className="w-full h-full object-cover"
+                             muted
+                             preload="metadata"
+                           >
+                             <source 
+                               src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(video.video_url)}`}
+                               type="video/mp4" 
+                             />
+                           </video>
+                           <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
+                             {video.duration || "N/A"}
+                           </div>
+                         </div>
+                         <div className="flex flex-col justify-between">
+                           <h4 className="font-medium text-sm line-clamp-2">{video.title}</h4>
+                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                             <span>{video.views} views</span>
+                             <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                               {video.category}
+                             </span>
+                           </div>
+                         </div>
+                       </div>
                     ))}
                   </div>
                 </ScrollArea>
