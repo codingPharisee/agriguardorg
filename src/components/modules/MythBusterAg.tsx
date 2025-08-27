@@ -1,13 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Video, Play, Volume2 } from "lucide-react";
+import { Video, ChevronLeft, ChevronRight } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from '@/integrations/supabase/client';
 
 interface VideoData {
@@ -23,11 +18,9 @@ interface VideoData {
 }
 
 const MythBusterAg = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   
   useEffect(() => {
     fetchVideos();
@@ -69,32 +62,20 @@ const MythBusterAg = () => {
       console.error('Error updating views:', error);
     }
   };
-  
-  const togglePlay = (videoId?: string) => {
-    setIsPlaying(!isPlaying);
-    
-    if (!isPlaying && videoId) {
-      incrementViews(videoId);
-      // Simulate video progress
-      const interval = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setIsPlaying(false);
-            return 100;
-          }
-          return prev + 1;
-        });
-      }, 100);
+
+  const nextVideo = () => {
+    if (currentVideoIndex < videos.length - 1) {
+      setCurrentVideoIndex(currentVideoIndex + 1);
     }
   };
 
-  const playVideo = (video: VideoData) => {
-    setSelectedVideo(video);
-    incrementViews(video.id);
+  const previousVideo = () => {
+    if (currentVideoIndex > 0) {
+      setCurrentVideoIndex(currentVideoIndex - 1);
+    }
   };
 
-  const featuredVideo = videos.find(v => v.is_featured) || videos[0];
+  const currentVideo = videos[currentVideoIndex];
   
   return (
     <Card className="module-card">
@@ -113,116 +94,96 @@ const MythBusterAg = () => {
           <div className="text-center py-8 text-muted-foreground">
             No videos available yet. Admin can upload videos to display here.
           </div>
-        ) : (
+        ) : currentVideo ? (
           <div className="space-y-4">
-            {featuredVideo && (
-              <div className="relative rounded-lg overflow-hidden border">
-                 <AspectRatio ratio={16/9}>
-                    <video 
-                      controls
-                      className="w-full h-full object-cover"
-                      poster={featuredVideo.thumbnail_url ? `https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${featuredVideo.thumbnail_url}` : undefined}
-                      onPlay={() => incrementViews(featuredVideo.id)}
-                    >
-                      <source 
-                        src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${featuredVideo.video_url}`}
-                        type="video/mp4" 
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
-                    <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-medium text-white">{featuredVideo.title}</h3>
-                      <Badge variant="outline" className="text-white border-white/50">
-                        {featuredVideo.duration || "N/A"}
-                      </Badge>
-                    </div>
-                    <Progress value={progress} className="h-1 bg-white/20" />
-                  </div>
-                </AspectRatio>
-              </div>
-            )}
-            
-            {videos.filter(v => !v.is_featured).length > 0 && (
-              <div>
-                <h3 className="font-medium mb-3">More Videos</h3>
-                <ScrollArea className="h-[200px]">
-                  <div className="grid gap-3">
-                    {videos.filter(v => !v.is_featured).map((video) => (
-                       <div 
-                          key={video.id}
-                          className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
-                          onClick={() => playVideo(video)}
-                        >
-                         <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden">
-                            <video 
-                              className="w-full h-full object-cover"
-                              muted
-                              preload="metadata"
-                            >
-                              <source 
-                                src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${video.video_url}`}
-                                type="video/mp4" 
-                              />
-                            </video>
-                           <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
-                             {video.duration || "N/A"}
-                           </div>
-                         </div>
-                         <div className="flex flex-col justify-between">
-                           <h4 className="font-medium text-sm line-clamp-2">{video.title}</h4>
-                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                             <span>{video.views} views</span>
-                             <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                               {video.category}
-                             </span>
-                           </div>
-                         </div>
-                       </div>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </div>
-            )}
-          </div>
-        )}
-      </CardContent>
-
-      {/* Video Player Modal */}
-      <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
-        <DialogContent className="max-w-4xl">
-          {selectedVideo && (
-            <div className="space-y-4">
+            {/* Main Video Player */}
+            <div className="relative rounded-lg overflow-hidden border">
               <AspectRatio ratio={16/9}>
                 <video 
+                  key={currentVideo.id}
                   controls
-                  autoPlay
-                  className="w-full h-full object-cover rounded-lg"
-                  poster={selectedVideo.thumbnail_url ? `https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${selectedVideo.thumbnail_url}` : undefined}
+                  className="w-full h-full object-cover"
+                  poster={currentVideo.thumbnail_url ? `https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${currentVideo.thumbnail_url}` : undefined}
+                  onPlay={() => incrementViews(currentVideo.id)}
                 >
                   <source 
-                    src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${selectedVideo.video_url}`}
+                    src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${currentVideo.video_url}`}
                     type="video/mp4" 
                   />
                   Your browser does not support the video tag.
                 </video>
               </AspectRatio>
-              
-              <div className="space-y-2">
-                <h3 className="text-xl font-semibold">{selectedVideo.title}</h3>
-                {selectedVideo.description && (
-                  <p className="text-muted-foreground">{selectedVideo.description}</p>
-                )}
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <span>{selectedVideo.views} views</span>
-                  <Badge variant="secondary">{selectedVideo.category}</Badge>
-                  {selectedVideo.duration && <span>Duration: {selectedVideo.duration}</span>}
-                </div>
-              </div>
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
+
+            {/* Video Title */}
+            <div className="text-center">
+              <h3 className="text-lg font-medium">{currentVideo.title}</h3>
+            </div>
+
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-between">
+              <Button 
+                variant="outline" 
+                onClick={previousVideo}
+                disabled={currentVideoIndex === 0}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Previous
+              </Button>
+              
+              <span className="text-sm text-muted-foreground">
+                {currentVideoIndex + 1} of {videos.length}
+              </span>
+              
+              <Button 
+                variant="outline" 
+                onClick={nextVideo}
+                disabled={currentVideoIndex === videos.length - 1}
+                className="flex items-center gap-2"
+              >
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Video Grid Navigation */}
+            {videos.length > 1 && (
+              <div className="grid grid-cols-3 gap-2 mt-4">
+                {videos.map((video, index) => (
+                  <div 
+                    key={video.id}
+                    className={`relative cursor-pointer rounded overflow-hidden border-2 transition-colors ${
+                      index === currentVideoIndex 
+                        ? 'border-primary' 
+                        : 'border-transparent hover:border-gray-300'
+                    }`}
+                    onClick={() => setCurrentVideoIndex(index)}
+                  >
+                    <AspectRatio ratio={16/9}>
+                      <video 
+                        className="w-full h-full object-cover"
+                        muted
+                        preload="metadata"
+                      >
+                        <source 
+                          src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${video.video_url}`}
+                          type="video/mp4" 
+                        />
+                      </video>
+                    </AspectRatio>
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                      <div className="bg-white/90 text-black text-xs px-2 py-1 rounded font-medium">
+                        {index + 1}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : null}
+      </CardContent>
     </Card>
   );
 };
