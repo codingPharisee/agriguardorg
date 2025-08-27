@@ -8,13 +8,14 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Search, MessageSquare, HelpCircle, Lightbulb, Mic, MicOff, Volume2, VolumeX, Home } from 'lucide-react';
+import { ArrowLeft, Search, MessageSquare, HelpCircle, Lightbulb, Mic, MicOff, Volume2, VolumeX, Home, Shield, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useVoiceRecording } from '@/hooks/useVoiceRecording';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import infoCenterBg from "@/assets/info-center-bg.jpg";
 
 // Language options for fact-checking
 const LANGUAGES = [
@@ -83,7 +84,7 @@ const getPlaceholderText = (language: string) => {
     case 'ha': return "Shigar da ikirarin aikin gona don bincike...";
     case 'fr': return "Entrez une affirmation agricole à vérifier...";
     case 'ar': return "أدخل ادعاءً زراعياً للتحقق منه...";
-    default: return "Enter an agricultural claim to fact check...";
+    default: return "Enter an agricultural claim to verify...";
   }
 };
 
@@ -115,14 +116,14 @@ const FactCheck = () => {
       setFactCheckResult(data);
       
       toast({
-        title: "Fact check complete",
-        description: "AI analysis based on African agricultural research",
+        title: "Verification complete",
+        description: "Information verified against agricultural research",
       });
     } catch (error) {
       console.error('Error fact-checking:', error);
       toast({
         title: "Error",
-        description: "Unable to fact-check the claim. Please try again.",
+        description: "Unable to verify the claim. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -158,41 +159,83 @@ const FactCheck = () => {
     }
   };
 
+  const getResultIcon = (isTrue: boolean | null) => {
+    if (isTrue === true) return <CheckCircle className="h-5 w-5 text-green-600" />;
+    if (isTrue === false) return <XCircle className="h-5 w-5 text-red-600" />;
+    return <AlertCircle className="h-5 w-5 text-yellow-600" />;
+  };
+
+  const getResultColor = (isTrue: boolean | null) => {
+    if (isTrue === true) return 'border-green-200 bg-green-50';
+    if (isTrue === false) return 'border-red-200 bg-red-50';
+    return 'border-yellow-200 bg-yellow-50';
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Header />
       
-      <main className="flex-grow py-8">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex justify-between items-center mb-8">
-              <h1 className="text-3xl font-bold text-center">Agricultural Fact Checker</h1>
-              <Button variant="outline" asChild>
+      {/* Hero Section */}
+      <section 
+        className="relative bg-cover bg-center py-16 text-white"
+        style={{ backgroundImage: `url(${infoCenterBg})` }}
+      >
+        <div className="absolute inset-0 bg-blue-800/70"></div>
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Shield className="h-8 w-8" />
+              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                Agricultural Information Center
+              </Badge>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Agricultural Information Verification
+            </h1>
+            <p className="text-xl mb-6 text-blue-50">
+              Verify agricultural claims against peer-reviewed research and expert consensus
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button variant="outline" asChild className="border-white/30 text-white hover:bg-white/10">
+                <Link to="/tools" className="flex items-center gap-2">
+                  <ArrowLeft className="h-4 w-4" /> Extension Services
+                </Link>
+              </Button>
+              <Button asChild className="bg-white text-blue-800 hover:bg-blue-50">
                 <Link to="/" className="flex items-center gap-2">
-                  <Home className="h-4 w-4" /> Return to Homepage
+                  <Home className="h-4 w-4" /> Department Home
                 </Link>
               </Button>
             </div>
-            
-            <Card className="mb-8">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2">
+          </div>
+        </div>
+      </section>
+      
+      <main className="flex-grow py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <Card className="mb-8 shadow-lg border-blue-100">
+              <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50">
+                <CardTitle className="flex items-center gap-2 text-blue-800">
                   <MessageSquare className="h-5 w-5" />
-                  Verify Agricultural Claims
+                  Information Verification Service
                 </CardTitle>
+                <CardDescription className="text-blue-700">
+                  Verify agricultural claims against scientific research and expert consensus
+                </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 <Tabs value={activeTab} onValueChange={setActiveTab}>
                   <TabsList className="grid grid-cols-3 mb-6">
-                    <TabsTrigger value="search">Fact Check</TabsTrigger>
-                    <TabsTrigger value="faqs">FAQs</TabsTrigger>
-                    <TabsTrigger value="claims">Claims</TabsTrigger>
+                    <TabsTrigger value="search">Verify Claim</TabsTrigger>
+                    <TabsTrigger value="faqs">Common Questions</TabsTrigger>
+                    <TabsTrigger value="claims">Research Topics</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="search" className="space-y-4">
                     <div className="flex gap-2 mb-4">
                       <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                        <SelectTrigger className="w-[200px]">
+                        <SelectTrigger className="w-[200px] border-blue-200 focus:border-blue-500">
                           <SelectValue placeholder="Select language" />
                         </SelectTrigger>
                         <SelectContent>
@@ -211,7 +254,7 @@ const FactCheck = () => {
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
                           onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                          className="pr-12"
+                          className="pr-12 border-blue-200 focus:border-blue-500"
                         />
                         <Button
                           variant="ghost"
@@ -227,23 +270,24 @@ const FactCheck = () => {
                           )}
                         </Button>
                       </div>
-                      <Button onClick={handleSearch} disabled={isLoading || !query.trim()}>
+                      <Button 
+                        onClick={handleSearch} 
+                        disabled={isLoading || !query.trim()}
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                      >
                         <Search className="h-4 w-4 mr-2" />
-                        {isLoading ? 'Checking...' : 'Check'}
+                        {isLoading ? 'Verifying...' : 'Verify'}
                       </Button>
                     </div>
 
                     {factCheckResult && (
-                      <div className="mt-6 p-4 bg-muted rounded-lg">
+                      <div className={`mt-6 p-4 rounded-lg border-2 ${getResultColor(factCheckResult.isTrue)}`}>
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <div className={`w-3 h-3 rounded-full ${
-                              factCheckResult.isTrue === true ? 'bg-green-500' : 
-                              factCheckResult.isTrue === false ? 'bg-red-500' : 'bg-yellow-500'
-                            }`} />
-                            <span className="font-medium">
-                              {factCheckResult.isTrue === true ? 'Supported' : 
-                               factCheckResult.isTrue === false ? 'Not Supported' : 'Mixed Evidence'}
+                            {getResultIcon(factCheckResult.isTrue)}
+                            <span className="font-medium text-lg">
+                              {factCheckResult.isTrue === true ? 'Supported by Evidence' : 
+                               factCheckResult.isTrue === false ? 'Not Supported by Evidence' : 'Mixed Evidence'}
                             </span>
                           </div>
                           <Button
@@ -255,7 +299,7 @@ const FactCheck = () => {
                             title={isPlaying ? "Stop audio" : isGenerating ? "Generating audio..." : "Play audio"}
                           >
                             {isGenerating ? (
-                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
                             ) : isPlaying ? (
                               <VolumeX className="h-4 w-4" />
                             ) : (
@@ -263,23 +307,25 @@ const FactCheck = () => {
                             )}
                           </Button>
                         </div>
-                        <p className="text-sm mb-2">{factCheckResult.explanation}</p>
-                        <p className="text-xs text-muted-foreground">Source: {factCheckResult.source}</p>
+                        <p className="text-sm mb-3 leading-relaxed">{factCheckResult.explanation}</p>
+                        <div className="bg-white/50 p-2 rounded text-xs">
+                          <strong>Research Source:</strong> {factCheckResult.source}
+                        </div>
                       </div>
                     )}
 
                     {(isProcessing || isGenerating) && (
-                      <div className="mt-4 text-center text-sm text-muted-foreground">
+                      <div className="mt-4 text-center text-sm text-blue-600">
                         {isProcessing && "Processing voice..."}
-                        {isGenerating && "Generating audio..."}
+                        {isGenerating && "Generating audio response..."}
                       </div>
                     )}
 
                     {!factCheckResult && (
-                      <div className="mt-6 text-center text-muted-foreground">
-                        <MessageSquare className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                        <p>Enter a claim above to get started with fact-checking</p>
-                        <p className="text-xs mt-2">Use the microphone button to record your voice</p>
+                      <div className="mt-6 text-center text-blue-600">
+                        <Shield className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                        <p className="text-lg mb-2">Ready to Verify Information</p>
+                        <p className="text-sm">Enter an agricultural claim to verify against research</p>
                       </div>
                     )}
                   </TabsContent>
@@ -288,10 +334,10 @@ const FactCheck = () => {
                     <ScrollArea className="h-[500px] pr-4">
                       <div className="space-y-4">
                         {FAQS.map((faq) => (
-                          <div key={faq.id} className="border rounded-md p-4 hover:bg-gray-50">
-                            <h4 className="font-medium mb-2">{faq.question}</h4>
-                            <p className="text-sm mb-2">{faq.answer}</p>
-                            <p className="text-xs text-muted-foreground">Source: {faq.source}</p>
+                          <div key={faq.id} className="border rounded-md p-4 hover:bg-blue-50 border-blue-200">
+                            <h4 className="font-medium mb-2 text-blue-800">{faq.question}</h4>
+                            <p className="text-sm mb-2 text-blue-700">{faq.answer}</p>
+                            <p className="text-xs text-blue-600">Research Source: {faq.source}</p>
                           </div>
                         ))}
                       </div>
@@ -299,12 +345,12 @@ const FactCheck = () => {
                   </TabsContent>
                   
                   <TabsContent value="claims">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {COMMON_CLAIMS.map((claim, index) => (
                         <Badge 
                           key={index} 
                           variant="outline" 
-                          className="text-sm py-2 px-3 cursor-pointer hover:bg-accent"
+                          className="text-sm py-2 px-3 cursor-pointer hover:bg-blue-50 border-blue-300 text-blue-700"
                           onClick={() => handleCommonClaimClick(claim)}
                         >
                           {claim}
@@ -312,14 +358,16 @@ const FactCheck = () => {
                       ))}
                     </div>
                     
-                    <Alert className="mt-6">
-                      <AlertTitle>Tips for evaluating agricultural information</AlertTitle>
-                      <AlertDescription>
+                    <Alert className="border-blue-200 bg-blue-50">
+                      <Shield className="h-4 w-4 text-blue-600" />
+                      <AlertTitle className="text-blue-800">Evidence-Based Information Guidelines</AlertTitle>
+                      <AlertDescription className="text-blue-700">
                         <ul className="list-disc pl-5 space-y-1 mt-2 text-sm">
                           <li>Look for peer-reviewed scientific sources rather than anecdotes</li>
-                          <li>Consider the consensus among experts rather than isolated studies</li>
-                          <li>Check if the information comes from organizations with relevant expertise</li>
+                          <li>Consider the consensus among agricultural experts and researchers</li>
+                          <li>Check if information comes from recognized agricultural institutions</li>
                           <li>Be cautious of claims that are absolute or overly simplistic</li>
+                          <li>Cross-reference with multiple credible agricultural sources</li>
                         </ul>
                       </AlertDescription>
                     </Alert>
