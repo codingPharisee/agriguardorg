@@ -1,7 +1,9 @@
 import React from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import VideoGenerator from '@/components/video/VideoGenerator';
+import { VideoUploadManager } from '@/components/video/VideoUploadManager';
 
 const VideoGeneration: React.FC = () => {
   return (
@@ -10,7 +12,24 @@ const VideoGeneration: React.FC = () => {
       
       <main className="flex-grow py-12">
         <div className="container mx-auto px-4">
-          <VideoGenerator />
+          <div className="max-w-6xl mx-auto">
+            <h1 className="text-3xl font-bold text-center mb-8">Video Management Center</h1>
+            
+            <Tabs defaultValue="generate" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="generate">Generate Videos</TabsTrigger>
+                <TabsTrigger value="upload">Upload Videos</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="generate" className="mt-6">
+                <VideoGenerator />
+              </TabsContent>
+              
+              <TabsContent value="upload" className="mt-6">
+                <VideoUploadManager />
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </main>
       
