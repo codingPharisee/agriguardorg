@@ -117,7 +117,7 @@
   }
 
   .module-header {
-    @apply text-xl font-semibold flex items-center gap-2 text-primary-dark mb-3;
+    @apply text-xl font-semibold flex items-center gap-2 text-primary mb-3;
   }
 
   .fade-in {
