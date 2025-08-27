@@ -7,11 +7,13 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from '@/integrations/supabase/client';
 
 interface VideoData {
   id: string;
   title: string;
+  description: string | null;
   thumbnail_url: string | null;
   video_url: string;
   duration: string | null;
@@ -25,6 +27,7 @@ const MythBusterAg = () => {
   const [progress, setProgress] = useState(0);
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
   
   useEffect(() => {
     fetchVideos();
@@ -86,6 +89,11 @@ const MythBusterAg = () => {
     }
   };
 
+  const playVideo = (video: VideoData) => {
+    setSelectedVideo(video);
+    incrementViews(video.id);
+  };
+
   const featuredVideo = videos.find(v => v.is_featured) || videos[0];
   
   return (
@@ -142,9 +150,10 @@ const MythBusterAg = () => {
                   <div className="grid gap-3">
                     {videos.filter(v => !v.is_featured).map((video) => (
                        <div 
-                         key={video.id}
-                         className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
-                       >
+                          key={video.id}
+                          className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
+                          onClick={() => playVideo(video)}
+                        >
                          <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden">
                             <video 
                               className="w-full h-full object-cover"
@@ -178,6 +187,42 @@ const MythBusterAg = () => {
           </div>
         )}
       </CardContent>
+
+      {/* Video Player Modal */}
+      <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+        <DialogContent className="max-w-4xl">
+          {selectedVideo && (
+            <div className="space-y-4">
+              <AspectRatio ratio={16/9}>
+                <video 
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover rounded-lg"
+                  poster={selectedVideo.thumbnail_url ? `https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${selectedVideo.thumbnail_url}` : undefined}
+                >
+                  <source 
+                    src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${selectedVideo.video_url}`}
+                    type="video/mp4" 
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </AspectRatio>
+              
+              <div className="space-y-2">
+                <h3 className="text-xl font-semibold">{selectedVideo.title}</h3>
+                {selectedVideo.description && (
+                  <p className="text-muted-foreground">{selectedVideo.description}</p>
+                )}
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>{selectedVideo.views} views</span>
+                  <Badge variant="secondary">{selectedVideo.category}</Badge>
+                  {selectedVideo.duration && <span>Duration: {selectedVideo.duration}</span>}
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
