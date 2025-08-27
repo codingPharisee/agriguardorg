@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages, Mic, Volume2 } from "lucide-react";
+import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages, Mic, Volume2, Camera, Upload, Scan } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
@@ -148,6 +148,15 @@ const AgriFactCheck = () => {
     explanation: string;
     source: string;
   } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [healthScanResult, setHealthScanResult] = useState<{
+    condition: string;
+    confidence: number;
+    recommendations: string[];
+    severity: string;
+  } | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
   const { toast } = useToast();
 
   // Voice functionality
@@ -257,7 +266,7 @@ const AgriFactCheck = () => {
       
       <CardContent className="relative pt-6 pb-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-3 mb-6 bg-green-100/60 p-1 rounded-lg">
+          <TabsList className="grid grid-cols-4 mb-6 bg-green-100/60 p-1 rounded-lg">
             <TabsTrigger 
               value="chat" 
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
@@ -275,6 +284,12 @@ const AgriFactCheck = () => {
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
             >
               Topics
+            </TabsTrigger>
+            <TabsTrigger 
+              value="scan"
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
+            >
+              Health Scan
             </TabsTrigger>
           </TabsList>
           
@@ -477,6 +492,180 @@ const AgriFactCheck = () => {
                   {topic}
                 </Badge>
               ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="scan" className="mt-0">
+            <div className="space-y-4">
+              <div className="p-4 bg-green-50/60 rounded-lg border border-green-200/40">
+                <div className="flex items-center gap-2 mb-2">
+                  <Scan className="h-5 w-5 text-green-600" />
+                  <span className="text-sm font-medium text-gray-700">Crop & Livestock Health Scanner</span>
+                </div>
+                <p className="text-xs text-gray-600">Upload or capture an image of your crops or livestock to get AI-powered health analysis and recommendations</p>
+              </div>
+
+              {!selectedImage ? (
+                <div className="space-y-3">
+                  <div 
+                    className="border-2 border-dashed border-green-300 rounded-lg p-8 text-center hover:border-green-400 transition-colors cursor-pointer bg-green-50/30"
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                  >
+                    <Camera className="h-12 w-12 text-green-500 mx-auto mb-3" />
+                    <p className="text-gray-600 font-medium mb-1">Upload or Capture Image</p>
+                    <p className="text-sm text-gray-500">Click to select an image of your crops or livestock</p>
+                  </div>
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setSelectedImage(file);
+                        setImagePreview(URL.createObjectURL(file));
+                        setHealthScanResult(null);
+                      }
+                    }}
+                  />
+                  <Button 
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Choose Image
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="relative">
+                    <img 
+                      src={imagePreview!} 
+                      alt="Selected crop/livestock" 
+                      className="w-full h-64 object-cover rounded-lg border border-green-200"
+                    />
+                    <Button
+                      onClick={() => {
+                        setSelectedImage(null);
+                        setImagePreview(null);
+                        setHealthScanResult(null);
+                      }}
+                      className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 h-auto"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  <Button
+                    onClick={async () => {
+                      if (!selectedImage) return;
+                      
+                      setIsScanning(true);
+                      setHealthScanResult(null);
+                      
+                      try {
+                        const formData = new FormData();
+                        formData.append('image', selectedImage);
+                        
+                        const { data, error } = await supabase.functions.invoke('pest-identification', {
+                          body: formData
+                        });
+
+                        if (error) throw error;
+
+                        // Transform the pest identification response for health scanning
+                        setHealthScanResult({
+                          condition: data.pest_name || 'Unknown condition',
+                          confidence: Math.round((data.confidence || 0) * 100),
+                          recommendations: data.treatment_recommendations || ['No specific recommendations available'],
+                          severity: data.confidence > 0.8 ? 'High' : data.confidence > 0.5 ? 'Medium' : 'Low'
+                        });
+
+                        toast({
+                          title: "Health scan complete",
+                          description: "AI analysis of your crop/livestock image is ready",
+                        });
+                      } catch (error) {
+                        console.error('Error scanning image:', error);
+                        toast({
+                          title: "Scan failed",
+                          description: "Unable to analyze the image. Please try again.",
+                          variant: "destructive",
+                        });
+                      } finally {
+                        setIsScanning(false);
+                      }
+                    }}
+                    disabled={isScanning}
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                  >
+                    {isScanning ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Analyzing Image...
+                      </>
+                    ) : (
+                      <>
+                        <Scan className="h-4 w-4 mr-2" />
+                        Scan for Health Issues
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+
+              {healthScanResult && (
+                <div className={`border-2 rounded-lg p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
+                  healthScanResult.severity === 'High' ? 'border-red-400 bg-red-50/80' : 
+                  healthScanResult.severity === 'Medium' ? 'border-amber-400 bg-amber-50/80' : 
+                  'border-green-400 bg-green-50/80'
+                }`}>
+                  <div className="flex items-start gap-3">
+                    <span className={`rounded-full p-2 mt-0.5 shadow-sm ${
+                      healthScanResult.severity === 'High' ? 'bg-red-500' : 
+                      healthScanResult.severity === 'Medium' ? 'bg-amber-500' : 
+                      'bg-green-500'
+                    }`}>
+                      <Scan className="h-4 w-4 text-white" />
+                    </span>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 mb-2">Health Analysis Results</h4>
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-sm font-medium text-gray-700">Detected Condition:</p>
+                          <p className="text-base font-semibold text-gray-800">{healthScanResult.condition}</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div>
+                            <p className="text-sm font-medium text-gray-700">Confidence:</p>
+                            <p className="text-lg font-bold">{healthScanResult.confidence}%</p>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-700">Severity:</p>
+                            <Badge 
+                              variant={healthScanResult.severity === 'High' ? 'destructive' : 
+                                      healthScanResult.severity === 'Medium' ? 'default' : 'secondary'}
+                              className="font-semibold"
+                            >
+                              {healthScanResult.severity}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-700 mb-2">Recommendations:</p>
+                          <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                            {healthScanResult.recommendations.map((rec, index) => (
+                              <li key={index}>{rec}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>
