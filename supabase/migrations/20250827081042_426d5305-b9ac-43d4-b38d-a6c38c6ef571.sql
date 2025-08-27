@@ -1,0 +1,1 @@
+INSERT INTO mythbuster_videos (title, video_url, category, is_featured) VALUES ('My Uploaded Video', 'vid.mp4', 'Education', true);
