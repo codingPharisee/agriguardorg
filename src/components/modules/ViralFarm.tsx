@@ -653,7 +653,7 @@ const ViralFarm = ({ fullPage = false }) => {
               <li>Report misinformation to social media platforms.</li>
               {fullPage && (
                 <>
-                  <li>Use the AgriGuard ecosystem to access factual responses to common myths.</li>
+                  <li>Access factual responses to common agricultural myths from reliable sources.</li>
                   <li>Monitor trending agricultural topics to stay ahead of misinformation waves.</li>
                 </>
               )}

@@ -49,7 +49,7 @@ const About = () => {
                   <li><strong>Fact Check:</strong> Verify agricultural claims and information accuracy.</li>
                   <li><strong>ViralFarm:</strong> Track and analyze trending agricultural content.</li>
                   <li><strong>MythBuster Ag:</strong> Debunk common agricultural myths and misconceptions.</li>
-                  <li><strong>Integrated Ecosystem:</strong> Connect with reliable agricultural information sources.</li>
+                  
                 </ul>
               </CardContent>
             </Card>

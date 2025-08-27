@@ -36,7 +36,7 @@ const AppContent = () => {
       <Route path="/viral-farm" element={<ViralFarmPage />} />
       <Route path="/myth-buster" element={<VideoGeneration />} />
       <Route path="/tools" element={<Tools />} />
-      <Route path="/ecosystem" element={<ComingSoon title="Integrated Ecosystem" />} />
+      
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/auth" element={<Auth />} />

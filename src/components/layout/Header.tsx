@@ -30,7 +30,7 @@ const Header = () => {
     { name: "MythBuster Ag", href: "/myth-buster" },
     { name: "Pest Identification", href: "/pest-identification" },
     { name: "Crop Recommendations", href: "/crop-recommendations" },
-    { name: "Integrated Ecosystem", href: "/ecosystem" },
+    
   ];
 
   const handleSignOut = async () => {

@@ -53,7 +53,7 @@ const FAQS = [
   {
     id: 6,
     question: "Are traditional African farming methods outdated compared to modern techniques?",
-    answer: "Many traditional farming methods incorporate sophisticated knowledge of local ecosystems developed over generations. These methods often include sustainable practices like intercropping, agroforestry, and natural pest management that are now being recognized by modern agricultural science as highly valuable, especially in the face of climate change.",
+    answer: "Many traditional farming methods incorporate sophisticated knowledge of local environments developed over generations. These methods often include sustainable practices like intercropping, agroforestry, and natural pest management that are now being recognized by modern agricultural science as highly valuable, especially in the face of climate change.",
     source: "Alliance for Food Sovereignty in Africa (AFSA), 2023",
     organization: "AFSA"
   },

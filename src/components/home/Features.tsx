@@ -29,14 +29,6 @@ const featuresList = [
     bgImage: "https://images.unsplash.com/photo-1574943320219-5650d380a722?q=80&w=500&auto=format&fit=crop",
     bgColor: "from-amber-600/90 to-orange-700/90"
   },
-  {
-    icon: <Shield className="h-8 w-8 text-white" />,
-    title: "Integrated Ecosystem",
-    description: "All three modules work together in a seamless pipeline to detect, debunk, and prevent misinformation.",
-    path: "/ecosystem",
-    bgImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=500&auto=format&fit=crop",
-    bgColor: "from-purple-600/90 to-purple-800/90"
-  },
 ];
 
 const Features = () => {
