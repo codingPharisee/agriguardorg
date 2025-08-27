@@ -35,6 +35,7 @@ const MythBusterAg = () => {
       const { data, error } = await supabase
         .from('mythbuster_videos')
         .select('*')
+        .neq('category', 'user-upload')
         .order('created_at', { ascending: false });
 
       if (error) {
