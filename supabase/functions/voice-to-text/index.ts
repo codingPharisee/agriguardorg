@@ -64,7 +64,12 @@ serve(async (req) => {
         cleanBase64 = audio.split(',')[1];
       }
       
-      binaryAudio = processBase64Chunks(cleanBase64);
+      // Simple base64 decode without chunking for better compatibility
+      const binaryString = atob(cleanBase64);
+      binaryAudio = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        binaryAudio[i] = binaryString.charCodeAt(i);
+      }
       console.log('Audio processed successfully, size:', binaryAudio.length);
     } catch (decodeError) {
       console.error('Error decoding base64 audio:', decodeError);
@@ -73,10 +78,10 @@ serve(async (req) => {
     
     // Prepare form data with proper audio format
     const formData = new FormData()
-    const blob = new Blob([binaryAudio], { type: 'audio/webm;codecs=opus' })
-    formData.append('file', blob, 'recording.webm')
+    const blob = new Blob([binaryAudio], { type: 'audio/wav' })
+    formData.append('file', blob, 'recording.wav')
     formData.append('model', 'whisper-1')
-    formData.append('language', 'en') // Optional: specify language for better accuracy
+    formData.append('response_format', 'text')
 
     console.log('Sending to OpenAI Whisper API...')
 

@@ -18,29 +18,26 @@ serve(async (req) => {
       throw new Error('Text is required')
     }
 
-    const elevenLabsApiKey = Deno.env.get('ELEVENLABS_API_KEY')
-    if (!elevenLabsApiKey) {
-      throw new Error('ElevenLabs API key not configured')
+    const openAIApiKey = Deno.env.get('OPENAI_API_KEY')
+    if (!openAIApiKey) {
+      throw new Error('OpenAI API key not configured')
     }
 
-    // Use Sarah voice for better quality
-    const voiceId = voice || 'EXAVITQu4vr4xnSDxMaL'
+    // Use OpenAI TTS instead of ElevenLabs
+    const voiceOption = voice || 'alloy' // alloy, echo, fable, onyx, nova, shimmer
 
-    // Generate speech from text using ElevenLabs API
-    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+    // Generate speech from text using OpenAI TTS API
+    const response = await fetch('https://api.openai.com/v1/audio/speech', {
       method: 'POST',
       headers: {
-        'Accept': 'audio/mpeg',
+        'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
-        'xi-api-key': elevenLabsApiKey,
       },
       body: JSON.stringify({
-        text: text,
-        model_id: 'eleven_multilingual_v2',
-        voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.5
-        }
+        model: 'tts-1',
+        input: text,
+        voice: voiceOption,
+        response_format: 'mp3',
       }),
     })
 
@@ -50,7 +47,7 @@ serve(async (req) => {
       
       // Better error handling for different status codes
       if (response.status === 401) {
-        throw new Error('Invalid ElevenLabs API key. Please check your configuration.');
+        throw new Error('Invalid OpenAI API key. Please check your configuration.');
       } else if (response.status === 429) {
         throw new Error('Rate limit exceeded. Please try again later.');
       } else if (response.status === 400) {

@@ -8,13 +8,15 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Search, MessageSquare, HelpCircle, Lightbulb, Mic, MicOff, Volume2, VolumeX, Home } from 'lucide-react';
+import { ArrowLeft, Search, MessageSquare, HelpCircle, Lightbulb, Mic, MicOff, Volume2, VolumeX, Home, Bug, TrendingUp } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useVoiceRecording } from '@/hooks/useVoiceRecording';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import PestIdentification from '@/components/modules/PestIdentification';
+import CropRecommendations from '@/components/modules/CropRecommendations';
 
 // Language options for fact-checking
 const LANGUAGES = [
@@ -183,10 +185,12 @@ const FactCheck = () => {
               </CardHeader>
               <CardContent>
                 <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid grid-cols-3 mb-6">
-                    <TabsTrigger value="search">Search</TabsTrigger>
-                    <TabsTrigger value="faqs">Common FAQs</TabsTrigger>
-                    <TabsTrigger value="claims">Common Claims</TabsTrigger>
+                  <TabsList className="grid grid-cols-5 mb-6">
+                    <TabsTrigger value="search">Fact Check</TabsTrigger>
+                    <TabsTrigger value="pest-id">Pest ID</TabsTrigger>
+                    <TabsTrigger value="crop-rec">Crop Rec</TabsTrigger>
+                    <TabsTrigger value="faqs">FAQs</TabsTrigger>
+                    <TabsTrigger value="claims">Claims</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="search" className="space-y-4">
@@ -282,6 +286,14 @@ const FactCheck = () => {
                         <p className="text-xs mt-2">Use the microphone button to record your voice</p>
                       </div>
                     )}
+                  </TabsContent>
+                  
+                  <TabsContent value="pest-id">
+                    <PestIdentification />
+                  </TabsContent>
+                  
+                  <TabsContent value="crop-rec">
+                    <CropRecommendations />
                   </TabsContent>
                   
                   <TabsContent value="faqs">

@@ -5,7 +5,7 @@ import AgricultureGuide from "@/components/agriculture/AgricultureGuide";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Home, Beaker, Video, Sprout, Network } from "lucide-react";
+import { Home, Beaker, Video, Sprout, Network, Bug, TrendingUp } from "lucide-react";
 
 const Tools = () => {
   return (
@@ -62,16 +62,50 @@ const Tools = () => {
             <Card className="group hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Network className="h-5 w-5 text-primary" />
-                  Integrated Ecosystem
+                  <Bug className="h-5 w-5 text-primary" />
+                  Pest Identification
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Comprehensive agricultural ecosystem management platform.
+                  AI-powered pest and disease identification through image recognition.
                 </p>
-                <Button asChild size="sm" className="w-full" variant="outline">
-                  <Link to="/ecosystem">Coming Soon</Link>
+                <Button asChild size="sm" className="w-full">
+                  <Link to="/fact-check">Open Pest ID</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-primary" />
+                  Crop Recommendations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Personalized crop recommendations based on soil data and weather patterns.
+                </p>
+                <Button asChild size="sm" className="w-full">
+                  <Link to="/fact-check">Open Crop Rec</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Network className="h-5 w-5 text-primary" />
+                  Fact Check AI
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Voice-enabled fact checking with text-to-speech capabilities.
+                </p>
+                <Button asChild size="sm" className="w-full">
+                  <Link to="/fact-check">Open Fact Check</Link>
                 </Button>
               </CardContent>
             </Card>
