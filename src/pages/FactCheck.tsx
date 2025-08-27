@@ -195,15 +195,10 @@ const FactCheck = () => {
             <p className="text-xl mb-6 text-blue-50">
               Verify agricultural claims against peer-reviewed research and expert consensus
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center">
               <Button variant="outline" asChild className="border-white/30 text-white hover:bg-white/10">
                 <Link to="/tools" className="flex items-center gap-2">
                   <ArrowLeft className="h-4 w-4" /> Extension Services
-                </Link>
-              </Button>
-              <Button asChild className="bg-white text-blue-800 hover:bg-blue-50">
-                <Link to="/" className="flex items-center gap-2">
-                  <Home className="h-4 w-4" /> Department Home
                 </Link>
               </Button>
             </div>

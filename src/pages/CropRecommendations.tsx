@@ -185,15 +185,10 @@ const CropRecommendations: React.FC = () => {
             <p className="text-xl mb-6 text-green-50">
               Get expert crop recommendations tailored to your soil conditions, climate, and farming objectives
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center">
               <Button variant="outline" asChild className="border-white/30 text-white hover:bg-white/10">
                 <Link to="/tools" className="flex items-center gap-2">
                   <ArrowLeft className="h-4 w-4" /> Extension Services
-                </Link>
-              </Button>
-              <Button asChild className="bg-white text-green-800 hover:bg-green-50">
-                <Link to="/" className="flex items-center gap-2">
-                  <Home className="h-4 w-4" /> Department Home
                 </Link>
               </Button>
             </div>
