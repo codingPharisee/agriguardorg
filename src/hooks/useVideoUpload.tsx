@@ -6,15 +6,14 @@ interface Video {
   id: string;
   title: string;
   description?: string;
-  file_name: string;
-  file_path: string;
-  file_size: number;
-  mime_type: string;
-  duration?: number;
-  status: 'processing' | 'ready' | 'failed';
-  public_url: string;
+  video_url: string;
+  category: string;
+  duration?: string;
+  is_featured: boolean;
+  created_by: string;
   created_at: string;
-  updated_at: string;
+  thumbnail_url?: string;
+  views?: number;
 }
 
 interface UploadProgress {

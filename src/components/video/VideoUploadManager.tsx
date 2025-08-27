@@ -272,16 +272,16 @@ export const VideoUploadManager: React.FC<VideoUploadManagerProps> = ({
                       {video.description && (
                         <p className="text-sm text-gray-600 mt-1">{video.description}</p>
                       )}
-                      <div className="flex items-center gap-2 mt-2">
-                        <Badge variant="secondary" className="text-xs">
-                          {formatFileSize(video.file_size)}
-                        </Badge>
-                        <Badge className={`text-xs ${getStatusColor(video.status)}`}>
-                          <div className="flex items-center gap-1">
-                            {getStatusIcon(video.status)}
-                            {video.status}
-                          </div>
-                        </Badge>
+                       <div className="flex items-center gap-2 mt-2">
+                         <Badge variant="secondary" className="text-xs">
+                           {video.category}
+                         </Badge>
+                         <Badge variant="default" className="text-xs bg-green-100 text-green-800">
+                           <div className="flex items-center gap-1">
+                             <CheckCircle className="h-3 w-3" />
+                             Ready
+                           </div>
+                         </Badge>
                         <span className="text-xs text-gray-500">
                           {new Date(video.created_at).toLocaleDateString()}
                         </span>
@@ -289,49 +289,47 @@ export const VideoUploadManager: React.FC<VideoUploadManagerProps> = ({
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    {video.status === 'ready' && (
-                      <>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                        >
-                          <a
-                            href={video.public_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1"
-                          >
-                            <Play className="h-3 w-3" />
-                            Play
-                          </a>
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                        >
-                          <a
-                            href={video.public_url}
-                            download={video.file_name}
-                            className="flex items-center gap-1"
-                          >
-                            <Download className="h-3 w-3" />
-                            Download
-                          </a>
-                        </Button>
-                      </>
-                    )}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleDelete(video.id)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  </div>
+                   <div className="flex items-center gap-2">
+                     <>
+                       <Button
+                         variant="outline"
+                         size="sm"
+                         asChild
+                       >
+                         <a
+                   href={video.video_url}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                           className="flex items-center gap-1"
+                         >
+                           <Play className="h-3 w-3" />
+                           Play
+                         </a>
+                       </Button>
+                       <Button
+                         variant="outline"
+                         size="sm"
+                         asChild
+                       >
+                         <a
+                           href={video.video_url}
+                           download={video.title}
+                           className="flex items-center gap-1"
+                         >
+                           <Download className="h-3 w-3" />
+                           Download
+                         </a>
+                       </Button>
+                     </>
+                     <Button
+                       variant="outline"
+                       size="sm"
+                       onClick={() => handleDelete(video.id)}
+                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                     >
+                       <Trash2 className="h-3 w-3" />
+                     </Button>
+                   </div>
                 </div>
               ))}
             </div>

@@ -101,18 +101,22 @@ Deno.serve(async (req) => {
           );
         }
 
+        // Get public URL
+        const { data: urlData } = supabase.storage
+          .from('mythbuster-videos')
+          .getPublicUrl(uploadData.path);
+
         // Save video metadata to database
         const { data: videoData, error: dbError } = await supabase
-          .from('videos')
+          .from('mythbuster_videos')
           .insert({
-            user_id: user.id,
             title: title || file.name,
             description,
-            file_name: file.name,
-            file_path: uploadData.path,
-            file_size: file.size,
-            mime_type: file.type,
-            status: 'ready'
+            video_url: urlData.publicUrl,
+            category: 'user-upload',
+            duration: null,
+            created_by: user.id,
+            is_featured: false
           })
           .select()
           .single();
@@ -129,11 +133,6 @@ Deno.serve(async (req) => {
             { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
-
-        // Get public URL
-        const { data: urlData } = supabase.storage
-          .from('mythbuster-videos')
-          .getPublicUrl(uploadData.path);
 
         return new Response(
           JSON.stringify({
@@ -188,9 +187,9 @@ Deno.serve(async (req) => {
     if (req.method === 'GET') {
       // Get user's videos
       const { data: videos, error: videosError } = await supabase
-        .from('videos')
+        .from('mythbuster_videos')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('created_by', user.id)
         .order('created_at', { ascending: false });
 
       if (videosError) {
@@ -201,20 +200,9 @@ Deno.serve(async (req) => {
         );
       }
 
-      // Add public URLs to videos
-      const videosWithUrls = videos.map(video => {
-        const { data: urlData } = supabase.storage
-          .from('mythbuster-videos')
-          .getPublicUrl(video.file_path);
-        
-        return {
-          ...video,
-          public_url: urlData.publicUrl
-        };
-      });
-
+      // Videos already have video_url, no need to generate public URLs
       return new Response(
-        JSON.stringify({ videos: videosWithUrls }),
+        JSON.stringify({ videos }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -233,10 +221,10 @@ Deno.serve(async (req) => {
 
       // Get video data
       const { data: video, error: fetchError } = await supabase
-        .from('videos')
-        .select('file_path, user_id')
+        .from('mythbuster_videos')
+        .select('video_url, created_by')
         .eq('id', videoId)
-        .eq('user_id', user.id)
+        .eq('created_by', user.id)
         .single();
 
       if (fetchError || !video) {
@@ -246,21 +234,14 @@ Deno.serve(async (req) => {
         );
       }
 
-      // Delete from storage
-      const { error: storageError } = await supabase.storage
-        .from('mythbuster-videos')
-        .remove([video.file_path]);
-
-      if (storageError) {
-        console.error('Storage delete error:', storageError);
-      }
+      // Note: For mythbuster_videos, we don't delete from storage as video_url might be external
 
       // Delete from database
       const { error: dbError } = await supabase
-        .from('videos')
+        .from('mythbuster_videos')
         .delete()
         .eq('id', videoId)
-        .eq('user_id', user.id);
+        .eq('created_by', user.id);
 
       if (dbError) {
         console.error('Database delete error:', dbError);
