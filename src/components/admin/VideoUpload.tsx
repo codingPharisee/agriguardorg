@@ -34,11 +34,7 @@ const VideoUpload = () => {
       throw uploadError;
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('mythbuster-videos')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
+    return filePath;
   };
 
   const handleThumbnailUpload = async (file: File) => {
@@ -56,11 +52,7 @@ const VideoUpload = () => {
       throw uploadError;
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('mythbuster-videos')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
+    return filePath;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

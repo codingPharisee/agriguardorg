@@ -113,18 +113,18 @@ const MythBusterAg = () => {
             {featuredVideo && (
               <div className="relative rounded-lg overflow-hidden border">
                  <AspectRatio ratio={16/9}>
-                   <video 
-                     controls
-                     className="w-full h-full object-cover"
-                     poster={featuredVideo.thumbnail_url}
-                     onPlay={() => incrementViews(featuredVideo.id)}
-                   >
-                     <source 
-                       src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(featuredVideo.video_url)}`}
-                       type="video/mp4" 
-                     />
-                     Your browser does not support the video tag.
-                   </video>
+                    <video 
+                      controls
+                      className="w-full h-full object-cover"
+                      poster={featuredVideo.thumbnail_url ? `https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${featuredVideo.thumbnail_url}` : undefined}
+                      onPlay={() => incrementViews(featuredVideo.id)}
+                    >
+                      <source 
+                        src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${featuredVideo.video_url}`}
+                        type="video/mp4" 
+                      />
+                      Your browser does not support the video tag.
+                    </video>
                   <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="font-medium text-white">{featuredVideo.title}</h3>
@@ -149,16 +149,16 @@ const MythBusterAg = () => {
                          className="flex gap-3 p-2 rounded-md hover:bg-secondary transition-colors cursor-pointer"
                        >
                          <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden">
-                           <video 
-                             className="w-full h-full object-cover"
-                             muted
-                             preload="metadata"
-                           >
-                             <source 
-                               src={`https://lhqwzirrqenvlsffpefk.supabase.co/functions/v1/video-proxy?path=${encodeURIComponent(video.video_url)}`}
-                               type="video/mp4" 
-                             />
-                           </video>
+                            <video 
+                              className="w-full h-full object-cover"
+                              muted
+                              preload="metadata"
+                            >
+                              <source 
+                                src={`https://lhqwzirrqenvlsffpefk.supabase.co/storage/v1/object/public/mythbuster-videos/${video.video_url}`}
+                                type="video/mp4" 
+                              />
+                            </video>
                            <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
                              {video.duration || "N/A"}
                            </div>
