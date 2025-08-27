@@ -3,9 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Sprout, MapPin, Calendar, TrendingUp, AlertCircle, Home, ArrowLeft, Thermometer, Droplets, Zap } from "lucide-react";
+import { Loader2, Sprout, MapPin, Calendar, TrendingUp, AlertCircle, Home, ArrowLeft, Thermometer, Droplets, Zap, Leaf, BarChart3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +12,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import agricultureHeroBg from "@/assets/agriculture-hero-bg.jpg";
 
 interface SoilData {
   ph?: string;
@@ -162,50 +162,64 @@ const CropRecommendations: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Header />
       
-      <main className="flex-grow py-8">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto">
-            {/* Page Header */}
-            <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center gap-4">
-                <Button variant="outline" asChild>
-                  <Link to="/tools" className="flex items-center gap-2">
-                    <ArrowLeft className="h-4 w-4" /> Back to Tools
-                  </Link>
-                </Button>
-                <div>
-                  <h1 className="text-3xl font-bold flex items-center gap-2">
-                    <Sprout className="h-8 w-8 text-green-600" />
-                    Smart Crop Recommendations
-                  </h1>
-                  <p className="text-gray-600 mt-2">
-                    Get AI-powered, personalized crop recommendations based on your soil, location, and farming goals
-                  </p>
-                </div>
-              </div>
-              <Button variant="outline" asChild>
+      {/* Hero Section */}
+      <section 
+        className="relative bg-cover bg-center py-16 text-white"
+        style={{ backgroundImage: `url(${agricultureHeroBg})` }}
+      >
+        <div className="absolute inset-0 bg-green-800/70"></div>
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Sprout className="h-8 w-8" />
+              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                Agricultural Planning Center
+              </Badge>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Crop Advisory & Planning Service
+            </h1>
+            <p className="text-xl mb-6 text-green-50">
+              Get expert crop recommendations tailored to your soil conditions, climate, and farming objectives
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button variant="outline" asChild className="border-white/30 text-white hover:bg-white/10">
+                <Link to="/tools" className="flex items-center gap-2">
+                  <ArrowLeft className="h-4 w-4" /> Extension Services
+                </Link>
+              </Button>
+              <Button asChild className="bg-white text-green-800 hover:bg-green-50">
                 <Link to="/" className="flex items-center gap-2">
-                  <Home className="h-4 w-4" /> Home
+                  <Home className="h-4 w-4" /> Department Home
                 </Link>
               </Button>
             </div>
-
+          </div>
+        </div>
+      </section>
+      
+      <main className="flex-grow py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
             <div className="grid xl:grid-cols-3 gap-8">
               {/* Input Form */}
               <div className="xl:col-span-1 space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5 text-blue-600" />
-                      Farm Information
+                <Card className="shadow-lg border-green-100">
+                  <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
+                    <CardTitle className="flex items-center gap-2 text-green-800">
+                      <MapPin className="h-5 w-5" />
+                      Farm Profile
                     </CardTitle>
+                    <p className="text-sm text-green-700 mt-2">
+                      Provide your farm details for personalized recommendations
+                    </p>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 pt-6">
                     <div>
-                      <Label htmlFor="location" className="flex items-center gap-2">
+                      <Label htmlFor="location" className="flex items-center gap-2 text-green-800">
                         <MapPin className="h-4 w-4" />
                         Location *
                       </Label>
@@ -213,18 +227,19 @@ const CropRecommendations: React.FC = () => {
                         id="location"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        placeholder="e.g., Nairobi, Kenya"
+                        placeholder="e.g., Nakuru County, Kenya"
+                        className="border-green-200 focus:border-green-500"
                       />
                     </div>
                     
                     <div>
-                      <Label htmlFor="season" className="flex items-center gap-2">
+                      <Label htmlFor="season" className="flex items-center gap-2 text-green-800">
                         <Calendar className="h-4 w-4" />
                         Current Season
                       </Label>
                       <Select value={season} onValueChange={setSeason}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select season" />
+                        <SelectTrigger className="border-green-200 focus:border-green-500">
+                          <SelectValue placeholder="Select growing season" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="dry-season">Dry Season</SelectItem>
@@ -236,115 +251,123 @@ const CropRecommendations: React.FC = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="farmSize">Farm Size</Label>
+                      <Label htmlFor="farmSize" className="text-green-800">Farm Size</Label>
                       <Select value={farmSize} onValueChange={setFarmSize}>
-                        <SelectTrigger>
+                        <SelectTrigger className="border-green-200 focus:border-green-500">
                           <SelectValue placeholder="Select farm size" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="small">Small (&lt; 1 hectare)</SelectItem>
-                          <SelectItem value="medium">Medium (1-5 hectares)</SelectItem>
-                          <SelectItem value="large">Large (&gt; 5 hectares)</SelectItem>
+                          <SelectItem value="small">Small Scale (&lt; 1 hectare)</SelectItem>
+                          <SelectItem value="medium">Medium Scale (1-5 hectares)</SelectItem>
+                          <SelectItem value="large">Large Scale (&gt; 5 hectares)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div>
-                      <Label htmlFor="experience">Farming Experience</Label>
+                      <Label htmlFor="experience" className="text-green-800">Farming Experience</Label>
                       <Select value={experience} onValueChange={setExperience}>
-                        <SelectTrigger>
+                        <SelectTrigger className="border-green-200 focus:border-green-500">
                           <SelectValue placeholder="Select experience level" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="beginner">Beginner (0-2 years)</SelectItem>
-                          <SelectItem value="intermediate">Intermediate (3-10 years)</SelectItem>
-                          <SelectItem value="experienced">Experienced (&gt; 10 years)</SelectItem>
+                          <SelectItem value="beginner">New Farmer (0-2 years)</SelectItem>
+                          <SelectItem value="intermediate">Experienced (3-10 years)</SelectItem>
+                          <SelectItem value="experienced">Expert Farmer (&gt; 10 years)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div>
-                      <Label htmlFor="budget">Budget Range</Label>
+                      <Label htmlFor="budget" className="text-green-800">Investment Capacity</Label>
                       <Select value={budget} onValueChange={setBudget}>
-                        <SelectTrigger>
+                        <SelectTrigger className="border-green-200 focus:border-green-500">
                           <SelectValue placeholder="Select budget range" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="low">Low Budget</SelectItem>
-                          <SelectItem value="medium">Medium Budget</SelectItem>
-                          <SelectItem value="high">High Budget</SelectItem>
+                          <SelectItem value="low">Limited Budget</SelectItem>
+                          <SelectItem value="medium">Moderate Investment</SelectItem>
+                          <SelectItem value="high">High Investment</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Thermometer className="h-5 w-5 text-orange-600" />
+                <Card className="shadow-lg border-green-100">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50">
+                    <CardTitle className="flex items-center gap-2 text-blue-800">
+                      <Thermometer className="h-5 w-5" />
                       Soil Analysis (Optional)
                     </CardTitle>
+                    <p className="text-sm text-blue-700 mt-2">
+                      Add soil test results for more precise recommendations
+                    </p>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 pt-6">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <Label htmlFor="ph">pH Level</Label>
+                        <Label htmlFor="ph" className="text-blue-800">pH Level</Label>
                         <Input
                           id="ph"
                           value={soilData.ph || ''}
                           onChange={(e) => handleSoilDataChange('ph', e.target.value)}
                           placeholder="6.5"
+                          className="border-blue-200 focus:border-blue-500"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="texture">Soil Texture</Label>
+                        <Label htmlFor="texture" className="text-blue-800">Soil Type</Label>
                         <Select value={soilData.texture || ''} onValueChange={(value) => handleSoilDataChange('texture', value)}>
-                          <SelectTrigger>
+                          <SelectTrigger className="border-blue-200 focus:border-blue-500">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="clay">Clay</SelectItem>
-                            <SelectItem value="sandy">Sandy</SelectItem>
-                            <SelectItem value="loam">Loam</SelectItem>
-                            <SelectItem value="silty">Silty</SelectItem>
+                            <SelectItem value="clay">Clay Soil</SelectItem>
+                            <SelectItem value="sandy">Sandy Soil</SelectItem>
+                            <SelectItem value="loam">Loam Soil</SelectItem>
+                            <SelectItem value="silty">Silty Soil</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <Label htmlFor="nitrogen">Nitrogen (%)</Label>
+                        <Label htmlFor="nitrogen" className="text-blue-800">Nitrogen (%)</Label>
                         <Input
                           id="nitrogen"
                           value={soilData.nitrogen || ''}
                           onChange={(e) => handleSoilDataChange('nitrogen', e.target.value)}
                           placeholder="2.5"
+                          className="border-blue-200 focus:border-blue-500"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="phosphorus">Phosphorus (ppm)</Label>
+                        <Label htmlFor="phosphorus" className="text-blue-800">Phosphorus (ppm)</Label>
                         <Input
                           id="phosphorus"
                           value={soilData.phosphorus || ''}
                           onChange={(e) => handleSoilDataChange('phosphorus', e.target.value)}
                           placeholder="25"
+                          className="border-blue-200 focus:border-blue-500"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="potassium">Potassium (ppm)</Label>
+                        <Label htmlFor="potassium" className="text-blue-800">Potassium (ppm)</Label>
                         <Input
                           id="potassium"
                           value={soilData.potassium || ''}
                           onChange={(e) => handleSoilDataChange('potassium', e.target.value)}
                           placeholder="200"
+                          className="border-blue-200 focus:border-blue-500"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="organic_matter">Organic Matter (%)</Label>
+                        <Label htmlFor="organic_matter" className="text-blue-800">Organic Matter (%)</Label>
                         <Input
                           id="organic_matter"
                           value={soilData.organic_matter || ''}
                           onChange={(e) => handleSoilDataChange('organic_matter', e.target.value)}
                           placeholder="3.2"
+                          className="border-blue-200 focus:border-blue-500"
                         />
                       </div>
                     </div>
@@ -358,15 +381,15 @@ const CropRecommendations: React.FC = () => {
                         {isAnalyzing ? (
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                         ) : (
-                          <TrendingUp className="h-4 w-4 mr-2" />
+                          <BarChart3 className="h-4 w-4 mr-2" />
                         )}
-                        {isAnalyzing ? 'Analyzing...' : 'Get Recommendations'}
+                        {isAnalyzing ? 'Analyzing Farm Data...' : 'Get Crop Recommendations'}
                       </Button>
                       
                       <Button
                         onClick={resetForm}
                         variant="outline"
-                        className="w-full"
+                        className="w-full border-green-300 text-green-700 hover:bg-green-50"
                       >
                         Reset Form
                       </Button>
@@ -378,21 +401,25 @@ const CropRecommendations: React.FC = () => {
               {/* Results */}
               <div className="xl:col-span-2">
                 {!recommendations && !isAnalyzing && (
-                  <Card className="h-96 flex items-center justify-center">
-                    <div className="text-center text-gray-500">
-                      <Sprout className="h-16 w-16 mx-auto mb-4 opacity-30" />
-                      <p className="text-xl mb-2">Ready for Analysis</p>
-                      <p className="text-sm">Fill in your farm information to get personalized crop recommendations</p>
+                  <Card className="h-96 flex items-center justify-center shadow-lg border-green-100">
+                    <div className="text-center text-green-600">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <Sprout className="h-8 w-8 text-green-600" />
+                      </div>
+                      <p className="text-xl mb-2 font-medium">Agricultural Planning Ready</p>
+                      <p className="text-sm text-green-700">Complete your farm profile to receive expert crop recommendations</p>
                     </div>
                   </Card>
                 )}
 
                 {isAnalyzing && (
-                  <Card className="h-96 flex items-center justify-center">
+                  <Card className="h-96 flex items-center justify-center shadow-lg border-green-100">
                     <div className="text-center">
-                      <Loader2 className="h-16 w-16 mx-auto mb-4 animate-spin text-green-600" />
-                      <p className="text-xl mb-2">Analyzing your farm data...</p>
-                      <p className="text-sm text-gray-600">This may take a few moments</p>
+                      <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+                      </div>
+                      <p className="text-xl mb-2 font-medium text-green-800">Analyzing Your Farm Profile...</p>
+                      <p className="text-sm text-green-700">Our agricultural specialists are preparing your recommendations</p>
                     </div>
                   </Card>
                 )}
@@ -400,46 +427,49 @@ const CropRecommendations: React.FC = () => {
                 {recommendations && (
                   <div className="space-y-6">
                     {/* Primary Recommendations */}
-                              {recommendations.primary_recommendations.length > 0 && (
-                              <Card>
-                                <CardHeader>
-                          <CardTitle className="text-xl flex items-center gap-2">
-                            <TrendingUp className="h-6 w-6 text-green-600" />
+                    {recommendations.primary_recommendations.length > 0 && (
+                      <Card className="shadow-lg border-green-100">
+                        <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
+                          <CardTitle className="text-xl flex items-center gap-2 text-green-800">
+                            <TrendingUp className="h-6 w-6" />
                             Recommended Crops for Your Farm
                           </CardTitle>
+                          <p className="text-sm text-green-700 mt-2">
+                            Expert-selected crops based on your conditions and goals
+                          </p>
                         </CardHeader>
-                        <CardContent>
-                                  <ScrollArea className="max-h-96">
+                        <CardContent className="pt-6">
+                          <ScrollArea className="max-h-96">
                             <div className="grid gap-4">
                               {recommendations.primary_recommendations.map((crop, index) => (
-                                <div key={index} className="border rounded-lg p-4 space-y-3 hover:bg-gray-50">
+                                <div key={index} className="border rounded-lg p-4 space-y-3 hover:bg-green-50/50 border-green-200">
                                   <div className="flex items-center justify-between">
-                                    <h3 className="font-semibold text-lg">{crop.crop}</h3>
+                                    <h3 className="font-semibold text-lg text-green-800">{crop.crop}</h3>
                                     <div className="flex items-center gap-2">
                                       <div className={`w-4 h-4 rounded-full ${getScoreColor(crop.suitability_score)}`} />
-                                      <span className="text-sm font-medium">{crop.suitability_score}/10</span>
+                                      <span className="text-sm font-medium text-green-700">{crop.suitability_score}/10 Match</span>
                                     </div>
                                   </div>
-                                  <p className="text-sm text-gray-600">
-                                    <strong>Variety:</strong> {crop.variety}
+                                  <p className="text-sm text-green-700">
+                                    <strong>Recommended Variety:</strong> {crop.variety}
                                   </p>
                                   <div className="flex flex-wrap gap-2">
                                     <Badge className={getMarketValueColor(crop.market_value)}>
-                                      {crop.market_value} market value
+                                      {crop.market_value} Market Value
                                     </Badge>
-                                    <Badge variant="outline" className="border-blue-200 bg-blue-50">
-                                      {crop.planting_window}
+                                    <Badge variant="outline" className="border-green-300 text-green-700">
+                                      Plant: {crop.planting_window}
                                     </Badge>
-                                    <Badge variant="outline" className="border-green-200 bg-green-50">
-                                      Expected: {crop.expected_yield}
+                                    <Badge variant="outline" className="border-blue-300 text-blue-700">
+                                      Yield: {crop.expected_yield}
                                     </Badge>
                                   </div>
                                   <div>
-                                    <h4 className="font-medium mb-2">Why this crop is perfect for you:</h4>
-                                    <ul className="grid grid-cols-1 gap-1">
+                                    <h4 className="font-medium text-green-800 mb-2">Why This Crop:</h4>
+                                    <ul className="space-y-1">
                                       {crop.reasons.map((reason, idx) => (
-                                        <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                                          <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0" />
+                                        <li key={idx} className="flex items-start gap-2 text-sm text-green-700">
+                                          <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0" />
                                           <span>{reason}</span>
                                         </li>
                                       ))}
