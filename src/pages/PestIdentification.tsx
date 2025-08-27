@@ -179,9 +179,9 @@ const PestIdentification: React.FC = () => {
               Professional plant health assessment and treatment recommendations from our agricultural specialists
             </p>
             <div className="flex justify-center">
-              <Button variant="outline" asChild className="border-white/30 text-white hover:bg-white/10">
+              <Button asChild className="bg-white/95 text-green-800 hover:bg-white border-2 border-white shadow-lg font-semibold px-6 py-3 text-base">
                 <Link to="/tools" className="flex items-center gap-2">
-                  <ArrowLeft className="h-4 w-4" /> Extension Services
+                  <ArrowLeft className="h-5 w-5" /> Extension Services
                 </Link>
               </Button>
             </div>
