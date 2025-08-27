@@ -41,6 +41,72 @@ export type Database = {
         }
         Relationships: []
       }
+      bookings: {
+        Row: {
+          created_at: string
+          id: string
+          passenger_name: string
+          phone_number: string | null
+          preferred_departure_time: string
+          route_id: string
+          schedule_id: string | null
+          seats_booked: number
+          special_requests: string | null
+          status: string
+          total_price: number
+          travel_date: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          passenger_name: string
+          phone_number?: string | null
+          preferred_departure_time: string
+          route_id: string
+          schedule_id?: string | null
+          seats_booked?: number
+          special_requests?: string | null
+          status?: string
+          total_price: number
+          travel_date: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          passenger_name?: string
+          phone_number?: string | null
+          preferred_departure_time?: string
+          route_id?: string
+          schedule_id?: string | null
+          seats_booked?: number
+          special_requests?: string | null
+          status?: string
+          total_price?: number
+          travel_date?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_schedule_id_fkey"
+            columns: ["schedule_id"]
+            isOneToOne: false
+            referencedRelation: "matatu_schedules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -116,6 +182,50 @@ export type Database = {
         }
         Relationships: []
       }
+      matatu_schedules: {
+        Row: {
+          capacity: number
+          created_at: string
+          days_of_week: string[]
+          departure_time: string
+          id: string
+          is_active: boolean
+          matatu_number: string
+          route_id: string
+          updated_at: string
+        }
+        Insert: {
+          capacity?: number
+          created_at?: string
+          days_of_week?: string[]
+          departure_time: string
+          id?: string
+          is_active?: boolean
+          matatu_number: string
+          route_id: string
+          updated_at?: string
+        }
+        Update: {
+          capacity?: number
+          created_at?: string
+          days_of_week?: string[]
+          departure_time?: string
+          id?: string
+          is_active?: boolean
+          matatu_number?: string
+          route_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matatu_schedules_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       misinformation_alerts: {
         Row: {
           content: string
@@ -158,6 +268,51 @@ export type Database = {
         }
         Relationships: []
       }
+      mythbuster_videos: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          duration: string | null
+          id: string
+          is_featured: boolean | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          video_url: string
+          views: number | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration?: string | null
+          id?: string
+          is_featured?: boolean | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          video_url: string
+          views?: number | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration?: string | null
+          id?: string
+          is_featured?: boolean | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string
+          views?: number | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -181,6 +336,39 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      routes: {
+        Row: {
+          base_price: number
+          created_at: string
+          distance_km: number | null
+          estimated_duration_minutes: number | null
+          from_location: string
+          id: string
+          to_location: string
+          updated_at: string
+        }
+        Insert: {
+          base_price: number
+          created_at?: string
+          distance_km?: number | null
+          estimated_duration_minutes?: number | null
+          from_location: string
+          id?: string
+          to_location: string
+          updated_at?: string
+        }
+        Update: {
+          base_price?: number
+          created_at?: string
+          distance_km?: number | null
+          estimated_duration_minutes?: number | null
+          from_location?: string
+          id?: string
+          to_location?: string
           updated_at?: string
         }
         Relationships: []

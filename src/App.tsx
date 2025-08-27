@@ -18,6 +18,7 @@ import Contact from "./pages/Contact";
 import VideoGeneration from "./pages/VideoGeneration";
 import Tools from "./pages/Tools";
 import Auth from "./pages/Auth";
+import AdminPanel from "./pages/AdminPanel";
 import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const AppContent = () => {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/admin" element={<AdminPanel />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

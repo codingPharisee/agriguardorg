@@ -53,7 +53,7 @@ export const useVoiceRecording = () => {
           reader.onloadend = async () => {
             const base64Audio = (reader.result as string).split(',')[1];
             
-            // Send to voice-to-text function
+          // Send to voice-to-text function
             const { data, error } = await supabase.functions.invoke('voice-to-text', {
               body: { audio: base64Audio }
             });
@@ -85,10 +85,9 @@ export const useVoiceRecording = () => {
           resolve(null);
         }
 
-        // Clean up
-        const stream = mediaRecorderRef.current?.stream;
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
+        // Clean up media recorder stream
+        if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
+          mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
         }
       };
 
