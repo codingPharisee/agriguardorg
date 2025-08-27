@@ -28,6 +28,61 @@ const MythBusterAg = () => {
   
   useEffect(() => {
     fetchVideos();
+
+    // Set up real-time subscription for new videos
+    const channel = supabase
+      .channel('mythbuster_videos_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'mythbuster_videos'
+        },
+        (payload) => {
+          const newVideo = payload.new as VideoData;
+          // Only add if it's not a user upload
+          if (newVideo.category !== 'user-upload') {
+            setVideos(prev => [newVideo, ...prev]);
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'mythbuster_videos'
+        },
+        (payload) => {
+          const updatedVideo = payload.new as VideoData;
+          if (updatedVideo.category !== 'user-upload') {
+            setVideos(prev => prev.map(video => 
+              video.id === updatedVideo.id ? updatedVideo : video
+            ));
+          } else {
+            // Remove if it became a user upload
+            setVideos(prev => prev.filter(video => video.id !== updatedVideo.id));
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'DELETE',
+          schema: 'public',
+          table: 'mythbuster_videos'
+        },
+        (payload) => {
+          const deletedVideo = payload.old as VideoData;
+          setVideos(prev => prev.filter(video => video.id !== deletedVideo.id));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchVideos = async () => {
