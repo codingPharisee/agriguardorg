@@ -1,9 +1,9 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages, Mic, Volume2, Camera, Upload, Eye, Bug, AlertTriangle, CheckCircle } from "lucide-react";
+import { MessageSquare, Send, Check, X, Loader2, Globe, Book, Languages, Mic, Volume2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
@@ -106,24 +106,6 @@ const LANGUAGES = [
   { value: "pt", label: "Português", flag: "🇵🇹" }
 ];
 
-// Interface for health analysis results
-interface HealthAnalysis {
-  identified: boolean;
-  type: 'pest' | 'disease' | 'nutrient_deficiency' | 'healthy' | 'unknown' | 'error';
-  name: string;
-  confidence: number;
-  description: string;
-  symptoms: string[];
-  treatment: {
-    immediate: string;
-    preventive: string;
-    organic: string;
-    chemical: string;
-  };
-  severity: 'low' | 'medium' | 'high' | 'unknown';
-  crop_affected: string;
-}
-
 // Mock database of fact-checking responses
 const FACT_CHECK_DATABASE = {
   "agricultural_biotech": {
@@ -166,13 +148,6 @@ const AgriFactCheck = () => {
     explanation: string;
     source: string;
   } | null>(null);
-
-  // Image scanning states
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState<HealthAnalysis | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const cameraInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   // Voice functionality
@@ -261,110 +236,6 @@ const AgriFactCheck = () => {
     }
   };
 
-  // Image scanning functions
-  const handleImageUpload = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      toast({
-        title: "Invalid file type",
-        description: "Please select an image file",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      setSelectedImage(result);
-      setAnalysis(null);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      handleImageUpload(file);
-    }
-  };
-
-  const analyzeImage = async () => {
-    if (!selectedImage) return;
-
-    setIsAnalyzing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('pest-identification', {
-        body: { image: selectedImage }
-      });
-
-      if (error) {
-        console.error('Health analysis error:', error);
-        toast({
-          title: "Analysis Failed",
-          description: "Could not analyze the image. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      setAnalysis(data);
-      toast({
-        title: "Health Analysis Complete",
-        description: `Analysis completed with ${data.confidence}% confidence`,
-      });
-    } catch (error) {
-      console.error('Error analyzing image:', error);
-      toast({
-        title: "Analysis Error",
-        description: "Could not analyze the image. Please check your connection and try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'pest':
-        return <Bug className="h-5 w-5" />;
-      case 'disease':
-        return <AlertTriangle className="h-5 w-5" />;
-      case 'healthy':
-        return <CheckCircle className="h-5 w-5" />;
-      default:
-        return <Eye className="h-5 w-5" />;
-    }
-  };
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'pest':
-        return 'bg-red-100 text-red-800 border-red-200';
-      case 'disease':
-        return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'healthy':
-        return 'bg-green-100 text-green-800 border-green-200';
-      case 'nutrient_deficiency':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
-
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'high':
-        return 'bg-red-500';
-      case 'medium':
-        return 'bg-yellow-500';
-      case 'low':
-        return 'bg-green-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
-
   return (
     <Card className="relative overflow-hidden border-0 shadow-xl bg-gradient-to-br from-green-50 via-emerald-50/80 to-green-100/60 backdrop-blur-sm">
       {/* Decorative background elements */}
@@ -386,18 +257,12 @@ const AgriFactCheck = () => {
       
       <CardContent className="relative pt-6 pb-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 mb-6 bg-green-100/60 p-1 rounded-lg">
+          <TabsList className="grid grid-cols-3 mb-6 bg-green-100/60 p-1 rounded-lg">
             <TabsTrigger 
               value="chat" 
               className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
             >
               Chat
-            </TabsTrigger>
-            <TabsTrigger 
-              value="scanner"
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
-            >
-              Health Scan
             </TabsTrigger>
             <TabsTrigger 
               value="faqs"
@@ -556,149 +421,6 @@ const AgriFactCheck = () => {
                 </p>
               </div>
             )}
-          </TabsContent>
-
-          <TabsContent value="scanner" className="mt-0 space-y-4">
-            <div className="space-y-4">
-              <div className="p-4 bg-green-50/60 rounded-lg border border-green-200/40">
-                <p className="text-sm text-gray-700 mb-2">
-                  <strong>Health Scanner:</strong> Upload or capture an image of your crops or livestock to identify pests, diseases, or health issues.
-                </p>
-                <p className="text-xs text-gray-600">
-                  Supports: crops, plants, livestock, and animal health analysis
-                </p>
-              </div>
-
-              <div className="flex gap-4">
-                <Button
-                  onClick={() => cameraInputRef.current?.click()}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  <Camera className="h-4 w-4 mr-2" />
-                  Take Photo
-                </Button>
-                <Button
-                  onClick={() => fileInputRef.current?.click()}
-                  variant="outline"
-                  className="flex-1 border-green-200 hover:bg-green-50"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Upload Image
-                </Button>
-              </div>
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileSelect}
-                className="hidden"
-              />
-              <input
-                ref={cameraInputRef}
-                type="file"
-                accept="image/*"
-                capture="environment"
-                onChange={handleFileSelect}
-                className="hidden"
-              />
-
-              {selectedImage && (
-                <div className="space-y-4">
-                  <div className="relative">
-                    <img
-                      src={selectedImage}
-                      alt="Selected for health analysis"
-                      className="w-full max-h-96 object-contain rounded-lg border border-green-200"
-                    />
-                  </div>
-                  <Button
-                    onClick={analyzeImage}
-                    disabled={isAnalyzing}
-                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
-                  >
-                    {isAnalyzing ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <Eye className="h-4 w-4 mr-2" />
-                    )}
-                    {isAnalyzing ? 'Analyzing Health...' : 'Analyze Health'}
-                  </Button>
-                </div>
-              )}
-
-              {analysis && (
-                <Card className="border-2 border-green-200 bg-white/90 backdrop-blur-sm">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        {getTypeIcon(analysis.type)}
-                        <span>Health Analysis Results</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge className={getTypeColor(analysis.type)}>
-                          {analysis.type.replace('_', ' ').toUpperCase()}
-                        </Badge>
-                        <div className="flex items-center gap-1">
-                          <div className={`w-3 h-3 rounded-full ${getSeverityColor(analysis.severity)}`} />
-                          <span className="text-sm text-gray-600 capitalize">{analysis.severity}</span>
-                        </div>
-                      </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-lg text-gray-800">{analysis.name}</h3>
-                      <p className="text-gray-600 leading-relaxed">{analysis.description}</p>
-                      <div className="mt-2 flex flex-wrap gap-4">
-                        <span className="text-sm text-gray-500">
-                          <strong>Confidence:</strong> {analysis.confidence}%
-                        </span>
-                        {analysis.crop_affected !== 'unknown' && (
-                          <span className="text-sm text-gray-500">
-                            <strong>Subject:</strong> {analysis.crop_affected}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {analysis.symptoms.length > 0 && (
-                      <div>
-                        <h4 className="font-medium mb-2 text-gray-800">Visible Signs & Symptoms:</h4>
-                        <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
-                          {analysis.symptoms.map((symptom, index) => (
-                            <li key={index}>{symptom}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="space-y-3">
-                        <div className="p-3 bg-red-50 rounded-lg border border-red-200">
-                          <h4 className="font-medium text-red-700 mb-1">🚨 Immediate Action:</h4>
-                          <p className="text-sm text-gray-700">{analysis.treatment.immediate}</p>
-                        </div>
-                        <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                          <h4 className="font-medium text-green-700 mb-1">🌿 Organic Treatment:</h4>
-                          <p className="text-sm text-gray-700">{analysis.treatment.organic}</p>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                          <h4 className="font-medium text-blue-700 mb-1">🛡️ Prevention:</h4>
-                          <p className="text-sm text-gray-700">{analysis.treatment.preventive}</p>
-                        </div>
-                        <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-                          <h4 className="font-medium text-orange-700 mb-1">⚗️ Chemical Treatment:</h4>
-                          <p className="text-sm text-gray-700">{analysis.treatment.chemical}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
           </TabsContent>
           
           <TabsContent value="faqs" className="mt-0">
