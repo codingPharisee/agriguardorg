@@ -93,11 +93,8 @@ const MythBusterAg = () => {
       <CardHeader className="pb-2">
         <CardTitle className="module-header">
           <Video className="h-5 w-5" />
-          MythBuster Ag
+          Agriguard At a glance
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
-          AI-generated educational videos to debunk and "prebunk" agricultural myths
-        </p>
       </CardHeader>
       <CardContent>
         {loading ? (
