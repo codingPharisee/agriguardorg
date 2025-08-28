@@ -9,7 +9,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ServiceWorkerProvider } from "@/components/ServiceWorkerProvider";
 import Index from "./pages/Index";
 import FactCheck from "./pages/FactCheck";
-import News from "./pages/News";
+import Blogs from "./pages/Blogs";
 import NotFound from "./pages/NotFound";
 import ComingSoon from "./pages/ComingSoon";
 import About from "./pages/About";
@@ -32,7 +32,7 @@ const AppContent = () => {
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/fact-check" element={<FactCheck />} />
-      <Route path="/news" element={<News />} />
+      <Route path="/blogs" element={<Blogs />} />
       <Route path="/viral-farm" element={<ViralFarmPage />} />
       <Route path="/myth-buster" element={<VideoGeneration />} />
       <Route path="/tools" element={<Tools />} />

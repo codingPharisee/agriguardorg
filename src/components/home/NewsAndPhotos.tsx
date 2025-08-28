@@ -21,10 +21,10 @@ const NewsAndPhotos = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchLatestNews();
+    fetchLatestBlogs();
   }, []);
 
-  const fetchLatestNews = async () => {
+  const fetchLatestBlogs = async () => {
     try {
       setLoading(true);
       
@@ -49,7 +49,7 @@ const NewsAndPhotos = () => {
         setArticles(processedArticles);
       }
     } catch (error) {
-      console.error("Error fetching news:", error);
+      console.error("Error fetching blogs:", error);
       // Fallback to static content if API fails
       setArticles(staticNewsItems);
     } finally {
@@ -97,7 +97,7 @@ const NewsAndPhotos = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-3 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-green-800 to-amber-800 bg-clip-text text-transparent">
-            Latest Agricultural News & Resources
+            Latest Agricultural Blogs & Resources
           </h2>
           <Newspaper className="h-8 w-8 text-green-600" />
         </div>
@@ -105,7 +105,7 @@ const NewsAndPhotos = () => {
         {loading ? (
           <div className="flex justify-center items-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-green-600" />
-            <span className="ml-2 text-gray-600">Loading latest news...</span>
+            <span className="ml-2 text-gray-600">Loading latest blogs...</span>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -123,7 +123,7 @@ const NewsAndPhotos = () => {
                     />
                   </AspectRatio>
                   <div className="absolute top-3 right-3">
-                    <Badge type="news" />
+                    <Badge type="blog" />
                   </div>
                 </div>
                 <CardHeader className="p-6">
@@ -148,14 +148,14 @@ const NewsAndPhotos = () => {
         
         <div className="flex justify-center mt-12 gap-4">
           <Button className="gap-2 bg-green-600 hover:bg-green-700 px-6 py-3" asChild>
-            <Link to="/news">
+            <Link to="/blogs">
               <Newspaper className="h-5 w-5" />
               View All Articles
             </Link>
           </Button>
           <Button variant="outline" className="gap-2 border-green-300 text-green-800 hover:bg-green-50 px-6 py-3">
             <Globe className="h-5 w-5" />
-            News Sources
+            Blog Sources
           </Button>
         </div>
       </div>
@@ -171,7 +171,7 @@ const Badge = ({ type }: { type: string }) => {
   if (type === "photo") {
     bgColor = "bg-blue-600 text-white";
     icon = <Image className="h-3 w-3 mr-1" />;
-  } else if (type === "news") {
+  } else if (type === "blog") {
     bgColor = "bg-orange-600 text-white";
     icon = <Newspaper className="h-3 w-3 mr-1" />;
   } else if (type === "resource") {

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -11,7 +10,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-interface NewsArticle {
+interface BlogArticle {
   title: string;
   description: string;
   url: string;
@@ -20,15 +19,15 @@ interface NewsArticle {
   source: string;
 }
 
-const News = () => {
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
+const Blogs = () => {
+  const [articles, setArticles] = useState<BlogArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredArticles, setFilteredArticles] = useState<NewsArticle[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<BlogArticle[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchNews();
+    fetchBlogs();
   }, []);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const News = () => {
     }
   }, [searchQuery, articles]);
 
-  const fetchNews = async (customQuery?: string) => {
+  const fetchBlogs = async (customQuery?: string) => {
     try {
       setLoading(true);
       
@@ -70,14 +69,14 @@ const News = () => {
       }
 
       toast({
-        title: "News loaded",
-        description: "Latest agricultural news has been loaded successfully.",
+        title: "Blogs loaded",
+        description: "Latest agricultural blogs have been loaded successfully.",
       });
     } catch (error) {
-      console.error("Error fetching news:", error);
+      console.error("Error fetching blogs:", error);
       toast({
-        title: "Error loading news",
-        description: "Unable to load the latest news. Please try again later.",
+        title: "Error loading blogs",
+        description: "Unable to load the latest blogs. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -88,7 +87,7 @@ const News = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      fetchNews(searchQuery);
+      fetchBlogs(searchQuery);
     }
   };
 
@@ -109,7 +108,7 @@ const News = () => {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
               <Newspaper className="h-8 w-8 text-green-600" />
-              <h1 className="text-3xl font-bold text-green-900">Agricultural News</h1>
+              <h1 className="text-3xl font-bold text-green-900">Agricultural Blogs</h1>
             </div>
             
             <div className="mb-8">
@@ -117,7 +116,7 @@ const News = () => {
                 <div className="relative flex-1 max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
-                    placeholder="Search agricultural news..."
+                    placeholder="Search agricultural blogs..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10"
@@ -126,7 +125,7 @@ const News = () => {
                 <Button type="submit" disabled={loading}>
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Search"}
                 </Button>
-                <Button onClick={() => fetchNews()} disabled={loading} variant="outline">
+                <Button onClick={() => fetchBlogs()} disabled={loading} variant="outline">
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Refresh"}
                 </Button>
               </form>
@@ -135,7 +134,7 @@ const News = () => {
             {loading ? (
               <div className="flex justify-center items-center py-16">
                 <Loader2 className="h-8 w-8 animate-spin text-green-600" />
-                <span className="ml-2 text-gray-600">Loading latest agricultural news...</span>
+                <span className="ml-2 text-gray-600">Loading latest agricultural blogs...</span>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -154,7 +153,7 @@ const News = () => {
                       </AspectRatio>
                       <Badge className="absolute top-3 right-3 bg-green-600">
                         <Newspaper className="h-3 w-3 mr-1" />
-                        News
+                        Blog
                       </Badge>
                     </div>
                     
@@ -200,4 +199,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default Blogs;
