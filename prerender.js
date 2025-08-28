@@ -13,7 +13,7 @@ const { render } = await import('./dist/server/entry-server.js')
 const routesToPrerender = [
   '/',
   '/fact-check',
-  '/news', 
+  '/blogs', 
   '/viral-farm',
   '/myth-buster',
   '/tools',

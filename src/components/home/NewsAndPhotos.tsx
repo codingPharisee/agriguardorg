@@ -148,7 +148,7 @@ const NewsAndPhotos = () => {
         
         <div className="flex justify-center mt-12 gap-4">
           <Button className="gap-2 bg-green-600 hover:bg-green-700 px-6 py-3" asChild>
-            <Link to="/news">
+            <Link to="/blogs">
               <Newspaper className="h-5 w-5" />
               View All Articles
             </Link>
