@@ -24,7 +24,19 @@ const Blogs = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredArticles, setFilteredArticles] = useState<BlogArticle[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const articlesPerPage = 9;
   const { toast } = useToast();
+
+  const categories = [
+    { id: "all", name: "All Articles", query: "agriculture Africa farming sustainable crops technology" },
+    { id: "climate", name: "Climate Smart", query: "climate smart agriculture Africa sustainable farming" },
+    { id: "technology", name: "AgTech", query: "agricultural technology Africa farming innovation digital" },
+    { id: "crops", name: "Crop Management", query: "crop management Africa farming yields seeds varieties" },
+    { id: "livestock", name: "Livestock", query: "livestock farming Africa cattle poultry sustainable" },
+    { id: "policy", name: "Policy & Trade", query: "agricultural policy Africa trade farming regulations" }
+  ];
 
   useEffect(() => {
     fetchBlogs();
@@ -40,6 +52,7 @@ const Blogs = () => {
     } else {
       setFilteredArticles(articles);
     }
+    setCurrentPage(1); // Reset to first page when filtering
   }, [searchQuery, articles]);
 
   const staticBlogItems = [
@@ -145,6 +158,26 @@ const Blogs = () => {
     }
   };
 
+  const handleCategoryChange = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    const category = categories.find(cat => cat.id === categoryId);
+    if (category) {
+      fetchBlogs(category.query);
+    }
+    setCurrentPage(1);
+  };
+
+  // Pagination logic
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = filteredArticles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -163,6 +196,27 @@ const Blogs = () => {
             <div className="flex items-center gap-3 mb-8">
               <Newspaper className="h-8 w-8 text-green-600" />
               <h1 className="text-3xl font-bold text-green-900">Agricultural Blogs</h1>
+            </div>
+            
+            {/* Category Navigation */}
+            <div className="mb-6">
+              <div className="flex flex-wrap gap-2">
+                {categories.map(category => (
+                  <Button
+                    key={category.id}
+                    onClick={() => handleCategoryChange(category.id)}
+                    variant={selectedCategory === category.id ? "default" : "outline"}
+                    size="sm"
+                    className={`${
+                      selectedCategory === category.id 
+                        ? "bg-green-600 hover:bg-green-700 text-white" 
+                        : "border-green-200 text-green-700 hover:bg-green-50"
+                    }`}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
+              </div>
             </div>
             
             <div className="mb-8">
@@ -192,7 +246,7 @@ const Blogs = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredArticles.map((article, index) => (
+                {currentArticles.map((article, index) => (
                   <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative">
                       <AspectRatio ratio={16/9} className="bg-gray-100">
@@ -234,6 +288,49 @@ const Blogs = () => {
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {!loading && totalPages > 1 && (
+              <div className="flex justify-center items-center mt-12 gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="border-green-200 text-green-700 hover:bg-green-50"
+                >
+                  Previous
+                </Button>
+                
+                <div className="flex gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <Button
+                      key={page}
+                      variant={currentPage === page ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => handlePageChange(page)}
+                      className={`${
+                        currentPage === page 
+                          ? "bg-green-600 hover:bg-green-700 text-white" 
+                          : "border-green-200 text-green-700 hover:bg-green-50"
+                      }`}
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="border-green-200 text-green-700 hover:bg-green-50"
+                >
+                  Next
+                </Button>
               </div>
             )}
 
