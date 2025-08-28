@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ServiceWorkerProvider } from "@/components/ServiceWorkerProvider";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import FactCheck from "./pages/FactCheck";
 import Blogs from "./pages/Blogs";
@@ -21,15 +22,14 @@ import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
 import PestIdentification from "./pages/PestIdentification";
 import CropRecommendations from "./pages/CropRecommendations";
-import useScrollPosition from "@/hooks/useScrollPosition";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  useScrollPosition();
-  
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/fact-check" element={<FactCheck />} />
       <Route path="/blogs" element={<Blogs />} />
@@ -44,7 +44,8 @@ const AppContent = () => {
       <Route path="/pest-identification" element={<PestIdentification />} />
       <Route path="/crop-recommendations" element={<CropRecommendations />} />
       <Route path="*" element={<NotFound />} />
-    </Routes>
+      </Routes>
+    </>
   );
 };
 
