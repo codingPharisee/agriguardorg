@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ServiceWorkerProvider } from "@/components/ServiceWorkerProvider";
 import Index from "./pages/Index";
@@ -32,7 +32,7 @@ const AppContent = () => {
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/fact-check" element={<FactCheck />} />
-      <Route path="/blogs" element={<News />} />
+      <Route path="/news" element={<News />} />
       <Route path="/viral-farm" element={<ViralFarmPage />} />
       <Route path="/myth-buster" element={<VideoGeneration />} />
       <Route path="/tools" element={<Tools />} />
@@ -55,7 +55,9 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <AppContent />
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
         </TooltipProvider>
       </ServiceWorkerProvider>
     </AuthProvider>

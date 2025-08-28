@@ -11,7 +11,6 @@ import NewsAndPhotos from "@/components/home/NewsAndPhotos";
 import AIToolsCarousel from "@/components/home/AIToolsCarousel";
 import { Button } from "@/components/ui/button";
 import ContactFormDialog from "@/components/forms/ContactFormDialog";
-import SEOHead from "@/components/SEOHead";
 import useScrollPosition from "@/hooks/useScrollPosition";
 
 const Index = () => {
@@ -20,13 +19,6 @@ const Index = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead 
-        title="AgriGuard Tech - Combat Agricultural Misinformation with AI | Fact-Checking & Education"
-        description="AgriGuard Tech provides AI-powered agricultural fact-checking, misinformation detection, and educational content to empower farmers with science-based knowledge about biotechnology and sustainable farming practices."
-        keywords="agricultural fact checking, farming misinformation, agricultural biotechnology, crop recommendations, pest identification, farm education, AI agriculture, sustainable farming, agricultural myths, AgriGuard"
-        image="/agriculture-hero-bg.jpg"
-        url="/"
-      />
       <Header />
       
       <main className="flex-grow">

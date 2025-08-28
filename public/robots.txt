@@ -1,12 +1,3 @@
-User-agent: *
-Allow: /
-
-# Block access to admin and auth pages from crawlers
-Disallow: /admin
-Disallow: /auth
-Disallow: /api/
-
-# Allow specific bots
 User-agent: Googlebot
 Allow: /
 
@@ -19,8 +10,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-# Crawl delay for all bots
-Crawl-delay: 1
-
-# Sitemap location
-Sitemap: https://yourdomain.com/sitemap.xml
+User-agent: *
+Allow: /
