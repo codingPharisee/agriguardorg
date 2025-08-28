@@ -117,6 +117,11 @@ const Blogs = () => {
       });
 
       if (error) throw error;
+      
+      // Check if the API response contains an error (like usage limits)
+      if (data && data.error) {
+        throw new Error(data.error.message || 'API error occurred');
+      }
 
       if (data && data.data) {
         const processedArticles = data.data.map((article: any) => ({
@@ -135,6 +140,9 @@ const Blogs = () => {
           title: "Latest blogs loaded",
           description: "Successfully loaded the most recent agricultural blogs.",
         });
+      } else {
+        // No data returned, use fallback
+        throw new Error('No data returned from API');
       }
     } catch (error) {
       console.error("Error fetching blogs:", error);
