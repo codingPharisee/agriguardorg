@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Leaf, ChevronDown } from "lucide-react";
+import { Menu, Sprout, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -30,7 +29,6 @@ const Header = () => {
     { name: "MythBuster Ag", href: "/myth-buster" },
     { name: "Pest Identification", href: "/pest-identification" },
     { name: "Crop Recommendations", href: "/crop-recommendations" },
-    
   ];
 
   const handleSignOut = async () => {
@@ -42,41 +40,64 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white border-b border-green-200 sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="bg-green-600 text-white px-3 py-2 font-bold rounded">
-              <div className="flex flex-col items-center">
-                <Leaf className="h-5 w-5 mb-1" />
-                <span className="text-sm">AgriGuard</span>
+    <header className="bg-background/95 backdrop-blur-lg border-b border-border sticky top-0 z-50 shadow-sm">
+      <div className="container mx-auto px-6">
+        <div className="flex justify-between items-center h-20">
+          {/* Professional Logo */}
+          <Link to="/" className="flex items-center gap-4 group">
+            <div className="relative">
+              <div className="bg-primary text-primary-foreground p-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <Sprout className="h-6 w-6" />
               </div>
+              <div className="absolute -top-1 -right-1 bg-accent text-accent-foreground rounded-full p-1">
+                <Shield className="h-3 w-3" />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-2xl font-bold text-foreground tracking-tight">
+                AgriGuard
+              </span>
+              <span className="text-sm text-muted-foreground font-medium">
+                Tech Solutions
+              </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navigationItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-gray-700 hover:text-green-600 transition-colors font-medium"
+                className="px-4 py-2 text-foreground hover:text-primary transition-all duration-200 font-medium rounded-lg hover:bg-secondary/50 relative group"
               >
                 {item.name}
+                <span className="absolute inset-x-4 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
               </Link>
             ))}
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-700 hover:text-green-600">
-                  Tools <ChevronDown className="ml-1 h-4 w-4" />
+                <Button 
+                  variant="ghost" 
+                  className="text-foreground hover:text-primary hover:bg-secondary/50 font-medium px-4 py-2 rounded-lg"
+                >
+                  Tools 
+                  <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-green-200 shadow-lg rounded-md z-50 min-w-[180px]">
+              <DropdownMenuContent 
+                className="bg-card/95 backdrop-blur-lg border border-border shadow-lg rounded-xl min-w-[200px] p-2"
+                align="center"
+              >
                 {toolsItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
-                    <Link to={item.href}>{item.name}</Link>
+                    <Link 
+                      to={item.href}
+                      className="px-3 py-2 rounded-lg hover:bg-secondary/80 transition-colors duration-200 cursor-pointer"
+                    >
+                      {item.name}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -84,21 +105,34 @@ const Header = () => {
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
-            <Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-50" asChild>
+          <div className="hidden lg:flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              className="border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-medium px-6 rounded-xl" 
+              asChild
+            >
               <Link to="/contact">Contact</Link>
             </Button>
             
             {user ? (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Welcome!</span>
-                <Button onClick={handleSignOut} variant="outline">
+              <div className="flex items-center gap-3">
+                <div className="text-sm">
+                  <span className="text-muted-foreground">Welcome back!</span>
+                </div>
+                <Button 
+                  onClick={handleSignOut} 
+                  variant="outline"
+                  className="border-muted-foreground/20 hover:bg-secondary/80 rounded-xl px-6"
+                >
                   Sign Out
                 </Button>
               </div>
             ) : (
-              <Button className="bg-green-600 hover:bg-green-700" asChild>
-                <Link to="/auth">Login</Link>
+              <Button 
+                className="bg-primary hover:bg-primary-dark text-primary-foreground font-medium px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200" 
+                asChild
+              >
+                <Link to="/auth">Get Started</Link>
               </Button>
             )}
           </div>
@@ -106,58 +140,89 @@ const Header = () => {
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon" className="lg:hidden hover:bg-secondary/50 rounded-xl">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[250px] bg-gradient-to-br from-green-50 to-white border-l-4 border-green-400 shadow-xl">
-              <div className="flex flex-col space-y-3 mt-4">
-                <div className="text-center pb-3 border-b border-green-200">
-                  <h2 className="text-lg font-bold text-green-700">Menu</h2>
+            <SheetContent 
+              side="right" 
+              className="w-[320px] bg-card/95 backdrop-blur-xl border-l border-border"
+            >
+              <div className="flex flex-col space-y-6 mt-8">
+                <div className="text-center pb-4 border-b border-border">
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <div className="bg-primary text-primary-foreground p-2 rounded-lg">
+                      <Sprout className="h-5 w-5" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">AgriGuard</h2>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Navigation Menu</p>
                 </div>
                 
-                {navigationItems.map((item, index) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 transition-all duration-200 font-medium py-2 px-3 rounded-md text-sm animate-fade-in"
-                    style={{ animationDelay: `${index * 50}ms` }}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                
-                <div className="border-t border-green-200 pt-3">
-                  <h3 className="font-semibold text-green-700 mb-2 text-sm px-3">Tools</h3>
-                  {toolsItems.map((item, index) => (
+                <nav className="space-y-2">
+                  {navigationItems.map((item, index) => (
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="block text-gray-600 hover:text-green-600 hover:bg-green-50 transition-all duration-200 py-1.5 px-3 rounded-md text-sm"
-                      style={{ animationDelay: `${(index + 4) * 50}ms` }}
+                      className="flex items-center text-foreground hover:text-primary hover:bg-secondary/50 transition-all duration-200 font-medium py-3 px-4 rounded-xl animate-fade-in"
+                      style={{ animationDelay: `${index * 50}ms` }}
                       onClick={() => setIsOpen(false)}
                     >
                       {item.name}
                     </Link>
                   ))}
+                </nav>
+                
+                <div className="border-t border-border pt-4">
+                  <h3 className="font-semibold text-foreground mb-3 text-sm px-4 uppercase tracking-wide">
+                    Agricultural Tools
+                  </h3>
+                  <div className="space-y-1">
+                    {toolsItems.map((item, index) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="block text-muted-foreground hover:text-primary hover:bg-secondary/50 transition-all duration-200 py-2.5 px-4 rounded-lg text-sm"
+                        style={{ animationDelay: `${(index + 4) * 50}ms` }}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
                 
-                <div className="border-t border-green-200 pt-3 space-y-2">
-                  <Button variant="outline" size="sm" className="w-full text-green-600 border-green-400 hover:bg-green-50 text-xs" asChild>
-                    <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+                <div className="border-t border-border pt-6 space-y-3">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full border-primary/20 text-primary hover:bg-primary/5 rounded-xl" 
+                    asChild
+                  >
+                    <Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link>
                   </Button>
                   
                   {user ? (
-                    <div className="space-y-2">
-                      <p className="text-xs text-gray-600 text-center">Welcome!</p>
-                      <Button onClick={() => { handleSignOut(); setIsOpen(false); }} variant="outline" size="sm" className="w-full text-xs">
+                    <div className="space-y-3">
+                      <p className="text-sm text-muted-foreground text-center">
+                        Welcome back!
+                      </p>
+                      <Button 
+                        onClick={() => { handleSignOut(); setIsOpen(false); }} 
+                        variant="outline" 
+                        size="lg" 
+                        className="w-full rounded-xl"
+                      >
                         Sign Out
                       </Button>
                     </div>
                   ) : (
-                    <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-xs" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Login</Link>
+                    <Button 
+                      size="lg" 
+                      className="w-full bg-primary hover:bg-primary-dark text-primary-foreground rounded-xl shadow-md" 
+                      asChild
+                    >
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
                     </Button>
                   )}
                 </div>

@@ -28,14 +28,13 @@ export default {
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
-					// AgriGuard agricultural colors inspired by the image
-					light: '#F59E0B',
-					DEFAULT: '#D97706',
-					dark: '#92400E',
+					light: 'hsl(var(--primary-light))',
+					dark: 'hsl(var(--primary-dark))',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))',
+					dark: 'hsl(var(--secondary-dark))',
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -48,6 +47,7 @@ export default {
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))',
+					light: 'hsl(var(--accent-light))',
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -67,21 +67,20 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom agricultural colors matching the uploaded design
+				// Professional Agricultural Design System
 				earth: {
-					light: '#D2B48C',
-					DEFAULT: '#8B4513',
-					dark: '#654321',
+					brown: 'hsl(var(--earth-brown))',
+					'brown-light': 'hsl(var(--earth-brown-light))',
+					tan: 'hsl(var(--earth-tan))',
 				},
 				golden: {
-					light: '#FFE4B5',
-					DEFAULT: '#DAA520',
-					dark: '#B8860B',
+					harvest: 'hsl(var(--golden-harvest))',
 				},
-				harvest: {
-					light: '#F4A460',
-					DEFAULT: '#CD853F',
-					dark: '#A0522D',
+				forest: {
+					green: 'hsl(var(--forest-green))',
+				},
+				sage: {
+					green: 'hsl(var(--sage-green))',
 				},
 			},
 			borderRadius: {
