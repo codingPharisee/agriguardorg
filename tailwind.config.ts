@@ -34,7 +34,6 @@ export default {
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))',
-					dark: 'hsl(var(--secondary-dark))',
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -47,7 +46,6 @@ export default {
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))',
-					light: 'hsl(var(--accent-light))',
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -67,20 +65,28 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Professional Agricultural Design System
+				// Professional Agricultural Color Palette
 				earth: {
 					brown: 'hsl(var(--earth-brown))',
-					'brown-light': 'hsl(var(--earth-brown-light))',
-					tan: 'hsl(var(--earth-tan))',
+					dark: 'hsl(var(--soil-dark))',
 				},
-				golden: {
-					harvest: 'hsl(var(--golden-harvest))',
+				harvest: {
+					gold: 'hsl(var(--harvest-gold))',
+					DEFAULT: 'hsl(var(--accent))',
 				},
-				forest: {
-					green: 'hsl(var(--forest-green))',
+				crop: {
+					green: 'hsl(var(--crop-green))',
 				},
-				sage: {
-					green: 'hsl(var(--sage-green))',
+				sky: {
+					blue: 'hsl(var(--sky-blue))',
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))',
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))',
 				},
 			},
 			borderRadius: {
@@ -105,10 +111,6 @@ export default {
 						height: '0'
 					}
 				},
-				'pulse-slow': {
-					'0%, 100%': { opacity: '1' },
-					'50%': { opacity: '0.7' },
-				},
 				'fade-in': {
 					'0%': {
 						opacity: '0',
@@ -118,13 +120,57 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
+				},
+				'slide-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(30px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'scale-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'scale(0.95)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'scale(1)'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px hsl(var(--primary) / 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 30px hsl(var(--primary) / 0.5)'
+					}
+				},
+				'pulse-soft': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
 				'fade-in': 'fade-in 0.7s ease-out',
+				'slide-up': 'slide-up 0.6s ease-out',
+				'scale-in': 'scale-in 0.5s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite',
+				'pulse-soft': 'pulse-soft 3s ease-in-out infinite',
 			}
 		}
 	},
