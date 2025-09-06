@@ -22,6 +22,7 @@ import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
 import PestIdentification from "./pages/PestIdentification";
 import CropRecommendations from "./pages/CropRecommendations";
+import AgriculturalMisinformation from "./pages/AgriculturalMisinformation";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const AppContent = () => {
       <Route path="/admin" element={<AdminPanel />} />
       <Route path="/pest-identification" element={<PestIdentification />} />
       <Route path="/crop-recommendations" element={<CropRecommendations />} />
+      <Route path="/agricultural-misinformation" element={<AgriculturalMisinformation />} />
       <Route path="*" element={<NotFound />} />
       </Routes>
     </>

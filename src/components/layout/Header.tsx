@@ -21,6 +21,7 @@ const Header = () => {
     { name: "Home", href: "/" },
     { name: "Blogs", href: "/blogs" },
     { name: "Fact Check", href: "/fact-check" },
+    { name: "Misinformation", href: "/agricultural-misinformation" },
     { name: "About", href: "/about" },
   ];
 
