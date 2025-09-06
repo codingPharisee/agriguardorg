@@ -1,285 +1,298 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, BookOpen, Users, Target, CheckCircle, XCircle } from "lucide-react";
+import { AlertTriangle, BookOpen, Users, Target, CheckCircle, XCircle, TrendingDown, DollarSign, Clock, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AgriculturalMisinformation = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Misinformation in Agriculture
+      <section className="py-20 px-4 bg-gradient-to-br from-red-600 to-orange-600 text-white">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              The True Cost of Agricultural Misinformation
             </h1>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              Separating fact from fiction in agricultural information
+            <p className="text-xl md:text-2xl mb-8 text-red-100 max-w-4xl mx-auto leading-relaxed">
+              Understanding How False Information Impacts Food Security, Farmer Livelihoods, and Global Agriculture
+            </p>
+            <p className="text-lg text-red-100 max-w-3xl mx-auto">
+              From historical famines caused by pseudoscience to modern social media myths affecting crop yields, 
+              agricultural misinformation has measurable impacts on our food systems and economy.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="pb-20 px-4">
-        <div className="container mx-auto max-w-4xl space-y-12">
+      {/* Key Impact Statistics */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+            The Measurable Impact of Agricultural Misinformation
+          </h2>
           
-          {/* Introduction */}
-          <Card className="border-2 border-gray-200">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-2xl">
-                <AlertTriangle className="h-6 w-6 text-orange-500" />
-                The Challenge of Agricultural Misinformation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                Social media is a hotbed of fake news and false claims about a huge range of topics, 
-                and agriculture is no exception. Is organic farming better than non-organic farming? 
-                Should farmers feed antibiotics and steroids to their animals? Such debates about food 
-                and agriculture can result in false information being spread as people try to convince 
-                others of the "right" point of view.
-              </p>
-              <p>
-                <strong>What is misinformation?</strong> Misinformation is fake or misleading information 
-                which is shared without the intent to deceive.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Agricultural Terms */}
-          <Card className="border-2 border-gray-200 bg-gradient-to-r from-orange-50 to-yellow-50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-2xl">
-                <BookOpen className="h-6 w-6 text-orange-500" />
-                Talk Like an Agricultural Scientist
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4">
-                <div className="p-4 bg-white rounded-lg border">
-                  <h4 className="font-semibold text-gray-900 mb-2">Agri-food</h4>
-                  <p className="text-gray-700">
-                    The sector that includes the primary production of food (e.g., crops, livestock), 
-                    and the processing, distribution and consumption of food (e.g., rice, bread, milk) 
-                    and non-food (e.g., leather, wax) agricultural products.
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg border">
-                  <h4 className="font-semibold text-gray-900 mb-2">Agronomist</h4>
-                  <p className="text-gray-700">An expert in crop production.</p>
-                </div>
-                <div className="p-4 bg-white rounded-lg border">
-                  <h4 className="font-semibold text-gray-900 mb-2">Disinformation</h4>
-                  <p className="text-gray-700">
-                    False information deliberately shared with the intent to cause harm.
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg border">
-                  <h4 className="font-semibold text-gray-900 mb-2">Genetically Modified Crop</h4>
-                  <p className="text-gray-700">
-                    A plant with DNA that has been scientifically altered.
-                  </p>
-                </div>
-                <div className="p-4 bg-white rounded-lg border">
-                  <h4 className="font-semibold text-gray-900 mb-2">Misinformation</h4>
-                  <p className="text-gray-700">
-                    False information that is believed to be true, shared without the intent to cause harm.
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center p-8 bg-white rounded-xl shadow-lg border-2 border-gray-200">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users className="h-8 w-8 text-red-600" />
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Consequences */}
-          <Card className="border-2 border-gray-200">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-2xl">
-                <Users className="h-6 w-6 text-red-500" />
-                Consequences of Agri-Food Misinformation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                While misinformation is not intentionally harmful, it can have severe consequences. 
-                "Misinformation can create division among people," explains Ataharul. "Polarisation 
-                on topics such as climate change and vaccines has damaged public trust in science, 
-                which makes it harder for scientists to serve society."
-              </p>
-              <p>
-                "Agri-food misinformation creates anxiety, uncertainty and confusion among farmers 
-                and consumers," explains Ataharul. It reduces their ability to make science-based 
-                decisions on issues such as the effects of agriculture on the environment and the 
-                effects of food on health, which can lead to economic and health losses.
-              </p>
-              <p>
-                Controversial topics such as genetically modified crops, organic farming and animal 
-                welfare are commonly surrounded by misinformation. While there are legitimate scientific 
-                debates on these topics, both sides use information that they believe to be true to 
-                promote their own personal, financial or political interests. However, this information 
-                may be false. Misinformation can affect everyone, from farmers who are sold poor quality 
-                seeds and fertilisers, to consumers who are led to buy unhealthy or unsustainable foods.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Historical Examples */}
-          <Card className="border-2 border-gray-200">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-2xl">
-                <Target className="h-6 w-6 text-purple-500" />
-                Examples of Agri-Food Misinformation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                <h4 className="font-semibold text-gray-900 mb-3">Historical Case: Lysenkoism (1928)</h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Soviet agronomist Trofim Lysenko claimed that crop yields could be increased by applying 
-                  his theory of Lysenkoism, which rejected biological ideas of genetics and evolution. 
-                  He believed that plants could be 'educated' to adapt to their environment. The Soviet 
-                  Union forcibly promoted Lysenkoism as it aligned with the country's political ideology, 
-                  but it had devastating consequences for agriculture. By forcing farmers to plant crops 
-                  in unsuitable conditions, crop yields dramatically decreased, leading to a famine that 
-                  cost millions of lives.
-                </p>
+              <div className="text-4xl font-bold text-gray-900 mb-2">Millions</div>
+              <div className="text-gray-600">Lives lost to historical agricultural misinformation campaigns</div>
+            </div>
+            
+            <div className="text-center p-8 bg-white rounded-xl shadow-lg border-2 border-gray-200">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <TrendingDown className="h-8 w-8 text-orange-600" />
               </div>
-              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                <h4 className="font-semibold text-gray-900 mb-3">Historical Case: Chinese Sparrow Campaign (1958)</h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Chinese farmers were ordered to kill sparrows in the belief that they were eating grain. 
-                  However, with the sparrow population decimated, insects had far fewer predators and swarms 
-                  of locusts devastated the fields, leading to one of the largest famines in human history.
-                </p>
+              <div className="text-4xl font-bold text-gray-900 mb-2">30-50%</div>
+              <div className="text-gray-600">Crop yield decreases from following false agricultural practices</div>
+            </div>
+            
+            <div className="text-center p-8 bg-white rounded-xl shadow-lg border-2 border-gray-200">
+              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <DollarSign className="h-8 w-8 text-yellow-600" />
               </div>
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h4 className="font-semibold text-gray-900 mb-3">Modern Example: Canadian Butter Scandal (2021)</h4>
-                <p className="text-gray-700 leading-relaxed">
-                  A food blogger claimed that Canadian butter had become harder to spread, suggesting this 
-                  was because dairy farmers were adding palm oil supplements to their cow feed. This idea 
-                  took off on social media, leading to the 'buttergate' scandal and decreased sales of 
-                  Canadian butter, highlighting how easily misinformation can spread in the modern world 
-                  and have a significant economic impact.
-                </p>
+              <div className="text-4xl font-bold text-gray-900 mb-2">Billions</div>
+              <div className="text-gray-600">Economic losses from misinformation-driven agricultural decisions</div>
+            </div>
+            
+            <div className="text-center p-8 bg-white rounded-xl shadow-lg border-2 border-gray-200">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock className="h-8 w-8 text-blue-600" />
               </div>
-            </CardContent>
-          </Card>
+              <div className="text-4xl font-bold text-gray-900 mb-2">Seconds</div>
+              <div className="text-gray-600">Time it takes for false information to spread on social media</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          {/* Recognition Guide */}
-          <Card className="border-2 border-gray-200">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-2xl">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                How to Recognize Mis- and Disinformation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-700 leading-relaxed">
-                With so much information available online, how can you separate fact from fiction? 
-                "The most important thing is to develop a critical mind when consuming information 
-                online," advises Ataharul. "In today's digital world, having critical media literacy 
-                skills is essential." He suggests the following techniques for evaluating the credibility 
-                of online information:
-              </p>
-              <div className="grid gap-4 mt-6">
-                <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+      {/* Historical Case Studies */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+            Historical Case Studies: When Misinformation Becomes Catastrophe
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <Card className="border-2 border-red-200 bg-red-50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl text-red-800">
+                  <AlertTriangle className="h-6 w-6" />
+                  Lysenkoism (1928-1964)
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-gray-700 leading-relaxed">
+                <div className="bg-white p-4 rounded-lg border border-red-200">
+                  <h4 className="font-semibold text-red-800 mb-2">The False Promise</h4>
+                  <p>Soviet agronomist Trofim Lysenko claimed crops could be "educated" to adapt to their environment, rejecting genetics and evolution.</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-red-200">
+                  <h4 className="font-semibold text-red-800 mb-2">The Catastrophic Result</h4>
+                  <p>Forced implementation led to dramatic crop yield decreases and famines that cost millions of lives across the Soviet Union.</p>
+                </div>
+                <Badge variant="destructive" className="text-sm">Economic Impact: Massive agricultural collapse</Badge>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-orange-200 bg-orange-50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl text-orange-800">
+                  <Target className="h-6 w-6" />
+                  Chinese Sparrow Campaign (1958)
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-gray-700 leading-relaxed">
+                <div className="bg-white p-4 rounded-lg border border-orange-200">
+                  <h4 className="font-semibold text-orange-800 mb-2">The Misguided Policy</h4>
+                  <p>Farmers were ordered to kill sparrows believing they consumed too much grain, disrupting the natural ecosystem.</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-orange-200">
+                  <h4 className="font-semibold text-orange-800 mb-2">The Ecological Disaster</h4>
+                  <p>Without natural predators, locust swarms devastated crops, contributing to one of history's largest famines.</p>
+                </div>
+                <Badge variant="secondary" className="text-sm bg-orange-100 text-orange-800">Impact: 15-45 million deaths</Badge>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Modern Misinformation Challenges */}
+      <section className="py-20 px-4 bg-blue-50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+            Modern Agricultural Misinformation: The Social Media Age
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="border-2 border-blue-200">
+              <CardHeader>
+                <CardTitle className="text-xl text-blue-800">Viral Food Myths</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700 mb-4">False claims about "superfoods" and "cancer-causing" foods spread rapidly on social platforms.</p>
+                <div className="bg-blue-100 p-3 rounded-lg">
+                  <p className="font-semibold text-blue-800">Example: Canadian Buttergate (2021)</p>
+                  <p className="text-sm text-blue-700">Social media myth about palm oil in cow feed led to significant economic losses for dairy farmers.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-200">
+              <CardHeader>
+                <CardTitle className="text-xl text-green-800">GMO Misinformation</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700 mb-4">False claims about genetically modified crops create fear and resistance to beneficial agricultural innovations.</p>
+                <div className="bg-green-100 p-3 rounded-lg">
+                  <p className="font-semibold text-green-800">Impact: Reduced Adoption</p>
+                  <p className="text-sm text-green-700">Countries ban beneficial crops due to misinformation, limiting food security improvements.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-purple-200">
+              <CardHeader>
+                <CardTitle className="text-xl text-purple-800">Pesticide Panic</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700 mb-4">Exaggerated or false claims about agricultural chemicals lead to poor farming decisions.</p>
+                <div className="bg-purple-100 p-3 rounded-lg">
+                  <p className="font-semibold text-purple-800">Consequence: Crop Losses</p>
+                  <p className="text-sm text-purple-700">Farmers avoid effective treatments, leading to increased pest damage and yield losses.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Solution Framework */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+            Evidence-Based Solutions: Building Information Literacy
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-8">Critical Evaluation Framework</h3>
+              <div className="space-y-6">
+                <div className="flex gap-4 p-6 bg-green-50 rounded-lg border border-green-200">
+                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Who wrote the information?</h4>
-                    <p className="text-gray-700">
-                      Research the author. Note that anonymous articles may be untrustworthy.
-                    </p>
+                    <h4 className="font-semibold text-gray-900 mb-2">Verify the Source</h4>
+                    <p className="text-gray-700">Research the author's credentials and check if the information comes from reputable agricultural institutions.</p>
                   </div>
                 </div>
-                <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                
+                <div className="flex gap-4 p-6 bg-green-50 rounded-lg border border-green-200">
+                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Why did they write it?</h4>
-                    <p className="text-gray-700">
-                      Think about the author's motives for sharing the information.
-                    </p>
+                    <h4 className="font-semibold text-gray-900 mb-2">Cross-Reference Information</h4>
+                    <p className="text-gray-700">Compare claims across multiple reliable sources and look for peer-reviewed research supporting the information.</p>
                   </div>
                 </div>
-                <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                
+                <div className="flex gap-4 p-6 bg-green-50 rounded-lg border border-green-200">
+                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">How does it make you feel?</h4>
-                    <p className="text-gray-700">
-                      If you read something that makes you angry, dig deeper. Disinformation often 
-                      deliberately generates strong emotions and divisive opinions.
-                    </p>
+                    <h4 className="font-semibold text-gray-900 mb-2">Question Emotional Appeals</h4>
+                    <p className="text-gray-700">Be skeptical of information designed to provoke strong emotional reactions or fear-based responses.</p>
                   </div>
                 </div>
-                <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                
+                <div className="flex gap-4 p-6 bg-green-50 rounded-lg border border-green-200">
+                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Who is sharing the information?</h4>
-                    <p className="text-gray-700">
-                      Genuine stories should be reported by multiple sources. Research the website 
-                      where you found the information. Beware of websites with odd domain names.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">What are the other perspectives?</h4>
-                    <p className="text-gray-700">
-                      Read multiple sources to get different points of view on the topic. Do not 
-                      just read articles that agree with your opinion.
-                    </p>
+                    <h4 className="font-semibold text-gray-900 mb-2">Seek Multiple Perspectives</h4>
+                    <p className="text-gray-700">Read diverse viewpoints and avoid sources that only confirm your existing beliefs.</p>
                   </div>
                 </div>
               </div>
-              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200 mt-6">
-                <p className="text-gray-700 font-medium">
-                  <strong>Important:</strong> If you suspect that something you read may be mis- or 
-                  disinformation, do not engage with it online. If you do, you are only contributing 
-                  to spreading fake news.
-                </p>
+            </div>
+            
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-8">Agricultural Science Fundamentals</h3>
+              <Card className="bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-200">
+                <CardContent className="p-8">
+                  <div className="space-y-6">
+                    <div className="p-4 bg-white rounded-lg border">
+                      <h4 className="font-semibold text-gray-900 mb-2">Agri-food Sector</h4>
+                      <p className="text-gray-700 text-sm">Includes primary food production, processing, distribution, and consumption of agricultural products.</p>
+                    </div>
+                    <div className="p-4 bg-white rounded-lg border">
+                      <h4 className="font-semibold text-gray-900 mb-2">Evidence-Based Agriculture</h4>
+                      <p className="text-gray-700 text-sm">Agricultural practices supported by scientific research, field trials, and peer-reviewed studies.</p>
+                    </div>
+                    <div className="p-4 bg-white rounded-lg border">
+                      <h4 className="font-semibold text-gray-900 mb-2">Agricultural Extension</h4>
+                      <p className="text-gray-700 text-sm">Services that help farmers apply scientific knowledge to real-world farming situations.</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 px-4 bg-gradient-to-br from-green-600 to-blue-600 text-white">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">
+            Combat Agricultural Misinformation with Science-Based Tools
+          </h2>
+          <p className="text-lg mb-12 text-green-100">
+            Use our fact-checking tools and resources to verify agricultural claims and make informed decisions based on scientific evidence.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg" asChild>
+              <Link to="/fact-check">Start Fact-Checking Now</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 text-lg" asChild>
+              <Link to="/tools">Explore All Tools</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted by Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <h3 className="text-2xl font-bold text-center text-gray-900 mb-12">
+            Trusted Agricultural Information Sources
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60">
+            <div className="text-center">
+              <div className="bg-white p-4 rounded-lg shadow-sm border">
+                <BookOpen className="h-8 w-8 mx-auto mb-2 text-gray-600" />
+                <p className="text-sm font-medium">FAO</p>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* About Agricultural Science */}
-          <Card className="border-2 border-gray-200 bg-gradient-to-r from-green-50 to-blue-50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-2xl">
-                <BookOpen className="h-6 w-6 text-green-500" />
-                About Agricultural Science
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                Agricultural scientists are interested in the question of how to improve agriculture, 
-                such as how to produce more food for the world's growing population while ensuring 
-                environmental sustainability and improving the livelihood of farmers. By incorporating 
-                ideas from biology, chemistry, economics, engineering and social science, agricultural 
-                scientists are developing better crop varieties, machinery, agricultural methods and 
-                food processing techniques. Those who work in agricultural advisory services (also 
-                known as agricultural extension) help farmers apply these new developments in real-world 
-                farming situations.
-              </p>
-              <p>
-                Agriculture faces many challenges in the 21st century, and agricultural scientists are 
-                leading the way in addressing them. Climate change is creating new and increasing 
-                difficulties for farmers, such as higher temperatures, increased flooding and changing 
-                soil conditions. At the same time, there are major problems around inequality. Small 
-                and medium sized farmers, particularly those in developing countries, find it increasingly 
-                difficult to compete with large corporations which control access to the latest technological 
-                developments.
-              </p>
-              <p>
-                New technology-driven approaches to agriculture could help to address environmental 
-                sustainability, but they could also exacerbate the problems of inequality, something 
-                which Ataharul is working to prevent. Millions of people around the world rely on 
-                agriculture for their livelihoods, and the next generation of agricultural scientists 
-                will play a role in helping to alleviate rural poverty and ensure global food security.
-              </p>
-            </CardContent>
-          </Card>
-
+            </div>
+            <div className="text-center">
+              <div className="bg-white p-4 rounded-lg shadow-sm border">
+                <Shield className="h-8 w-8 mx-auto mb-2 text-gray-600" />
+                <p className="text-sm font-medium">USDA</p>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="bg-white p-4 rounded-lg shadow-sm border">
+                <Users className="h-8 w-8 mx-auto mb-2 text-gray-600" />
+                <p className="text-sm font-medium">Extension Services</p>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="bg-white p-4 rounded-lg shadow-sm border">
+                <Target className="h-8 w-8 mx-auto mb-2 text-gray-600" />
+                <p className="text-sm font-medium">Research Institutions</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
