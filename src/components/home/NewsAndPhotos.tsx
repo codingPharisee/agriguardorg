@@ -95,9 +95,9 @@ const NewsAndPhotos = () => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Additional Resources for Your AI Journey
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Blogs and News
           </h2>
         </div>
         
@@ -107,11 +107,11 @@ const NewsAndPhotos = () => {
             <span className="ml-2 text-gray-600">Loading latest resources...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {articles.slice(0, 3).map((item, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 bg-white border-0 rounded-xl">
+              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 bg-white border-2 border-gray-200 rounded-xl">
                 <div className="relative">
-                  <AspectRatio ratio={16/10} className="bg-gray-100">
+                  <AspectRatio ratio={16/9} className="bg-gray-100">
                     <img 
                       src={item.image_url} 
                       alt={item.title}
@@ -122,18 +122,18 @@ const NewsAndPhotos = () => {
                     />
                   </AspectRatio>
                 </div>
-                <div className="p-8">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4 line-clamp-2">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-base line-clamp-3 leading-relaxed mb-6">
+                  <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mb-4">
                     {item.description}
                   </p>
                   <a 
                     href={item.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors text-sm"
                   >
                     View Now
                     <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,8 +146,8 @@ const NewsAndPhotos = () => {
           </div>
         )}
         
-        <div className="flex justify-center mt-16">
-          <Button className="gap-2 bg-blue-600 hover:bg-blue-700 px-8 py-3 text-lg" asChild>
+        <div className="flex justify-center mt-12">
+          <Button className="gap-2 bg-green-600 hover:bg-green-700 px-8 py-3 text-lg" asChild>
             <Link to="/blogs">
               <Newspaper className="h-5 w-5" />
               Explore All Resources
