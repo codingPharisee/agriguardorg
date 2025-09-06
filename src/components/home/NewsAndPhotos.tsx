@@ -93,26 +93,25 @@ const NewsAndPhotos = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-green-50">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center gap-3 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-green-800 to-amber-800 bg-clip-text text-transparent">
-            Latest Agricultural Blogs & Resources
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Additional Resources for Your AI Journey
           </h2>
-          <Newspaper className="h-8 w-8 text-green-600" />
         </div>
         
         {loading ? (
           <div className="flex justify-center items-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-green-600" />
-            <span className="ml-2 text-gray-600">Loading latest blogs...</span>
+            <span className="ml-2 text-gray-600">Loading latest resources...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((item, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow border-green-200 bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {articles.slice(0, 3).map((item, index) => (
+              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 bg-white border-0 rounded-xl">
                 <div className="relative">
-                  <AspectRatio ratio={16/9} className="bg-green-100">
+                  <AspectRatio ratio={16/10} className="bg-gray-100">
                     <img 
                       src={item.image_url} 
                       alt={item.title}
@@ -122,40 +121,37 @@ const NewsAndPhotos = () => {
                       }}
                     />
                   </AspectRatio>
-                  <div className="absolute top-3 right-3">
-                    <Badge type="blog" />
-                  </div>
                 </div>
-                <CardHeader className="p-6">
-                  <CardTitle className="text-lg font-semibold line-clamp-2 text-green-900">{item.title}</CardTitle>
-                  <div className="text-sm text-green-700 font-medium">{formatDate(item.published_at)}</div>
-                </CardHeader>
-                <CardContent className="p-6 pt-0">
-                  <p className="text-gray-700 text-sm line-clamp-3 leading-relaxed">{item.description}</p>
-                  <div className="mt-3 text-xs text-green-600 font-medium">{item.source}</div>
-                </CardContent>
-                <CardFooter className="p-6 pt-0">
-                  <Button variant="outline" size="sm" className="w-full border-green-300 text-green-800 hover:bg-green-50" asChild>
-                    <a href={item.url} target="_blank" rel="noopener noreferrer">
-                      Read More
-                    </a>
-                  </Button>
-                </CardFooter>
+                <div className="p-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4 line-clamp-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 text-base line-clamp-3 leading-relaxed mb-6">
+                    {item.description}
+                  </p>
+                  <a 
+                    href={item.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                  >
+                    View Now
+                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
               </Card>
             ))}
           </div>
         )}
         
-        <div className="flex justify-center mt-12 gap-4">
-          <Button className="gap-2 bg-green-600 hover:bg-green-700 px-6 py-3" asChild>
+        <div className="flex justify-center mt-16">
+          <Button className="gap-2 bg-blue-600 hover:bg-blue-700 px-8 py-3 text-lg" asChild>
             <Link to="/blogs">
               <Newspaper className="h-5 w-5" />
-              View All Articles
+              Explore All Resources
             </Link>
-          </Button>
-          <Button variant="outline" className="gap-2 border-green-300 text-green-800 hover:bg-green-50 px-6 py-3">
-            <Globe className="h-5 w-5" />
-            Blog Sources
           </Button>
         </div>
       </div>
