@@ -93,11 +93,11 @@ const NewsAndPhotos = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Blogs and News
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Additional Resources for your Agricultural Journey
           </h2>
         </div>
         
@@ -107,11 +107,11 @@ const NewsAndPhotos = () => {
             <span className="ml-2 text-gray-600">Loading latest resources...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {articles.slice(0, 3).map((item, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 bg-white border-2 border-gray-200 rounded-xl">
+              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                 <div className="relative">
-                  <AspectRatio ratio={16/9} className="bg-gray-100">
+                  <AspectRatio ratio={4/3} className="bg-gray-50">
                     <img 
                       src={item.image_url} 
                       alt={item.title}
@@ -122,32 +122,35 @@ const NewsAndPhotos = () => {
                     />
                   </AspectRatio>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
-                    {item.title}
+                
+                <div className="p-8">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight min-h-[56px]">
+                    {item.title.length > 60 ? `${item.title.substring(0, 60)}...` : item.title}
                   </h3>
-                  <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mb-4">
-                    {item.description}
+                  
+                  <p className="text-gray-600 text-base leading-relaxed mb-8 min-h-[72px]">
+                    {item.description.length > 120 ? `${item.description.substring(0, 120)}...` : item.description}
                   </p>
+                  
                   <a 
                     href={item.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors text-sm"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors text-base group"
                   >
                     View Now
-                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         )}
         
-        <div className="flex justify-center mt-12">
-          <Button className="gap-2 bg-green-600 hover:bg-green-700 px-8 py-3 text-lg" asChild>
+        <div className="flex justify-center mt-16">
+          <Button className="gap-2 bg-green-600 hover:bg-green-700 px-10 py-4 text-lg font-semibold rounded-xl" asChild>
             <Link to="/blogs">
               <Newspaper className="h-5 w-5" />
               Explore All Resources
