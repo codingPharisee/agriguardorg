@@ -18,7 +18,7 @@ const Header = () => {
   const { user, signOut } = useAuth();
 
   const navigationItems = [
-    { name: "Fast", href: "/fact-check" },
+    { name: "Fact check", href: "/fact-check" },
     { name: "Blogs", href: "/blogs" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
