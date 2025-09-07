@@ -109,7 +109,7 @@ const NewsAndPhotos = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {articles.slice(0, 3).map((item, index) => (
-              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300">
                 <div className="relative">
                   <AspectRatio ratio={4/3} className="bg-gray-50">
                     <img 
@@ -136,7 +136,7 @@ const NewsAndPhotos = () => {
                     href={item.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors text-base group"
+                    className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold transition-colors text-base group"
                   >
                     View Now
                     <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
