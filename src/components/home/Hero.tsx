@@ -30,8 +30,8 @@ const Hero = () => {
       {/* Dark overlay for readability */}
       <div className="absolute inset-0 bg-black/40"></div>
       
-      {/* Tree overlay effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-green-900/30"></div>
+      {/* Overlay effect */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-green-900/60"></div>
       
       <div className={`container mx-auto px-4 ${isMobile ? 'py-4' : 'py-24'} flex items-center justify-center relative z-10`}>
         {/* Centered Content */}
