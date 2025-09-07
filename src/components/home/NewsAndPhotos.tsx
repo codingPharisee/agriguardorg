@@ -96,8 +96,8 @@ const NewsAndPhotos = () => {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Additional Resources for your Agricultural Journey
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
+            News and Other Resources
           </h2>
         </div>
         
@@ -111,7 +111,7 @@ const NewsAndPhotos = () => {
             {articles.slice(0, 3).map((item, index) => (
               <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300">
                 <div className="relative">
-                  <AspectRatio ratio={4/3} className="bg-gray-50">
+                  <AspectRatio ratio={16/9} className="bg-gray-50">
                     <img 
                       src={item.image_url} 
                       alt={item.title}
@@ -123,13 +123,13 @@ const NewsAndPhotos = () => {
                   </AspectRatio>
                 </div>
                 
-                <div className="p-8">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight min-h-[56px]">
-                    {item.title.length > 60 ? `${item.title.substring(0, 60)}...` : item.title}
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight min-h-[42px]">
+                    {item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}
                   </h3>
                   
-                  <p className="text-gray-600 text-base leading-relaxed mb-8 min-h-[72px]">
-                    {item.description.length > 120 ? `${item.description.substring(0, 120)}...` : item.description}
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4 min-h-[40px]">
+                    {item.description.length > 100 ? `${item.description.substring(0, 100)}...` : item.description}
                   </p>
                   
                   <a 
