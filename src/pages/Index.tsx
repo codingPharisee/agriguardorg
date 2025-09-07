@@ -8,7 +8,7 @@ import ViralFarm from "@/components/modules/ViralFarm";
 import AgriFactCheck from "@/components/modules/AgriFactCheck";
 import MythBusterAg from "@/components/modules/MythBusterAg";
 import NewsAndPhotos from "@/components/home/NewsAndPhotos";
-import AIToolsCarousel from "@/components/home/AIToolsCarousel";
+import SystemShowcase from "@/components/home/SystemShowcase";
 import { Button } from "@/components/ui/button";
 import ContactFormDialog from "@/components/forms/ContactFormDialog";
 import useScrollPosition from "@/hooks/useScrollPosition";
@@ -24,8 +24,8 @@ const Index = () => {
       <main className="flex-grow">
         <Hero />
         
-        {/* AI Tools Carousel */}
-        <AIToolsCarousel />
+        {/* System Showcase */}
+        <SystemShowcase />
         
         {/* Fact Check section with enhanced styling */}
         <section className="py-16 bg-gradient-to-br from-white via-green-50/30 to-amber-50/20 agrifactcheck-section">
