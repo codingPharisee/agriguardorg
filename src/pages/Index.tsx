@@ -166,7 +166,7 @@ const Index = () => {
         </section>
         
         {/* Call to action with enhanced styling */}
-        <section className="py-16 bg-gradient-to-r from-green-800 via-green-700 to-amber-700 text-white text-center">
+        <section className="py-16 bg-black text-white text-center">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Combat Agricultural Misinformation?

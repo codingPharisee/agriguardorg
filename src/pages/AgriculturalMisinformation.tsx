@@ -261,40 +261,6 @@ const AgriculturalMisinformation = () => {
         </div>
       </section>
 
-      {/* Trusted by Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-12">
-            Trusted Agricultural Information Sources
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60">
-            <div className="text-center">
-              <div className="bg-white p-4 rounded-lg shadow-sm border">
-                <BookOpen className="h-8 w-8 mx-auto mb-2 text-gray-600" />
-                <p className="text-sm font-medium">FAO</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white p-4 rounded-lg shadow-sm border">
-                <Shield className="h-8 w-8 mx-auto mb-2 text-gray-600" />
-                <p className="text-sm font-medium">USDA</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white p-4 rounded-lg shadow-sm border">
-                <Users className="h-8 w-8 mx-auto mb-2 text-gray-600" />
-                <p className="text-sm font-medium">Extension Services</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white p-4 rounded-lg shadow-sm border">
-                <Target className="h-8 w-8 mx-auto mb-2 text-gray-600" />
-                <p className="text-sm font-medium">Research Institutions</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
