@@ -242,19 +242,19 @@ const AgriculturalMisinformation = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 px-4 bg-gradient-to-br from-green-600 to-blue-600 text-white">
+      <section className="py-20 px-4 bg-gradient-to-br from-black to-green-800 text-white">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">
-            Combat Agricultural Misinformation with Science-Based Tools
+            Ready to Combat Agricultural Misinformation?
           </h2>
-          <p className="text-lg mb-12 text-green-100">
-            Use our fact-checking tools and resources to verify agricultural claims and make informed decisions based on scientific evidence.
+          <p className="text-lg mb-12 text-green-200">
+            Join our network of agricultural experts, extension officers, and farmers to help build a more informed and prosperous farming community.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg" asChild>
-              <Link to="/fact-check">Start Fact-Checking Now</Link>
+            <Button size="lg" className="bg-white text-black hover:bg-green-100 px-8 py-4 text-lg" asChild>
+              <Link to="/fact-check">Get Started Today</Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 text-lg" asChild>
+            <Button size="lg" variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black px-8 py-4 text-lg" asChild>
               <Link to="/tools">Explore All Tools</Link>
             </Button>
           </div>
