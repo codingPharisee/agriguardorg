@@ -166,17 +166,17 @@ const Index = () => {
         </section>
         
         {/* Call to action with enhanced styling */}
-        <section className="py-16 bg-black text-white text-center">
+        <section className="py-16 bg-white text-center">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-green-800">
               Ready to Combat Agricultural Misinformation?
             </h2>
-            <p className="mb-8 max-w-2xl mx-auto text-green-100 leading-relaxed">
+            <p className="mb-8 max-w-2xl mx-auto text-green-700 leading-relaxed">
               Join our network of agricultural experts, extension officers, and farmers 
               to help build a more informed and prosperous farming community.
             </p>
             <Button 
-              className="bg-white text-green-800 hover:bg-green-50 px-8 py-3 rounded-full font-bold tracking-wide transition-all text-lg shadow-lg"
+              className="bg-green-800 text-white hover:bg-green-700 px-8 py-3 rounded-full font-bold tracking-wide transition-all text-lg shadow-lg"
               onClick={() => setContactFormOpen(true)}
             >
               Get Started Today
