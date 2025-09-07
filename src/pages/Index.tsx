@@ -74,8 +74,6 @@ const Index = () => {
         
         <Features />
         
-        <NewsAndPhotos />
-        
         {/* AI Modules section with enhanced styling */}
         <section className="py-16 bg-gradient-to-br from-green-50 via-amber-50/30 to-green-50">
           <div className="container mx-auto px-4">
@@ -165,83 +163,7 @@ const Index = () => {
           </div>
         </section>
         
-        {/* Economic Impact section */}
-        <section className="py-16 bg-gradient-to-br from-green-600 via-green-700 to-green-800">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div className="relative">
-                <div className="bg-black/20 rounded-2xl p-8 backdrop-blur-sm">
-                  <div className="bg-white rounded-lg p-6 shadow-2xl">
-                    <div className="h-3 bg-gray-200 rounded mb-4"></div>
-                    <h3 className="text-lg font-bold text-gray-800 mb-4">
-                      The Total Economic Impact of Fighting Agricultural Misinformation
-                    </h3>
-                    <div className="space-y-2">
-                      <div className="h-2 bg-green-200 rounded w-3/4"></div>
-                      <div className="h-2 bg-green-200 rounded w-1/2"></div>
-                      <div className="h-2 bg-green-200 rounded w-2/3"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="text-white">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  The Total Economic Impact of Fighting Agricultural Misinformation
-                </h2>
-                <p className="text-green-100 mb-8 text-lg leading-relaxed">
-                  Transform agricultural communities with evidence-based information, 
-                  delivering $2.3M in validated benefits over just two years.
-                </p>
-                
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-400 rounded-full p-1 mt-1">
-                      <svg className="h-4 w-4 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-green-50">340% ROI with a 6-month payback period</span>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-400 rounded-full p-1 mt-1">
-                      <svg className="h-4 w-4 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-green-50">$1.2M in increased crop productivity</span>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-400 rounded-full p-1 mt-1">
-                      <svg className="h-4 w-4 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-green-50">75% reduction in crop losses ($890,000 value)</span>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-400 rounded-full p-1 mt-1">
-                      <svg className="h-4 w-4 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-green-50">$210,000 in extension service efficiency gains</span>
-                  </div>
-                </div>
-                
-                <Button 
-                  className="bg-white text-green-800 hover:bg-green-50 px-8 py-3 rounded-full font-bold tracking-wide transition-all text-lg shadow-lg"
-                  onClick={() => setContactFormOpen(true)}
-                >
-                  Read Impact Report →
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <NewsAndPhotos />
 
         {/* Call to action with enhanced styling */}
         <section className="py-16 bg-white text-center">
