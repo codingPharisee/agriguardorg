@@ -18,11 +18,6 @@ const SystemShowcase = () => {
       icon: <Users className="w-6 h-6" />,
       title: "Community Engagement",
       description: "Connect farmers, extension officers, and agricultural experts through integrated communication tools and collaborative learning platforms."
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: "Actionable Insights",
-      description: "Transform complex agricultural data into simplified workflows, real-time insights, and governance controls to elevate farming productivity."
     }
   ];
 
