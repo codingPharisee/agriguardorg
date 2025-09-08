@@ -135,9 +135,9 @@ const Index = () => {
         <Features />
         
         {/* AI Modules section with enhanced styling */}
-        <section className="py-16 bg-gradient-to-br from-green-50 via-amber-50/30 to-green-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-green-800 to-amber-800 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600">
               Advanced AI Tools for Modern African Agriculture
             </h2>
             
@@ -147,36 +147,36 @@ const Index = () => {
                   <ViralFarm />
                 </div>
                 <div className="order-1 lg:order-2 p-6 lg:p-8">
-                  <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-green-800 to-amber-800 bg-clip-text text-transparent">Early Detection of Agricultural Misinformation in Africa</h3>
-                  <p className="text-gray-700 mb-6 leading-relaxed">
+                  <h3 className="text-2xl font-bold mb-4 text-blue-600">Early Detection of Agricultural Misinformation in Africa</h3>
+                  <p className="text-black mb-6 leading-relaxed">
                     ViralFarm uses advanced AI and machine learning to continuously monitor African social media platforms, 
                     WhatsApp groups, radio broadcasts, and community forums to identify emerging agricultural myths 
                     and misinformation before they can spread widely among farming communities across Africa.
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
-                      <span className="bg-gradient-to-r from-green-600 to-amber-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-1">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">Real-time monitoring of trending agricultural topics</span>
+                      <span className="text-black">Real-time monitoring of trending agricultural topics</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-gradient-to-r from-green-600 to-amber-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-1">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">AI-powered classification of potential misinformation</span>
+                      <span className="text-black">AI-powered classification of potential misinformation</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-gradient-to-r from-green-600 to-amber-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-1">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">Early warning alerts for rapidly spreading myths</span>
+                      <span className="text-black">Early warning alerts for rapidly spreading myths</span>
                     </li>
                   </ul>
                 </div>
@@ -184,36 +184,36 @@ const Index = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div className="p-6 lg:p-8 order-1">
-                  <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-green-800 to-amber-800 bg-clip-text text-transparent">Educational Video Content for African Farmers</h3>
-                  <p className="text-gray-700 mb-6 leading-relaxed">
+                  <h3 className="text-2xl font-bold mb-4 text-blue-600">Educational Video Content for African Farmers</h3>
+                  <p className="text-black mb-6 leading-relaxed">
                     MythBuster Ag creates engaging, multilingual educational videos that proactively address
                     common agricultural misconceptions and provide evidence-based farming guidance tailored 
                     for African farming communities, available in local languages and dialects.
                   </p>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
-                      <span className="bg-gradient-to-r from-green-600 to-amber-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-1">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">AI-generated educational videos in multiple languages</span>
+                      <span className="text-black">AI-generated educational videos in multiple languages</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-gradient-to-r from-green-600 to-amber-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-1">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">Simplified explanations of complex agricultural concepts</span>
+                      <span className="text-black">Simplified explanations of complex agricultural concepts</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-gradient-to-r from-green-600 to-amber-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-1">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-gray-700">Shareable content for WhatsApp and social media</span>
+                      <span className="text-black">Shareable content for WhatsApp and social media</span>
                     </li>
                   </ul>
                 </div>
