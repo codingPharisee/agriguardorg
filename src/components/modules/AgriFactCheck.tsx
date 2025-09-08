@@ -246,64 +246,103 @@ const AgriFactCheck = () => {
   };
 
   return (
-    <Card className="relative overflow-hidden border-0 shadow-xl bg-gradient-to-br from-green-50 via-emerald-50/80 to-green-100/60 backdrop-blur-sm">
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/50 shadow-2xl">
       {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-emerald-400/5 to-green-600/10"></div>
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/20 to-emerald-500/20 rounded-full -translate-y-16 translate-x-16"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-300/15 to-green-400/15 rounded-full translate-y-12 -translate-x-12"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-400/3 to-green-600/5"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/10 to-emerald-500/10 rounded-full -translate-y-16 translate-x-16"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-300/10 to-green-400/10 rounded-full translate-y-12 -translate-x-12"></div>
       
-      <CardHeader className="relative pb-3 bg-gradient-to-r from-green-600/90 to-emerald-600/90 text-white">
-        <CardTitle className="flex items-center gap-3 text-xl font-bold">
-          <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
-            <MessageSquare className="h-6 w-6" />
+      <div className="relative p-8">
+        {/* AgriGuard Logo and Header */}
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-green-600/20 backdrop-blur-sm rounded-lg">
+            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">AG</span>
+            </div>
           </div>
-          AgriFactCheck
-        </CardTitle>
-        <p className="text-green-50/90 text-sm leading-relaxed">
-          African agricultural fact checking via AI chatbot and SMS system
+          <span className="text-slate-400 text-sm font-medium">AgriGuard AI</span>
+        </div>
+        
+        <h2 className="text-3xl font-bold text-white mb-2">
+          How can I help you today?
+        </h2>
+        <p className="text-slate-400 text-sm mb-8 leading-relaxed">
+          This code will display a prompt asking the user for their name, and 
+          then it will display a greeting message with the name entered by the user.
         </p>
-      </CardHeader>
       
-      <CardContent className="relative pt-6 pb-6">
+        {/* Feature Cards */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <div 
+            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-700/50 transition-colors cursor-pointer group"
+            onClick={() => setActiveTab("faqs")}
+          >
+            <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-600/30 transition-colors">
+              <Book className="h-5 w-5 text-green-400" />
+            </div>
+            <h3 className="text-white font-semibold text-sm mb-1">Saved FAQs</h3>
+            <p className="text-slate-400 text-xs">Quick access to verified agricultural FAQs for faster responses.</p>
+          </div>
+
+          <div 
+            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-700/50 transition-colors cursor-pointer group"
+            onClick={() => setActiveTab("scan")}
+          >
+            <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-600/30 transition-colors">
+              <Scan className="h-5 w-5 text-green-400" />
+            </div>
+            <h3 className="text-white font-semibold text-sm mb-1">Crop Analysis</h3>
+            <p className="text-slate-400 text-xs">Upload crop images for AI-powered health diagnosis and treatment.</p>
+          </div>
+
+          <div 
+            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-700/50 transition-colors cursor-pointer group"
+            onClick={() => setActiveTab("topics")}
+          >
+            <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-600/30 transition-colors">
+              <Languages className="h-5 w-5 text-green-400" />
+            </div>
+            <h3 className="text-white font-semibold text-sm mb-1">Multilingual Support</h3>
+            <p className="text-slate-400 text-xs">Choose your language for better agricultural fact-checking interaction.</p>
+          </div>
+        </div>
+
+        {/* Quick Topics */}
+        <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
+          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
+            All
+          </button>
+          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
+            Text
+          </button>
+          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
+            Image
+          </button>
+          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
+            Video
+          </button>
+          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
+            Music
+          </button>
+          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
+            Analytics
+          </button>
+        </div>
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 mb-6 bg-green-100/60 p-1 rounded-lg">
-            <TabsTrigger 
-              value="chat" 
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
-            >
-              Chat
-            </TabsTrigger>
-            <TabsTrigger 
-              value="faqs"
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
-            >
-              FAQs
-            </TabsTrigger>
-            <TabsTrigger 
-              value="topics"
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
-            >
-              Topics
-            </TabsTrigger>
-            <TabsTrigger 
-              value="scan"
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-white transition-all"
-            >
-              Health Scan
-            </TabsTrigger>
-          </TabsList>
           
-          <TabsContent value="chat" className="mt-0 space-y-4">
-            <div className="mb-4 flex items-center gap-3 p-3 bg-green-50/60 rounded-lg border border-green-200/40">
-              <Languages className="h-5 w-5 text-green-600" />
-              <span className="text-sm font-medium text-gray-700">Language:</span>
+          <TabsContent value="chat" className="mt-0">
+            {/* Language Selection */}
+            <div className="mb-6 flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
+              <Languages className="h-5 w-5 text-green-400" />
+              <span className="text-sm font-medium text-slate-300">Language:</span>
               <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                <SelectTrigger className="w-[200px] border-green-200 focus:border-green-500">
+                <SelectTrigger className="w-[200px] bg-slate-800 border-slate-700 text-white focus:border-green-500">
                   <SelectValue placeholder="Select language" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-slate-800 border-slate-700">
                   {LANGUAGES.map((lang) => (
-                    <SelectItem key={lang.value} value={lang.value}>
+                    <SelectItem key={lang.value} value={lang.value} className="text-white hover:bg-slate-700">
                       <span className="flex items-center gap-2">
                         <span>{lang.flag}</span>
                         <span>{lang.label}</span>
@@ -314,52 +353,65 @@ const AgriFactCheck = () => {
               </Select>
             </div>
             
-            <form onSubmit={handleSubmit} className="flex gap-3">
-              <Input
-                placeholder={selectedLanguage === "sw" ? "Uliza kuhusu madai ya kilimo Afrika..." : 
-                            selectedLanguage === "am" ? "ስለ አፍሪካ ግብርና አባባሎች ይጠይቁ..." :
-                            selectedLanguage === "ha" ? "Yi tambaya game da da'awar noma a Afirka..." :
-                            selectedLanguage === "yo" ? "Béèrè nípa àwọn ìjápọ̀ àgbàtójọ ní Áfíríkà..." :
-                            selectedLanguage === "fr" ? "Posez des questions sur les affirmations agricoles en Afrique..." :
-                            selectedLanguage === "ar" ? "اسأل عن الادعاءات الزراعية في أفريقيا..." :
-                            "Ask about agricultural claims or myths in Africa..."}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 border-green-200 focus:border-green-500 focus:ring-green-500/20 bg-white/80 backdrop-blur-sm"
-                disabled={isLoading}
-              />
-              <Button 
-                type="button"
-                onClick={handleVoiceRecording}
-                disabled={isLoading || isProcessing}
-                className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white shadow-lg`}
-              >
-                {isProcessing ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Mic className={`h-4 w-4 ${isRecording ? 'animate-pulse' : ''}`} />
-                )}
-              </Button>
-              <Button 
-                type="submit" 
-                disabled={isLoading || !query.trim()}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 shadow-lg"
-              >
-                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-              </Button>
-            </form>
+            {/* Main Input */}
+            <div className="relative">
+              <div className="flex items-center gap-3 p-4 bg-slate-800/70 border border-slate-700/50 rounded-2xl">
+                <div className="p-2 bg-green-600/20 rounded-lg">
+                  <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded flex items-center justify-center">
+                    <span className="text-white font-bold text-xs">AG</span>
+                  </div>
+                </div>
+                <form onSubmit={handleSubmit} className="flex-1 flex items-center gap-3">
+                  <Input
+                    placeholder={selectedLanguage === "sw" ? "Uliza kuhusu madai ya kilimo Afrika..." : 
+                                selectedLanguage === "am" ? "ስለ አፍሪካ ግብርና አባባሎች ይጠይቁ..." :
+                                selectedLanguage === "ha" ? "Yi tambaya game da da'awar noma a Afirka..." :
+                                selectedLanguage === "yo" ? "Béèrè nípa àwọn ìjápọ̀ àgbàtójọ ní Áfíríkà..." :
+                                selectedLanguage === "fr" ? "Posez des questions sur les affirmations agricoles en Afrique..." :
+                                selectedLanguage === "ar" ? "اسأل عن الادعاءات الزراعية في أفريقيا..." :
+                                "Type your prompt here..."}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    className="flex-1 bg-transparent border-0 text-white placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    disabled={isLoading}
+                  />
+                  <Button 
+                    type="button"
+                    onClick={handleVoiceRecording}
+                    disabled={isLoading || isProcessing}
+                    variant="ghost"
+                    size="sm"
+                    className={`text-slate-400 hover:text-white p-2 ${isRecording ? 'text-red-400' : ''}`}
+                  >
+                    {isProcessing ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Mic className={`h-4 w-4 ${isRecording ? 'animate-pulse' : ''}`} />
+                    )}
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    disabled={isLoading || !query.trim()}
+                    size="sm"
+                    className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg"
+                  >
+                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  </Button>
+                </form>
+              </div>
+            </div>
             
             {showResults && factCheckResult && (
-              <div className={`border-2 rounded-lg p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
-                factCheckResult.isTrue === true ? 'border-emerald-400 bg-emerald-50/80' : 
-                factCheckResult.isTrue === false ? 'border-red-400 bg-red-50/80' : 
-                'border-amber-400 bg-amber-50/80'
+              <div className={`mt-6 border rounded-2xl p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
+                factCheckResult.isTrue === true ? 'border-emerald-500/50 bg-emerald-900/20' : 
+                factCheckResult.isTrue === false ? 'border-red-500/50 bg-red-900/20' : 
+                'border-amber-500/50 bg-amber-900/20'
               }`}>
                 <div className="flex items-start gap-3">
                   <span className={`rounded-full p-2 mt-0.5 shadow-sm ${
-                    factCheckResult.isTrue === true ? 'bg-emerald-500' : 
-                    factCheckResult.isTrue === false ? 'bg-red-500' : 
-                    'bg-amber-500'
+                    factCheckResult.isTrue === true ? 'bg-emerald-600' : 
+                    factCheckResult.isTrue === false ? 'bg-red-600' : 
+                    'bg-amber-600'
                   }`}>
                     {factCheckResult.isTrue === true ? (
                       <Check className="h-4 w-4 text-white" />
@@ -370,7 +422,7 @@ const AgriFactCheck = () => {
                     )}
                   </span>
                   <div className="flex-1">
-                    <div className="text-sm leading-relaxed text-gray-700 space-y-3">
+                    <div className="text-sm leading-relaxed text-slate-300 space-y-3">
                       {factCheckResult.explanation.split(/[.!?]+(?:\s+|$)/).filter(sentence => sentence.trim()).map((sentence, index) => (
                         <p key={index} className="mb-2 last:mb-0">
                           {sentence.trim()}{sentence.includes('.') || sentence.includes('!') || sentence.includes('?') ? '' : '.'}
@@ -380,18 +432,18 @@ const AgriFactCheck = () => {
                   </div>
                 </div>
                 
-                <div className="pt-3 text-sm text-gray-600 border-t border-gray-200/60 flex items-center justify-between">
+                <div className="pt-3 text-sm text-slate-400 border-t border-slate-700/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Globe className="h-4 w-4 text-green-600" />
+                    <Globe className="h-4 w-4 text-green-400" />
                     <span className="font-medium">Source:</span>
                     <span>{factCheckResult.source}</span>
                   </div>
                   <Button
                     onClick={handlePlayResponse}
                     disabled={isGenerating}
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="ml-auto border-green-200 hover:bg-green-50"
+                    className="ml-auto text-slate-400 hover:text-white hover:bg-slate-800"
                   >
                     {isGenerating ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -412,11 +464,11 @@ const AgriFactCheck = () => {
             )}
             
             {!showResults && !isLoading && (
-              <div className="flex flex-col items-center justify-center p-12 text-center rounded-lg bg-gradient-to-br from-green-50/60 to-emerald-50/60 border border-green-200/40">
-                <div className="p-4 bg-green-100/60 rounded-full mb-4">
-                  <MessageSquare className="h-12 w-12 text-green-600" />
+              <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl bg-slate-800/30 border border-slate-700/30 mt-6">
+                <div className="p-4 bg-green-600/20 rounded-full mb-4">
+                  <MessageSquare className="h-12 w-12 text-green-400" />
                 </div>
-                <p className="text-gray-600 font-medium">
+                <p className="text-slate-300 font-medium">
                   {selectedLanguage === "sw" ? "Uliza swali kuhusu hadithi au madai ya kilimo Afrika" :
                    selectedLanguage === "am" ? "ስለ አፍሪካ ግብርና አወያይ ወይም ጥያቄዎች ይጠይቁ" :
                    selectedLanguage === "ha" ? "Yi tambaya game da tatsuniyoyi ko da'awar noma a Afirka" :
@@ -425,7 +477,7 @@ const AgriFactCheck = () => {
                    selectedLanguage === "ar" ? "اسأل سؤالاً عن الأساطير أو الادعاءات الزراعية في أفريقيا" :
                    "Ask a question about agricultural myths or claims in Africa"}
                 </p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-slate-500 text-sm mt-1">
                   {selectedLanguage === "sw" ? "Pata ukaguzi wa haraka wa ukweli unaotumia AI pamoja na marejeo" :
                    selectedLanguage === "am" ? "በ AI የተደገፈ ፈጣን የእውነት ማረጋገጫ ከዋቢዎች ጋር ያግኙ" :
                    selectedLanguage === "ha" ? "Samu binciken gaskiya na gaggawa da AI tare da ambato" :
@@ -439,16 +491,16 @@ const AgriFactCheck = () => {
           </TabsContent>
           
           <TabsContent value="faqs" className="mt-0">
-            <div className="mb-4 flex items-center gap-3 p-3 bg-green-50/60 rounded-lg border border-green-200/40">
-              <Book className="h-5 w-5 text-green-600" />
-              <span className="text-sm font-medium text-gray-700">Filter by organization:</span>
+            <div className="mb-4 flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
+              <Book className="h-5 w-5 text-green-400" />
+              <span className="text-sm font-medium text-slate-300">Filter by organization:</span>
               <Select value={selectedOrg} onValueChange={setSelectedOrg}>
-                <SelectTrigger className="w-[240px] border-green-200 focus:border-green-500">
+                <SelectTrigger className="w-[240px] bg-slate-800 border-slate-700 text-white focus:border-green-500">
                   <SelectValue placeholder="All Organizations" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-slate-800 border-slate-700">
                   {ORGANIZATIONS.map((org) => (
-                    <SelectItem key={org.value} value={org.value}>{org.label}</SelectItem>
+                    <SelectItem key={org.value} value={org.value} className="text-white hover:bg-slate-700">{org.label}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -458,17 +510,17 @@ const AgriFactCheck = () => {
               <div className="space-y-4">
                 {filteredFaqs.length > 0 ? (
                   filteredFaqs.map((faq) => (
-                    <div key={faq.id} className="border border-green-200/60 rounded-lg p-4 bg-white/70 backdrop-blur-sm hover:bg-green-50/80 hover:border-green-300/60 transition-all cursor-pointer">
-                      <h4 className="font-semibold mb-3 text-gray-800">{faq.question}</h4>
-                      <p className="text-sm text-gray-700 mb-3 leading-relaxed">{faq.answer}</p>
-                      <p className="text-xs text-green-700 font-medium bg-green-100/60 px-2 py-1 rounded inline-block">
+                    <div key={faq.id} className="border border-slate-700/60 rounded-2xl p-4 bg-slate-800/40 backdrop-blur-sm hover:bg-slate-700/50 hover:border-slate-600/60 transition-all cursor-pointer">
+                      <h4 className="font-semibold mb-3 text-white">{faq.question}</h4>
+                      <p className="text-sm text-slate-300 mb-3 leading-relaxed">{faq.answer}</p>
+                      <p className="text-xs text-green-400 font-medium bg-green-600/20 px-2 py-1 rounded inline-block">
                         Source: {faq.source}
                       </p>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8 text-gray-500">
-                    <Book className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                  <div className="text-center py-8 text-slate-500">
+                    <Book className="h-8 w-8 mx-auto mb-2 text-slate-400" />
                     No FAQs available for this organization
                   </div>
                 )}
@@ -477,16 +529,16 @@ const AgriFactCheck = () => {
           </TabsContent>
           
           <TabsContent value="topics" className="mt-0">
-            <div className="p-4 bg-green-50/60 rounded-lg border border-green-200/40 mb-4">
-              <p className="text-sm text-gray-700 font-medium mb-1">Popular Agricultural Topics</p>
-              <p className="text-xs text-gray-600">Click on any topic to ask about it</p>
+            <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/50 mb-4">
+              <p className="text-sm text-slate-300 font-medium mb-1">Popular Agricultural Topics</p>
+              <p className="text-xs text-slate-500">Click on any topic to ask about it</p>
             </div>
             <div className="flex flex-wrap gap-3">
               {COMMON_TOPICS.map((topic, index) => (
                 <Badge 
                   key={index}
                   variant="outline"
-                  className="text-sm py-2 px-4 cursor-pointer border-green-300 text-green-700 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all shadow-sm bg-white/70 backdrop-blur-sm"
+                  className="text-sm py-2 px-4 cursor-pointer border-slate-700 text-slate-300 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all shadow-sm bg-slate-800/40 backdrop-blur-sm"
                   onClick={() => handleTopicClick(topic)}
                 >
                   {topic}
@@ -497,23 +549,23 @@ const AgriFactCheck = () => {
 
           <TabsContent value="scan" className="mt-0">
             <div className="space-y-4">
-              <div className="p-4 bg-green-50/60 rounded-lg border border-green-200/40">
+              <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/50">
                 <div className="flex items-center gap-2 mb-2">
-                  <Scan className="h-5 w-5 text-green-600" />
-                  <span className="text-sm font-medium text-gray-700">Crop & Livestock Health Scanner</span>
+                  <Scan className="h-5 w-5 text-green-400" />
+                  <span className="text-sm font-medium text-slate-300">Crop & Livestock Health Scanner</span>
                 </div>
-                <p className="text-xs text-gray-600">Upload or capture an image of your crops or livestock to get AI-powered health analysis and recommendations</p>
+                <p className="text-xs text-slate-500">Upload or capture an image of your crops or livestock to get AI-powered health analysis and recommendations</p>
               </div>
 
               {!selectedImage ? (
                 <div className="space-y-3">
                   <div 
-                    className="border-2 border-dashed border-green-300 rounded-lg p-8 text-center hover:border-green-400 transition-colors cursor-pointer bg-green-50/30"
+                    className="border-2 border-dashed border-slate-700 rounded-2xl p-8 text-center hover:border-slate-600 transition-colors cursor-pointer bg-slate-800/30"
                     onClick={() => document.getElementById('image-upload')?.click()}
                   >
-                    <Camera className="h-12 w-12 text-green-500 mx-auto mb-3" />
-                    <p className="text-gray-600 font-medium mb-1">Upload or Capture Image</p>
-                    <p className="text-sm text-gray-500">Click to select an image of your crops or livestock</p>
+                    <Camera className="h-12 w-12 text-green-400 mx-auto mb-3" />
+                    <p className="text-slate-300 font-medium mb-1">Upload or Capture Image</p>
+                    <p className="text-sm text-slate-500">Click to select an image of your crops or livestock</p>
                   </div>
                   <input
                     id="image-upload"
@@ -544,7 +596,7 @@ const AgriFactCheck = () => {
                     <img 
                       src={imagePreview!} 
                       alt="Selected crop/livestock" 
-                      className="w-full h-64 object-cover rounded-lg border border-green-200"
+                      className="w-full h-64 object-cover rounded-2xl border border-slate-700"
                     />
                     <Button
                       onClick={() => {
@@ -617,33 +669,33 @@ const AgriFactCheck = () => {
               )}
 
               {healthScanResult && (
-                <div className={`border-2 rounded-lg p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
-                  healthScanResult.severity === 'High' ? 'border-red-400 bg-red-50/80' : 
-                  healthScanResult.severity === 'Medium' ? 'border-amber-400 bg-amber-50/80' : 
-                  'border-green-400 bg-green-50/80'
+                <div className={`border-2 rounded-2xl p-5 space-y-3 animate-fade-in backdrop-blur-sm ${
+                  healthScanResult.severity === 'High' ? 'border-red-500/50 bg-red-900/20' : 
+                  healthScanResult.severity === 'Medium' ? 'border-amber-500/50 bg-amber-900/20' : 
+                  'border-green-500/50 bg-green-900/20'
                 }`}>
                   <div className="flex items-start gap-3">
                     <span className={`rounded-full p-2 mt-0.5 shadow-sm ${
-                      healthScanResult.severity === 'High' ? 'bg-red-500' : 
-                      healthScanResult.severity === 'Medium' ? 'bg-amber-500' : 
-                      'bg-green-500'
+                      healthScanResult.severity === 'High' ? 'bg-red-600' : 
+                      healthScanResult.severity === 'Medium' ? 'bg-amber-600' : 
+                      'bg-green-600'
                     }`}>
                       <Scan className="h-4 w-4 text-white" />
                     </span>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-800 mb-2">Health Analysis Results</h4>
+                      <h4 className="font-semibold text-white mb-2">Health Analysis Results</h4>
                       <div className="space-y-3">
                         <div>
-                          <p className="text-sm font-medium text-gray-700">Detected Condition:</p>
-                          <p className="text-base font-semibold text-gray-800">{healthScanResult.condition}</p>
+                          <p className="text-sm font-medium text-slate-400">Detected Condition:</p>
+                          <p className="text-base font-semibold text-white">{healthScanResult.condition}</p>
                         </div>
                         <div className="flex items-center gap-4">
                           <div>
-                            <p className="text-sm font-medium text-gray-700">Confidence:</p>
-                            <p className="text-lg font-bold">{healthScanResult.confidence}%</p>
+                            <p className="text-sm font-medium text-slate-400">Confidence:</p>
+                            <p className="text-lg font-bold text-white">{healthScanResult.confidence}%</p>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-gray-700">Severity:</p>
+                            <p className="text-sm font-medium text-slate-400">Severity:</p>
                             <Badge 
                               variant={healthScanResult.severity === 'High' ? 'destructive' : 
                                       healthScanResult.severity === 'Medium' ? 'default' : 'secondary'}
@@ -654,8 +706,8 @@ const AgriFactCheck = () => {
                           </div>
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-700 mb-2">Recommendations:</p>
-                          <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                          <p className="text-sm font-medium text-slate-400 mb-2">Recommendations:</p>
+                          <ul className="list-disc list-inside space-y-1 text-sm text-slate-300">
                             {healthScanResult.recommendations.map((rec, index) => (
                               <li key={index}>{rec}</li>
                             ))}
@@ -669,8 +721,8 @@ const AgriFactCheck = () => {
             </div>
           </TabsContent>
         </Tabs>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
