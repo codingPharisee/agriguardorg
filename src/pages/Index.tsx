@@ -184,6 +184,7 @@ const Index = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div className="p-6 lg:p-8 order-1">
+                  <h3 className="text-2xl font-bold text-slate-800 mb-4">Educational Video Content for African Farmers</h3>
                   <p className="text-black mb-6 leading-relaxed">
                     MythBuster Ag creates engaging, multilingual educational videos that proactively address
                     common agricultural misconceptions and provide evidence-based farming guidance tailored 
