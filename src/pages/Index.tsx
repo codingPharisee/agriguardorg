@@ -137,7 +137,7 @@ const Index = () => {
         {/* AI Modules section with enhanced styling */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-slate-800">
               Advanced AI Tools for Modern African Agriculture
             </h2>
             
@@ -147,7 +147,7 @@ const Index = () => {
                   <ViralFarm />
                 </div>
                 <div className="order-1 lg:order-2 p-6 lg:p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-blue-600">Early Detection of Agricultural Misinformation in Africa</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-slate-800">Early Detection of Agricultural Misinformation in Africa</h3>
                   <p className="text-black mb-6 leading-relaxed">
                     ViralFarm uses advanced AI and machine learning to continuously monitor African social media platforms, 
                     WhatsApp groups, radio broadcasts, and community forums to identify emerging agricultural myths 
@@ -184,7 +184,7 @@ const Index = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div className="p-6 lg:p-8 order-1">
-                  <h3 className="text-2xl font-bold mb-4 text-blue-600">Educational Video Content for African Farmers</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-slate-800">Educational Video Content for African Farmers</h3>
                   <p className="text-black mb-6 leading-relaxed">
                     MythBuster Ag creates engaging, multilingual educational videos that proactively address
                     common agricultural misconceptions and provide evidence-based farming guidance tailored 
