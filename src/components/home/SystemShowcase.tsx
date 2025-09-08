@@ -26,7 +26,7 @@ const SystemShowcase = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <p className="text-sm font-medium text-green-400 mb-4 tracking-wider uppercase">
-            AgriGuard AI Platform
+            AgriGuard Platform
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
             The Only Unified AI Platform for 
@@ -34,7 +34,7 @@ const SystemShowcase = () => {
             <span className="text-green-400">Agricultural Information</span>
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Trusted distribution, simplified workflows, real-time insights, and governance controls 
+            Trusted distribution, real-time insights,
             you need to elevate agricultural productivity to save your organization time, money, and risk.
           </p>
         </div>
