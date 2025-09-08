@@ -137,10 +137,6 @@ const Index = () => {
         {/* AI Modules section with enhanced styling */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-slate-800">
-              Advanced AI Tools for Modern African Agriculture
-            </h2>
-            
             <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div className="order-2 lg:order-1">
