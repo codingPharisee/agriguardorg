@@ -21,8 +21,7 @@ const routesToPrerender = [
   '/auth',
   '/admin',
   '/pest-identification',
-  '/crop-recommendations',
-  '/agricultural-misinformation'
+  '/crop-recommendations'
 ]
 
 ;(async () => {

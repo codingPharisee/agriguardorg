@@ -4,14 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ShieldCheck, Shield } from "lucide-react";
 import ContactFormDialog from "@/components/forms/ContactFormDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [contactFormOpen, setContactFormOpen] = useState(false);
   const isMobile = useIsMobile();
-  const { user } = useAuth();
-  const navigate = useNavigate();
   // Static wheat background
   const wheatBackground = "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2000&auto=format&fit=crop";
 
@@ -73,9 +69,9 @@ const Hero = () => {
               variant="outline" 
               size={isMobile ? "sm" : "lg"}
               className={`bg-white/10 border border-white text-white hover:bg-white hover:text-black ${isMobile ? 'px-3 py-1 text-xs w-full' : 'px-8 py-3'} rounded-full font-medium tracking-wider transition-all duration-300`}
-              onClick={() => user ? setContactFormOpen(true) : navigate('/auth')}
+              onClick={() => setContactFormOpen(true)}
             >
-              {user ? (isMobile ? 'LEARN MORE' : 'Learn More') : (isMobile ? 'SIGN UP FREE' : 'Sign Up Free')}
+              {isMobile ? 'LEARN MORE' : 'Learn More'}
             </Button>
           </div>
         </div>

@@ -18,10 +18,10 @@ const Header = () => {
   const { user, signOut } = useAuth();
 
   const navigationItems = [
-    { name: "Fact check", href: "/fact-check" },
+    { name: "Home", href: "/" },
     { name: "Blogs", href: "/blogs" },
+    { name: "Fact Check", href: "/fact-check" },
     { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
   ];
 
   const toolsItems = [
@@ -85,6 +85,10 @@ const Header = () => {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-50" asChild>
+              <Link to="/contact">Contact</Link>
+            </Button>
+            
             {user ? (
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-600">Welcome!</span>
@@ -94,7 +98,7 @@ const Header = () => {
               </div>
             ) : (
               <Button className="bg-green-600 hover:bg-green-700" asChild>
-                <Link to="/auth">Register/Sign In</Link>
+                <Link to="/auth">Login</Link>
               </Button>
             )}
           </div>
@@ -140,6 +144,10 @@ const Header = () => {
                 </div>
                 
                 <div className="border-t border-green-200 pt-3 space-y-2">
+                  <Button variant="outline" size="sm" className="w-full text-green-600 border-green-400 hover:bg-green-50 text-xs" asChild>
+                    <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+                  </Button>
+                  
                   {user ? (
                     <div className="space-y-2">
                       <p className="text-xs text-gray-600 text-center">Welcome!</p>
@@ -149,7 +157,7 @@ const Header = () => {
                     </div>
                   ) : (
                     <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-xs" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Register/Sign In</Link>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>Login</Link>
                     </Button>
                   )}
                 </div>
