@@ -134,87 +134,164 @@ const Index = () => {
         
         <Features />
         
-        {/* AI Modules section with enhanced styling */}
-        <section className="py-16 bg-white">
+        {/* All-in-One Agricultural AI Solution section with clean styling */}
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="space-y-16">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div className="order-2 lg:order-1">
-                  <ViralFarm />
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+                All-in-One Agricultural AI Solution
+              </h2>
+              <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Comprehensive AI-powered tools designed specifically for African farmers to combat misinformation, 
+                get accurate information, and make informed agricultural decisions.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {/* ViralFarm Card */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div className="bg-blue-600 p-8 text-center relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-700"></div>
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">ViralFarm</h3>
+                    <p className="text-blue-100 text-sm leading-relaxed">
+                      AI-powered detection of trending agricultural myths across social media and radio.
+                    </p>
+                  </div>
                 </div>
-                <div className="order-1 lg:order-2 p-6 lg:p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-slate-800">Early Detection of Agricultural Misinformation in Africa</h3>
-                  <p className="text-black mb-6 leading-relaxed">
-                    ViralFarm uses advanced AI and machine learning to continuously monitor African social media platforms, 
-                    WhatsApp groups, radio broadcasts, and community forums to identify emerging agricultural myths 
-                    and misinformation before they can spread widely among farming communities across Africa.
-                  </p>
-                  <ul className="space-y-3">
+                <div className="p-6">
+                  <ul className="space-y-3 mb-6">
                     <li className="flex items-start gap-3">
-                      <span className="bg-green-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-black">Real-time monitoring of trending agricultural topics</span>
+                      <span className="text-slate-700 text-sm">Real-time monitoring</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-green-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-black">AI-powered classification of potential misinformation</span>
+                      <span className="text-slate-700 text-sm">Misinformation detection</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-green-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-black">Early warning alerts for rapidly spreading myths</span>
+                      <span className="text-slate-700 text-sm">Early warning alerts</span>
                     </li>
                   </ul>
+                  <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-blue-50 group-hover:text-blue-700">
+                    Explore Now
+                  </button>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div className="p-6 lg:p-8 order-1">
-                  <h3 className="text-2xl font-bold text-slate-800 mb-4">Educational Video Content for African Farmers</h3>
-                  <p className="text-black mb-6 leading-relaxed">
-                    MythBuster Ag creates engaging, multilingual educational videos that proactively address
-                    common agricultural misconceptions and provide evidence-based farming guidance tailored 
-                    for African farming communities, available in local languages and dialects.
-                  </p>
-                  <ul className="space-y-3">
+
+              {/* AgriFactCheck Card */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div className="bg-green-600 p-8 text-center relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-green-700"></div>
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">AgriFactCheck</h3>
+                    <p className="text-green-100 text-sm leading-relaxed">
+                      Instant fact-checking via AI chatbot and SMS to provide farmers with accurate information.
+                    </p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3 mb-6">
                     <li className="flex items-start gap-3">
-                      <span className="bg-green-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-black">AI-generated educational videos in multiple languages</span>
+                      <span className="text-slate-700 text-sm">SMS & WhatsApp support</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-green-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-black">Simplified explanations of complex agricultural concepts</span>
+                      <span className="text-slate-700 text-sm">Verified FAQs database</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="bg-green-600 rounded-full p-1 mt-1">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
                         <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </span>
-                      <span className="text-black">Shareable content for WhatsApp and social media</span>
+                      <span className="text-slate-700 text-sm">Scientific citations</span>
                     </li>
                   </ul>
+                  <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-green-50 group-hover:text-green-700">
+                    Explore Now
+                  </button>
                 </div>
-                <div className="order-2">
-                  <MythBusterAg />
+              </div>
+
+              {/* MythBuster Ag Card */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div className="bg-orange-600 p-8 text-center relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-700"></div>
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">MythBuster Ag</h3>
+                    <p className="text-orange-100 text-sm leading-relaxed">
+                      AI-generated educational videos to proactively counter common agricultural misinformation.
+                    </p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start gap-3">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
+                        <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      <span className="text-slate-700 text-sm">Multilingual videos</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
+                        <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      <span className="text-slate-700 text-sm">Simplified explanations</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="bg-green-600 rounded-full p-1 mt-0.5">
+                        <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      <span className="text-slate-700 text-sm">Shareable content</span>
+                    </li>
+                  </ul>
+                  <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-orange-50 group-hover:text-orange-700">
+                    Explore Now
+                  </button>
                 </div>
               </div>
             </div>
