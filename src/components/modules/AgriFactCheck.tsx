@@ -252,82 +252,60 @@ const AgriFactCheck = () => {
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/10 to-emerald-500/10 rounded-full -translate-y-16 translate-x-16"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-300/10 to-green-400/10 rounded-full translate-y-12 -translate-x-12"></div>
       
-      <div className="relative p-8">
-        {/* AgriGuard Logo and Header */}
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-green-600/20 backdrop-blur-sm rounded-lg">
+      <div className="relative p-6">
+        {/* AgriGuard Logo and Header - Centered */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <div className="p-2 bg-green-600/20 backdrop-blur-sm rounded-lg mb-3">
             <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">AG</span>
             </div>
           </div>
-          <span className="text-slate-400 text-sm font-medium">AgriGuard AI</span>
+          
+          <h2 className="text-2xl font-bold text-white mb-2">
+            AgriGuard Fact Check
+          </h2>
+          <p className="text-slate-400 text-sm max-w-md leading-relaxed">
+            Verify agricultural information with AI-powered fact-checking. Get instant analysis 
+            of farming claims, techniques, and practices based on scientific research and expert knowledge.
+          </p>
         </div>
-        
-        <h2 className="text-3xl font-bold text-white mb-2">
-          How can I help you today?
-        </h2>
-        <p className="text-slate-400 text-sm mb-8 leading-relaxed">
-          This code will display a prompt asking the user for their name, and 
-          then it will display a greeting message with the name entered by the user.
-        </p>
       
-        {/* Feature Cards */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+      {/* Feature Cards */}
+        <div className="grid grid-cols-3 gap-3 mb-6">
           <div 
-            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-700/50 transition-colors cursor-pointer group"
+            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 hover:bg-slate-700/50 transition-colors cursor-pointer group"
             onClick={() => setActiveTab("faqs")}
           >
-            <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-600/30 transition-colors">
-              <Book className="h-5 w-5 text-green-400" />
+            <div className="w-8 h-8 bg-green-600/20 rounded-lg flex items-center justify-center mb-2 group-hover:bg-green-600/30 transition-colors">
+              <Book className="h-4 w-4 text-green-400" />
             </div>
-            <h3 className="text-white font-semibold text-sm mb-1">Saved FAQs</h3>
-            <p className="text-slate-400 text-xs">Quick access to verified agricultural FAQs for faster responses.</p>
+            <h3 className="text-white font-semibold text-xs mb-1">Saved FAQs</h3>
+            <p className="text-slate-400 text-xs leading-tight">Quick access to verified agricultural FAQs.</p>
           </div>
 
           <div 
-            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-700/50 transition-colors cursor-pointer group"
+            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 hover:bg-slate-700/50 transition-colors cursor-pointer group"
             onClick={() => setActiveTab("scan")}
           >
-            <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-600/30 transition-colors">
-              <Scan className="h-5 w-5 text-green-400" />
+            <div className="w-8 h-8 bg-green-600/20 rounded-lg flex items-center justify-center mb-2 group-hover:bg-green-600/30 transition-colors">
+              <Scan className="h-4 w-4 text-green-400" />
             </div>
-            <h3 className="text-white font-semibold text-sm mb-1">Crop Analysis</h3>
-            <p className="text-slate-400 text-xs">Upload crop images for AI-powered health diagnosis and treatment.</p>
+            <h3 className="text-white font-semibold text-xs mb-1">Crop Analysis</h3>
+            <p className="text-slate-400 text-xs leading-tight">Upload images for AI diagnosis.</p>
           </div>
 
           <div 
-            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-700/50 transition-colors cursor-pointer group"
+            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 hover:bg-slate-700/50 transition-colors cursor-pointer group"
             onClick={() => setActiveTab("topics")}
           >
-            <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-600/30 transition-colors">
-              <Languages className="h-5 w-5 text-green-400" />
+            <div className="w-8 h-8 bg-green-600/20 rounded-lg flex items-center justify-center mb-2 group-hover:bg-green-600/30 transition-colors">
+              <Languages className="h-4 w-4 text-green-400" />
             </div>
-            <h3 className="text-white font-semibold text-sm mb-1">Multilingual Support</h3>
-            <p className="text-slate-400 text-xs">Choose your language for better agricultural fact-checking interaction.</p>
+            <h3 className="text-white font-semibold text-xs mb-1">Multilingual Support</h3>
+            <p className="text-slate-400 text-xs leading-tight">Choose your preferred language.</p>
           </div>
         </div>
 
-        {/* Quick Topics */}
-        <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
-          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
-            All
-          </button>
-          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
-            Text
-          </button>
-          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
-            Image
-          </button>
-          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
-            Video
-          </button>
-          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
-            Music
-          </button>
-          <button className="px-4 py-2 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:bg-slate-700 transition-colors whitespace-nowrap">
-            Analytics
-          </button>
-        </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           
