@@ -301,9 +301,9 @@ const ViralFarm = ({ fullPage = false }) => {
   
   // Component to render the myths list
   const MythsList = () => (
-    <ScrollArea className={fullPage ? "h-[600px] pr-4" : "h-[450px] pr-4"}>
+    <ScrollArea className={fullPage ? "h-[600px] pr-4" : "h-[280px] pr-4"}>
       <div className="space-y-4">
-        {filteredMyths.map((myth) => {
+        {filteredMyths.slice(0, 3).map((myth) => {
           const severityVariant = 
             SEVERITY_BADGE_VARIANTS[myth.severity as keyof typeof SEVERITY_BADGE_VARIANTS];
           const TrendIcon = TREND_ICONS[myth.trend as keyof typeof TREND_ICONS];
