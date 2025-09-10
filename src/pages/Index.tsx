@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
-import Features from "@/components/home/Features";
 import ViralFarm from "@/components/modules/ViralFarm";
 import AgriFactCheck from "@/components/modules/AgriFactCheck";
 import MythBusterAg from "@/components/modules/MythBusterAg";
@@ -132,8 +132,6 @@ const Index = () => {
           </div>
         </section>
         
-        <Features />
-        
         {/* All-in-One Agricultural AI Solution section with clean styling */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
@@ -191,9 +189,11 @@ const Index = () => {
                       <span className="text-slate-700 text-sm">Early warning alerts</span>
                     </li>
                   </ul>
-                  <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-blue-50 group-hover:text-blue-700">
-                    Explore Now
-                  </button>
+                  <Link to="/viral-farm">
+                    <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-blue-50 group-hover:text-blue-700">
+                      Explore Now
+                    </button>
+                  </Link>
                 </div>
               </div>
 
@@ -240,9 +240,11 @@ const Index = () => {
                       <span className="text-slate-700 text-sm">Scientific citations</span>
                     </li>
                   </ul>
-                  <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-green-50 group-hover:text-green-700">
-                    Explore Now
-                  </button>
+                  <Link to="/fact-check">
+                    <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-green-50 group-hover:text-green-700">
+                      Explore Now
+                    </button>
+                  </Link>
                 </div>
               </div>
 
@@ -289,9 +291,11 @@ const Index = () => {
                       <span className="text-slate-700 text-sm">Shareable content</span>
                     </li>
                   </ul>
-                  <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-orange-50 group-hover:text-orange-700">
-                    Explore Now
-                  </button>
+                  <Link to="/myth-buster">
+                    <button className="w-full bg-slate-100 text-slate-800 py-3 px-4 rounded-lg font-semibold hover:bg-slate-200 transition-colors group-hover:bg-orange-50 group-hover:text-orange-700">
+                      Explore Now
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

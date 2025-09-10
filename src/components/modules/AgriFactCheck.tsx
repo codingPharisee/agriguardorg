@@ -464,6 +464,27 @@ const AgriFactCheck = () => {
                    selectedLanguage === "ar" ? "احصل على فحص فوري للحقائق مدعوم بالذكاء الاصطناعي مع المراجع" :
                    "Get instant AI-powered fact checking with citations"}
                 </p>
+                
+                {/* FAQ Tags Section */}
+                <div className="mt-6 pt-6 border-t border-slate-700/30">
+                  <p className="text-slate-400 text-sm mb-3 text-center">
+                    Most Frequently Asked Questions
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center max-w-md mx-auto">
+                    {COMMON_TOPICS.map((topic, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setQuery(`Tell me about ${topic}`);
+                          handleSubmit(new Event('submit') as any);
+                        }}
+                        className="px-3 py-1.5 text-xs bg-slate-700/50 text-slate-300 rounded-full border border-slate-600/50 hover:bg-slate-600/50 hover:text-white hover:border-green-500/50 transition-all duration-200"
+                      >
+                        {topic}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </TabsContent>
