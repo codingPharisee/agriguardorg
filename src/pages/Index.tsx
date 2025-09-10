@@ -88,40 +88,40 @@ const Index = () => {
         <SystemShowcase />
         
         {/* Fact Check section with enhanced styling and SEO optimization */}
-        <section className="py-16 bg-white agrifactcheck-section">
+        <section className="py-8 bg-white agrifactcheck-section">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div className="p-6 lg:p-8 order-2 lg:order-1">
-                <h2 className="text-3xl font-bold mb-4 text-slate-800">AI-Powered Agricultural Fact Checking for African Farmers</h2>
-                <p className="text-black mb-6 leading-relaxed">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center max-w-6xl mx-auto">
+              <div className="p-4 lg:p-6 order-2 lg:order-1">
+                <h2 className="text-2xl lg:text-3xl font-bold mb-3 text-slate-800">AI-Powered Agricultural Fact Checking for African Farmers</h2>
+                <p className="text-black mb-4 leading-relaxed text-sm lg:text-base">
                   AgriFactCheck provides African farmers with instant, verified responses to agricultural questions using
                   AI-powered fact checking technology. Combat farming myths and misinformation with evidence-based 
                   agricultural guidance from trusted African agricultural authorities and research institutions.
                 </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <span className="bg-green-600 rounded-full p-1 mt-1">
-                      <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="bg-green-600 rounded-full p-0.5 mt-1">
+                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                       </svg>
                     </span>
-                    <span className="text-black">SMS and WhatsApp fact checking service for remote farmers</span>
+                    <span className="text-black text-sm">SMS and WhatsApp fact checking service for remote farmers</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="bg-green-600 rounded-full p-1 mt-1">
-                      <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <li className="flex items-start gap-2">
+                    <span className="bg-green-600 rounded-full p-0.5 mt-1">
+                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                       </svg>
                     </span>
-                    <span className="text-black">Preloaded with verified FAQs from African agricultural authorities</span>
+                    <span className="text-black text-sm">Preloaded with verified FAQs from African agricultural authorities</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="bg-green-600 rounded-full p-1 mt-1">
-                      <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <li className="flex items-start gap-2">
+                    <span className="bg-green-600 rounded-full p-0.5 mt-1">
+                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                       </svg>
                     </span>
-                    <span className="text-black">Citations from trusted scientific sources</span>
+                    <span className="text-black text-sm">Citations from trusted scientific sources</span>
                   </li>
                 </ul>
               </div>
