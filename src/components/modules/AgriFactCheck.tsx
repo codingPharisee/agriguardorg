@@ -274,13 +274,13 @@ const AgriFactCheck = () => {
         <div className="grid grid-cols-3 gap-3 mb-6">
           <div 
             className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 hover:bg-slate-700/50 transition-colors cursor-pointer group"
-            onClick={() => setActiveTab("faqs")}
+            onClick={() => setActiveTab("chat")}
           >
             <div className="w-8 h-8 bg-green-600/20 rounded-lg flex items-center justify-center mb-2 group-hover:bg-green-600/30 transition-colors">
-              <Book className="h-4 w-4 text-green-400" />
+              <MessageSquare className="h-4 w-4 text-green-400" />
             </div>
-            <h3 className="text-white font-semibold text-xs mb-1">Saved FAQs</h3>
-            <p className="text-slate-400 text-xs leading-tight">Quick access to verified agricultural FAQs.</p>
+            <h3 className="text-white font-semibold text-xs mb-1">Fact Check</h3>
+            <p className="text-slate-400 text-xs leading-tight">Verify agricultural claims instantly with AI.</p>
           </div>
 
           <div 
