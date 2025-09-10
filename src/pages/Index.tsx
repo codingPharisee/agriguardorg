@@ -87,25 +87,46 @@ const Index = () => {
         {/* System Showcase */}
         <SystemShowcase />
         
-        {/* Fact Check section - compact version */}
-        <section className="py-6 bg-white agrifactcheck-section">
+        {/* Fact Check section with enhanced styling and SEO optimization */}
+        <section className="py-8 bg-white agrifactcheck-section">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center max-w-5xl mx-auto">
-              <div className="p-3 order-2 lg:order-1">
-                <h2 className="text-xl lg:text-2xl font-bold mb-2 text-slate-800">AI-Powered Agricultural Fact Checking</h2>
-                <p className="text-black mb-3 text-sm leading-relaxed">
-                  Get instant, verified responses to agricultural questions using AI-powered fact checking technology.
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center max-w-6xl mx-auto">
+              <div className="p-4 lg:p-6 order-2 lg:order-1">
+                <h2 className="text-2xl lg:text-3xl font-bold mb-3 text-slate-800">AI-Powered Agricultural Fact Checking for African Farmers</h2>
+                <p className="text-black mb-4 leading-relaxed text-sm lg:text-base">
+                  AgriFactCheck provides African farmers with instant, verified responses to agricultural questions using
+                  AI-powered fact checking technology. Combat farming myths and misinformation with evidence-based 
+                  agricultural guidance from trusted African agricultural authorities and research institutions.
                 </p>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full">SMS & WhatsApp Support</span>
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full">Verified FAQs</span>
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full">Scientific Citations</span>
-                </div>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="bg-green-600 rounded-full p-0.5 mt-1">
+                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    <span className="text-black text-sm">SMS and WhatsApp fact checking service for remote farmers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="bg-green-600 rounded-full p-0.5 mt-1">
+                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    <span className="text-black text-sm">Preloaded with verified FAQs from African agricultural authorities</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="bg-green-600 rounded-full p-0.5 mt-1">
+                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    <span className="text-black text-sm">Citations from trusted scientific sources</span>
+                  </li>
+                </ul>
               </div>
               <div className="order-1 lg:order-2">
-                <div className="transform scale-75 origin-center">
-                  <AgriFactCheck />
-                </div>
+                <AgriFactCheck />
               </div>
             </div>
           </div>
