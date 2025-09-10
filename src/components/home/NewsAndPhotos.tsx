@@ -93,25 +93,26 @@ const NewsAndPhotos = () => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-16 bg-gradient-to-b from-white to-green-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
-            News and Other Resources
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-green-800 to-amber-800 bg-clip-text text-transparent">
+            Latest Agricultural Blogs & Resources
           </h2>
+          <Newspaper className="h-8 w-8 text-green-600" />
         </div>
         
         {loading ? (
           <div className="flex justify-center items-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-green-600" />
-            <span className="ml-2 text-gray-600">Loading latest resources...</span>
+            <span className="ml-2 text-gray-600">Loading latest blogs...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {articles.slice(0, 3).map((item, index) => (
-              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {articles.map((item, index) => (
+              <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow border-green-200 bg-white">
                 <div className="relative">
-                  <AspectRatio ratio={16/9} className="bg-gray-50">
+                  <AspectRatio ratio={16/9} className="bg-green-100">
                     <img 
                       src={item.image_url} 
                       alt={item.title}
@@ -121,40 +122,40 @@ const NewsAndPhotos = () => {
                       }}
                     />
                   </AspectRatio>
+                  <div className="absolute top-3 right-3">
+                    <Badge type="blog" />
+                  </div>
                 </div>
-                
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight min-h-[42px]">
-                    {item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 min-h-[40px]">
-                    {item.description.length > 100 ? `${item.description.substring(0, 100)}...` : item.description}
-                  </p>
-                  
-                  <a 
-                    href={item.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold transition-colors text-base group"
-                  >
-                    View Now
-                    <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+                <CardHeader className="p-6">
+                  <CardTitle className="text-lg font-semibold line-clamp-2 text-green-900">{item.title}</CardTitle>
+                  <div className="text-sm text-green-700 font-medium">{formatDate(item.published_at)}</div>
+                </CardHeader>
+                <CardContent className="p-6 pt-0">
+                  <p className="text-gray-700 text-sm line-clamp-3 leading-relaxed">{item.description}</p>
+                  <div className="mt-3 text-xs text-green-600 font-medium">{item.source}</div>
+                </CardContent>
+                <CardFooter className="p-6 pt-0">
+                  <Button variant="outline" size="sm" className="w-full border-green-300 text-green-800 hover:bg-green-50" asChild>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                      Read More
+                    </a>
+                  </Button>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         )}
         
-        <div className="flex justify-center mt-16">
-          <Button className="gap-2 bg-green-600 hover:bg-green-700 px-10 py-4 text-lg font-semibold rounded-xl" asChild>
+        <div className="flex justify-center mt-12 gap-4">
+          <Button className="gap-2 bg-green-600 hover:bg-green-700 px-6 py-3" asChild>
             <Link to="/blogs">
               <Newspaper className="h-5 w-5" />
-              Explore All Resources
+              View All Articles
             </Link>
+          </Button>
+          <Button variant="outline" className="gap-2 border-green-300 text-green-800 hover:bg-green-50 px-6 py-3">
+            <Globe className="h-5 w-5" />
+            Blog Sources
           </Button>
         </div>
       </div>

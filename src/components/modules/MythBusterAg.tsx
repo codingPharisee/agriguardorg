@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Video, ChevronLeft, ChevronRight } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { supabase } from '@/integrations/supabase/client';
 
@@ -60,16 +63,29 @@ const MythBusterAg = () => {
     }
   };
 
+  const nextVideo = () => {
+    if (currentVideoIndex < videos.length - 1) {
+      setCurrentVideoIndex(currentVideoIndex + 1);
+    }
+  };
+
+  const previousVideo = () => {
+    if (currentVideoIndex > 0) {
+      setCurrentVideoIndex(currentVideoIndex - 1);
+    }
+  };
+
   const currentVideo = videos[currentVideoIndex];
   
   return (
-    <div className="h-full">
-      <div className="pb-4">
-        <h3 className="text-2xl font-bold text-slate-800 mb-4">
-          Agriguard at a glance
-        </h3>
-      </div>
-      <div>
+    <Card className="module-card">
+      <CardHeader className="pb-2">
+        <CardTitle className="module-header">
+          <Video className="h-5 w-5" />
+          Agriguard At a glance
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -81,7 +97,7 @@ const MythBusterAg = () => {
         ) : currentVideo ? (
           <div className="space-y-4">
             {/* Main Video Player */}
-            <div className="relative rounded-lg overflow-hidden">
+            <div className="relative rounded-lg overflow-hidden border">
               <AspectRatio ratio={16/9}>
                 <video 
                   key={currentVideo.id}
@@ -97,6 +113,34 @@ const MythBusterAg = () => {
                   Your browser does not support the video tag.
                 </video>
               </AspectRatio>
+            </div>
+
+
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-between">
+              <Button 
+                variant="outline" 
+                onClick={previousVideo}
+                disabled={currentVideoIndex === 0}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Previous
+              </Button>
+              
+              <span className="text-sm text-muted-foreground">
+                {currentVideoIndex + 1} of {videos.length}
+              </span>
+              
+              <Button 
+                variant="outline" 
+                onClick={nextVideo}
+                disabled={currentVideoIndex === videos.length - 1}
+                className="flex items-center gap-2"
+              >
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </Button>
             </div>
 
             {/* Video Grid Navigation */}
@@ -135,8 +179,8 @@ const MythBusterAg = () => {
             )}
           </div>
         ) : null}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
