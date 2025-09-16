@@ -82,7 +82,7 @@ const MythBusterAg = () => {
       <CardHeader className="pb-2">
         <CardTitle className="module-header">
           <Video className="h-5 w-5" />
-          Agriguard At a glance
+          AgriFact Hub At a glance
         </CardTitle>
       </CardHeader>
       <CardContent>

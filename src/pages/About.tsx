@@ -16,7 +16,7 @@ const About = () => {
             <div className="inline-flex items-center justify-center bg-primary/10 p-5 rounded-full mb-6">
               <Info className="h-12 w-12 text-primary" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About AgriGuard</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">About AgriFact Hub</h1>
             <p className="text-xl text-gray-600 max-w-2xl">
               Protecting agricultural information integrity through fact-checking and misinformation detection.
             </p>
@@ -32,7 +32,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">
-                  AgriGuard is dedicated to promoting accuracy in agricultural information. We fight misinformation through a combination of expert analysis, technological tools, and community engagement. Our goal is to ensure farmers, policymakers, and the public have access to reliable agricultural information.
+                  AgriFact Hub is dedicated to promoting accuracy in agricultural information. We fight misinformation through a combination of expert analysis, technological tools, and community engagement. Our goal is to ensure farmers, policymakers, and the public have access to reliable agricultural information.
                 </p>
               </CardContent>
             </Card>
@@ -62,7 +62,7 @@ const About = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 mb-4">
-                AgriGuard employs a rigorous verification process that combines human expertise with advanced technology:
+                AgriFact Hub employs a rigorous verification process that combines human expertise with advanced technology:
               </p>
               <ol className="list-decimal pl-5 space-y-3 text-gray-700">
                 <li>

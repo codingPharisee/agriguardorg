@@ -31,11 +31,11 @@ const VideoGeneration: React.FC = () => {
       <main className="flex-grow py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold text-center mb-8">Agriguard At a glance</h1>
+            <h1 className="text-3xl font-bold text-center mb-8">AgriFact Hub At a glance</h1>
             
             <Tabs defaultValue="view" className="w-full">
               <TabsList className={`grid w-full ${isAdmin ? 'grid-cols-3' : 'grid-cols-1'}`}>
-                <TabsTrigger value="view">Agriguard At a glance</TabsTrigger>
+                <TabsTrigger value="view">AgriFact Hub At a glance</TabsTrigger>
                 {isAdmin && <TabsTrigger value="upload">Upload Videos</TabsTrigger>}
                 {isAdmin && <TabsTrigger value="generate">Generate Videos</TabsTrigger>}
               </TabsList>
