@@ -10,14 +10,10 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-green-500 text-white px-3 py-2 font-bold rounded">
-                <div className="flex flex-col items-start leading-tight">
-                  <div className="flex items-center gap-1">
-                    <span className="text-sm font-bold">Agri</span>
-                    <Leaf className="h-3 w-3" />
-                    <span className="text-sm font-bold">Fact</span>
-                  </div>
-                  <span className="text-xs font-semibold text-green-200 -mt-1">hub</span>
+              <div className="bg-green-500 text-white px-3 py-2 font-bold">
+                <div className="flex items-center gap-2">
+                  <Leaf className="h-5 w-5" />
+                  <span className="text-sm font-semibold">AgriFact Hub</span>
                 </div>
               </div>
             </div>
