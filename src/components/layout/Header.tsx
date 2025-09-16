@@ -47,10 +47,10 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="bg-green-600 text-white px-4 py-2 font-bold rounded-lg shadow-lg">
-              <div className="flex items-center gap-2">
-                <Leaf className="h-6 w-6" />
-                <span className="text-lg font-semibold">AgriFact Hub</span>
+            <div className="bg-green-600 text-white px-3 py-2 font-bold rounded">
+              <div className="flex flex-col items-center">
+                <Leaf className="h-5 w-5 mb-1" />
+                <span className="text-sm">AgriGuard</span>
               </div>
             </div>
           </Link>

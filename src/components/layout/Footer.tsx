@@ -11,9 +11,9 @@ const Footer = () => {
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-3 mb-4">
               <div className="bg-green-500 text-white px-3 py-2 font-bold">
-                <div className="flex items-center gap-2">
-                  <Leaf className="h-5 w-5" />
-                  <span className="text-sm font-semibold">AgriFact Hub</span>
+                <div className="flex flex-col items-center">
+                  <Leaf className="h-5 w-5 mb-1" />
+                  <span className="text-sm">AgriGuard</span>
                 </div>
               </div>
             </div>
@@ -22,7 +22,7 @@ const Footer = () => {
               a more informed and prosperous farming community.
             </p>
             <div className="text-green-300 text-xs">
-              &copy; {new Date().getFullYear()} AgriFact Hub Technological Solutions
+              &copy; {new Date().getFullYear()} AgriGuard Technological Solutions
             </div>
           </div>
 
@@ -33,7 +33,7 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <Mail className="h-4 w-4 text-green-400 mt-1" />
                 <div className="text-green-200 text-sm">
-                  <p>agrifacthubtech@gmail.com</p>
+                  <p>agriguardtech@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">

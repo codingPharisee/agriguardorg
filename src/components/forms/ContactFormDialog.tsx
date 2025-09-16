@@ -18,7 +18,7 @@ const ContactFormDialog = ({ open, onOpenChange }: ContactFormDialogProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Learn more about AgriFact Hub</DialogTitle>
+          <DialogTitle>Learn more about AgriGuard</DialogTitle>
           <DialogDescription>
             Fill out the form below and we'll provide you with more information about our services.
           </DialogDescription>
