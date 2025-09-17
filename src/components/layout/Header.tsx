@@ -47,13 +47,11 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="bg-green-600 text-white px-3 py-2 font-bold rounded">
-              <img 
-                src="/agrifact-logo.png" 
-                alt="AgriFact Hub"
-                className="h-8 w-auto"
-              />
-            </div>
+            <img 
+              src="/agrifact-logo-professional.png" 
+              alt="AgriFact Hub"
+              className="h-8 w-auto rounded"
+            />
           </Link>
 
           {/* Desktop Navigation */}

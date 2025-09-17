@@ -10,13 +10,11 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-green-500 text-white px-3 py-2 font-bold">
               <img 
-                src="/agrifact-logo.png" 
+                src="/agrifact-logo-professional.png" 
                 alt="AgriFact Hub"
-                className="h-12 w-auto"
+                className="h-12 w-auto rounded"
               />
-              </div>
             </div>
             <p className="text-green-200 text-sm leading-relaxed mb-4">
               Combating agricultural misinformation with AI technology to build 
