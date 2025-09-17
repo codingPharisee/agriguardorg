@@ -256,11 +256,11 @@ self.addEventListener('push', (event) => {
   if (event.data) {
     const pushData = event.data.json();
     options.body = pushData.body || options.body;
-    options.title = pushData.title || 'AgriGuard Tech';
+    options.title = pushData.title || 'AgriFact Hub';
   }
 
   event.waitUntil(
-    self.registration.showNotification('AgriGuard Tech', options)
+    self.registration.showNotification('AgriFact Hub', options)
   );
 });
 

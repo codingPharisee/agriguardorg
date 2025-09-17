@@ -14,7 +14,7 @@ const Contact = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold text-amber-900 mb-4">
-                Contact AgriGuard Company
+                Contact AgriFact Hub
               </h1>
               <p className="text-lg text-gray-700 leading-relaxed">
                 Get in touch with our team for agricultural biotechnology information, agricultural guidance, 
@@ -34,7 +34,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                      <p className="text-gray-600">agriguardtech@gmail.com</p>
+                      <p className="text-gray-600">agrifacthub@gmail.com</p>
                     </div>
                   </div>
 
@@ -83,8 +83,8 @@ const Contact = () => {
               <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg shadow-lg p-8 border border-amber-200">
                 <h2 className="text-2xl font-bold text-amber-900 mb-6">Our Mission</h2>
                 <p className="text-gray-700 mb-4 leading-relaxed">
-                  AgriGuard Company is dedicated to providing accurate, science-based information 
-                  about agricultural biotechnology and modern agricultural practices. We work to combat misinformation 
+                  AgriFact Hub is dedicated to providing accurate, science-based information 
+                  about agricultural biotechnology and modern agricultural practices. We work to combat misinformation
                   and support farmers with reliable knowledge.
                 </p>
                 

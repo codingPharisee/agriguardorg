@@ -123,7 +123,7 @@ const ContactForm = ({ onSuccess }: ContactFormProps) => {
               <FormLabel>What are you interested in?</FormLabel>
               <FormControl>
                 <Textarea 
-                  placeholder="Tell us how AgriGuard can help your farming community..."
+                  placeholder="Tell us how AgriFact Hub can help your farming community..."
                   className="min-h-[120px]" 
                   {...field}
                 />
@@ -146,7 +146,7 @@ const ContactForm = ({ onSuccess }: ContactFormProps) => {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="cursor-pointer">
-                  I would like to receive updates about AgriGuard
+                  I would like to receive updates about AgriFact Hub
                 </FormLabel>
               </div>
             </FormItem>

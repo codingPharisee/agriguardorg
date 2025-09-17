@@ -1,6 +1,6 @@
 {
-  "name": "AgriGuard Tech - Agricultural Myth Busters",
-  "short_name": "AgriGuard",
+  "name": "AgriFact Hub - Agricultural Myth Busters",
+  "short_name": "AgriFact Hub",
   "description": "AI-powered agricultural fact-checking and content generation platform",
   "start_url": "/",
   "display": "standalone",
