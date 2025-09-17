@@ -50,7 +50,7 @@ const Header = () => {
             <img 
               src="/agrifact-logo-professional.png" 
               alt="AgriFact Hub"
-              className="h-8 w-auto rounded"
+              className="h-12 w-auto rounded"
             />
           </Link>
 

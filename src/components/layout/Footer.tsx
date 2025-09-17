@@ -13,7 +13,7 @@ const Footer = () => {
               <img 
                 src="/agrifact-logo-professional.png" 
                 alt="AgriFact Hub"
-                className="h-12 w-auto rounded"
+                className="h-16 w-auto rounded"
               />
             </div>
             <p className="text-green-200 text-sm leading-relaxed mb-4">
