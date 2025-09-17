@@ -40,9 +40,6 @@ const Hero = () => {
             <h1 className={`${isMobile ? 'text-2xl' : 'text-6xl md:text-7xl'} font-bold tracking-tight text-white ${isMobile ? 'mb-1' : 'mb-4'}`}>
               AgriFact Hub
             </h1>
-            <h3 className={`${isMobile ? 'text-sm' : 'text-2xl md:text-3xl'} font-semibold text-green-300 ${isMobile ? 'mb-1' : 'mb-4'}`}>
-              Technological Solutions
-            </h3>
           </div>
           
           <div className={`bg-black/20 backdrop-blur-sm rounded-lg ${isMobile ? 'p-3 mb-3 max-w-sm' : 'p-6 mb-8 max-w-4xl'} mx-auto`}>
