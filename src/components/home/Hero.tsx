@@ -20,13 +20,17 @@ const Hero = () => {
 
   return (
     <div 
-      className={`relative ${isMobile ? 'min-h-[50vh]' : 'min-h-screen'} flex items-${isMobile ? 'start pt-16' : 'center'} bg-cover bg-center bg-no-repeat`}
-      style={{
-        backgroundImage: `url('${wheatBackground}')`,
-        backgroundSize: isMobile ? 'cover' : 'cover',
-        backgroundPosition: isMobile ? 'center top' : 'center center'
-      }}
+      className={`relative ${isMobile ? 'min-h-[50vh]' : 'min-h-screen'} flex items-${isMobile ? 'start pt-16' : 'center'}`}
     >
+      {/* Hero background image with priority hint for LCP optimization */}
+      <img
+        src={wheatBackground}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        fetchPriority="high"
+        loading="eager"
+      />
+      
       {/* Dark overlay for readability */}
       <div className="absolute inset-0 bg-black/40"></div>
       
