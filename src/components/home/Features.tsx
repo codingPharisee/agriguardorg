@@ -10,7 +10,7 @@ const featuresList = [
     title: "ViralFarm",
     description: "AI-powered detection of trending agricultural myths across social media and radio.",
     path: "/viral-farm",
-    bgImage: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=500&auto=format&fit=crop",
+    bgImage: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=350&auto=format&fit=crop",
     bgColor: "from-blue-600/90 to-blue-800/90"
   },
   {
@@ -18,7 +18,7 @@ const featuresList = [
     title: "AgriFactCheck",
     description: "Instant fact-checking via AI chatbot and SMS to provide farmers with accurate information.",
     path: "/fact-check",
-    bgImage: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=500&auto=format&fit=crop",
+    bgImage: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=350&auto=format&fit=crop",
     bgColor: "from-green-600/90 to-green-800/90"
   },
   {
@@ -26,7 +26,7 @@ const featuresList = [
     title: "MythBuster Ag",
     description: "AI-generated educational videos to proactively counter common agricultural misinformation.",
     path: "/myth-buster",
-    bgImage: "https://images.unsplash.com/photo-1574943320219-5650d380a722?q=80&w=500&auto=format&fit=crop",
+    bgImage: "https://images.unsplash.com/photo-1574943320219-5650d380a722?q=80&w=350&auto=format&fit=crop",
     bgColor: "from-amber-600/90 to-orange-700/90"
   },
 ];
@@ -48,11 +48,14 @@ const Features = () => {
             >
               <div className="relative overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-xl text-center h-full flex flex-col min-h-[300px]">
                 <div className="absolute inset-0">
-                  <img 
-                    src={feature.bgImage} 
-                    alt={feature.title}
-                    className="w-full h-full object-cover"
-                  />
+              <img 
+                src={feature.bgImage} 
+                alt={feature.title} 
+                className="w-full h-full object-cover"
+                width="302"
+                height="300"
+                loading="lazy"
+              />
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor}`}></div>
                 </div>
                 

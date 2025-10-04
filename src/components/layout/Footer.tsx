@@ -14,6 +14,9 @@ const Footer = () => {
                 src="/agrifact-logo-professional.png" 
                 alt="AgriFact Hub"
                 className="h-20 w-auto rounded"
+                width="80"
+                height="80"
+                loading="lazy"
               />
             </div>
             <p className="text-green-200 text-sm leading-relaxed mb-4">

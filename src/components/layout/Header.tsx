@@ -51,6 +51,9 @@ const Header = () => {
               src="/agrifact-logo-professional.png" 
               alt="AgriFact Hub"
               className="h-16 w-auto rounded"
+              width="64"
+              height="64"
+              loading="eager"
             />
           </Link>
 

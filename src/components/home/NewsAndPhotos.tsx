@@ -117,6 +117,9 @@ const NewsAndPhotos = () => {
                       src={item.image_url} 
                       alt={item.title}
                       className="w-full h-full object-cover"
+                      width="400"
+                      height="225"
+                      loading="lazy"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=500&auto=format&fit=crop";
                       }}
